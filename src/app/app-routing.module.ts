@@ -11,6 +11,10 @@ const routes: Routes = [
     path: 'rpe',
     loadChildren: () => import('./rpe/rpe.module').then( m => m.RpePageModule)
   },
+  {
+    path: 'coeff',
+    loadChildren: () => import('./coefficients/coefficients.module').then( m => m.CoefficientsPageModule)
+  },
 ];
 
 @NgModule({
