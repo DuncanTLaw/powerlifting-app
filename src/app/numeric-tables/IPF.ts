@@ -1,11 +1,4 @@
-export interface GenderCoeffs {
-  [gender: string]: {
-    c1: number;
-    c2: number;
-    c3: number;
-    c4: number;
-  };
-}
+import { GenderCoeffs } from './coefficient.model';
 
 export const IPFCOEFF: GenderCoeffs = {
   male: {
