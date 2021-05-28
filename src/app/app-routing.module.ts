@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'coeff',
     loadChildren: () => import('./coefficients/coefficients.module').then( m => m.CoefficientsPageModule)
   },
+  {
+    path: 'timer',
+    loadChildren: () => import('./timer/timer.module').then( m => m.TimerPageModule)
+  },
 ];
 
 @NgModule({

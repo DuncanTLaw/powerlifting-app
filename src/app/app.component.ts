@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  selectedView = 'RPE Calculation';
+
   constructor() {}
+
+  onChangeView(title: string): void {
+    this.selectedView = title;
+  }
 }
