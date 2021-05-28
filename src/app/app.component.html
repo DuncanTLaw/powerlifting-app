@@ -1,24 +1,18 @@
 <ion-app>
-  <ion-header>
-    <ion-toolbar>
-      <ion-title size="large" color="tertiary">{{ selectedView }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <ion-content>
     <ion-router-outlet></ion-router-outlet>
 
     <ion-tabs>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="rpe" (click)="onChangeView('RPE Calculation')">
+      <ion-tab-bar>
+        <ion-tab-button tab="rpe">
           <ion-icon name="barbell-sharp"></ion-icon>
           <ion-label>RPE</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="coeff" (click)="onChangeView('Coefficients')">
+        <ion-tab-button tab="coeff">
           <ion-icon name="calculator"></ion-icon>
           <ion-label>Coefficients</ion-label>
         </ion-tab-button>
-        <ion-tab-button tab="timer" (click)="onChangeView('Timer')">
+        <ion-tab-button tab="timer">
           <ion-icon name="timer-sharp"></ion-icon>
           <ion-label>Timer</ion-label>
         </ion-tab-button>

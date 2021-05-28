@@ -10,7 +10,4 @@ export class AppComponent {
 
   constructor() {}
 
-  onChangeView(title: string): void {
-    this.selectedView = title;
-  }
 }

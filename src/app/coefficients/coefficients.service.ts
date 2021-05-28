@@ -13,6 +13,7 @@ export class CoeffService {
   male = true;
   total: number;
   benchOnly: false;
+  pointSelected: string;
 
   dotsScale: GenderCoeff = DOTSCOEFF;
   dotsPoints: number;

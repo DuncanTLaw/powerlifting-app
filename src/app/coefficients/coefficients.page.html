@@ -1,1 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large" color="warning">Coeffs</ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-grid>
+  <ion-card>
+    <form #coeff="ngForm">
+      <ion-card-header>
+        <ion-card-title>{{ points }} Points</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label position="fixed">Gender</ion-label>
+        <ion-select value="m" interface="popover">
+          <ion-select-option value="m">Male</ion-select-option>
+          <ion-select-option value="f">Female</ion-select-option>
+        </ion-select>
+        <ion-label position="fixed">Point system</ion-label>
+        <ion-select value="gl" interface="popover">
+          <ion-select-option value="gl">IPF GL</ion-select-option>
+          <ion-select-option value="ipf">IPF</ion-select-option>
+          <ion-select-option value="dots">DOTS</ion-select-option>
+          <ion-select-option value="wilks">Wilks</ion-select-option>
+          <ion-select-option value="blues">Blues</ion-select-option>
+        </ion-select>
+        <ion-radio-group value="total">
+          <ion-item>
+            <ion-label>Total</ion-label>
+            <ion-radio slot="start" value="total"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>SBD</ion-label>
+            <ion-radio slot="start" value="SBD"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <br>
+        <ion-list>
+          <ion-item>
+            <ion-label position="fixed">load</ion-label>
+            <ion-input
+              type="number"
+              ngModel
+              name="haveWeight"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">reps</ion-label>
+            <ion-input
+              type="number"
+              ngModel
+              name="haveReps"
+              step="1"
+              min="1"
+              max="15"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">RPE</ion-label>
+            <ion-input
+              type="number"
+              ngModel
+              name="haveRPE"
+              min="5"
+              max = "10"
+              step="0.5"
+            ></ion-input>
+          </ion-item>
+        </ion-list>
+        <br>
+        <ion-row id="result">
+            e1RM <ion-text class="ion-padding-start" color="success">{{ 'yes' }}</ion-text>
+        </ion-row>
+      </ion-card-content>
+    </form>
+  </ion-card>
+</ion-grid>
