@@ -1,86 +1,54 @@
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { GenderCoeff } from '../numeric-tables/coefficient.model';
+import { DOTSCOEFF } from '../numeric-tables/dots';
+import { GLCOEFF } from '../numeric-tables/GL';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DateService {
-  male: boolean;
-  c1: number;
-  c2: number;
-  c3: number;
-  c4: number;
-  userGender: string;
+export class CoeffService {
+  male = true;
+  total: number;
 
-  blueAchieved: string;
-  ipfPoints: number;
-  userTotal: number;
-  totalSelected: boolean;
-  squatNo: number;
-  benchNo: number;
-  deadliftNo: number;
+  dotsScale: GenderCoeff = DOTSCOEFF;
+  dotsPoints: number;
 
-  goalIPF: number;
-  goalTotal: number;
+  glScale: GenderCoeff = GLCOEFF;
+  glPoints: number;
 
-  constructor() {}
+  calcDOTS(form: NgForm): void {
+    this.male = form.value.gender;
+    const bw = form.value.weight;
+    this.total = form.value.total;
 
-  onSelect(event: any): void {
-    this.totalSelected = (event === 'sbd') ? false : true;
+    const c1 = this.male ?  this.dotsScale.male.c1 : this.dotsScale.female.c1;
+    const c2 = this.male ?  this.dotsScale.male.c2 : this.dotsScale.female.c2;
+    const c3 = this.male ?  this.dotsScale.male.c3 : this.dotsScale.female.c3;
+    const c4 = this.male ?  this.dotsScale.male.c4 : this.dotsScale.female.c4;
+    const c5 = this.male ?  this.dotsScale.male.c5 : this.dotsScale.female.c5;
+
+    this.dotsPoints = this.total * 500 / (-c1*bw**4 + c2*bw**3 - c3*bw**2 + c4*bw - c5);
   }
 
-  coeffChange(form: NgForm): void {
-    this.male = (form.value.gender === 'M') ? true : false;
-    this.userGender = form.value.gender;
-    if (this.male) {
-      this.c1 = 310.67;
-      this.c2 = 857.785;
-      this.c3 = 53.216;
-      this.c4 = 147.0835;
-    } else {
-      this.c1 = 125.1435;
-      this.c2 = 228.03;
-      this.c3 = 34.5246;
-      this.c4 = 86.8301;
-    }
-  }
+  calcGL(form: NgForm): void {
+    this.male = form.value.gender;
+    const bw = form.value.weight;
+    this.total = form.value.total;
+    const benchOnly = false;
 
-  calcBlue(form: NgForm): void {
-    this.coeffChange(form);
-    this.userGender = form.value.gender;
-    if (this.totalSelected === true) {
-      this.userTotal = form.value.total;
-    } else {
-      this.userTotal = form.value.squat + form.value.bench + form.value.deadlift;
-      this.squatNo = form.value.squat;
-      this.benchNo = form.value.bench;
-      this.deadliftNo = form.value.deadlift;
-    }
-    this.ipfPoints = 500 + 100 * (
-      (this.userTotal - (this.c1 * Math.log(form.value.weight) - this.c2)) /
-      (this.c3 * Math.log(form.value.weight) - this.c4)
-    );
-    if (this.ipfPoints && form.value.gender && form.value.weight) {
-      if (this.ipfPoints < 500) {
-        this.blueAchieved = 'None';
-      } else if (this.ipfPoints >= 500 && this.ipfPoints < 560) {
-        this.blueAchieved = 'Half Blue';
-      } else {
-        this.blueAchieved = 'Full Blue';
-      }
-    }
-  }
+    if (!benchOnly) {
+      const c1 = this.male ?  this.glScale.male.c1 : this.glScale.female.c1;
+      const c2 = this.male ?  this.glScale.male.c2 : this.glScale.female.c2;
+      const c3 = this.male ?  this.glScale.male.c3 : this.glScale.female.c3;
 
-  calcGoal(form: NgForm): void {
-    this.coeffChange(form);
-    if (form.value.goalBlue === 'full') {
-      this.goalIPF = 560;
+      this.glPoints = this.total * 100 / (c1 - c2*Math.E**(-c3*bw));
     } else {
-      this.goalIPF = 500;
-    }
-    if (form.value.gender && form.value.weight && form.value.goalBlue) {
-      this.goalTotal = +(((this.goalIPF - 500) / 100) * (this.c3 * Math.log(form.value.weight) - this.c4) +
-        (this.c1 * Math.log(form.value.weight) - this.c2)).toFixed(2);
+      const c1b = this.male ?  this.glScale.male.c1b : this.glScale.female.c1b;
+      const c2b = this.male ?  this.glScale.male.c2b : this.glScale.female.c2b;
+      const c3b = this.male ?  this.glScale.male.c3b : this.glScale.female.c3b;
+
+      this.glPoints = this.total * 100 / (c1b - c2b*Math.E**(-c3b*bw));
     }
   }
 

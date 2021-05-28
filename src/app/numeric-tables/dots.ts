@@ -1,6 +1,6 @@
-import { GenderCoeffs } from './coefficient.model';
+import { GenderCoeff } from './coefficient.model';
 
-export const DOTSCOEFF: GenderCoeffs = {
+export const DOTSCOEFF: GenderCoeff = {
   male: {
     c1: 1.093*10**(-6),
     c2: 7.391293*10**(-4),

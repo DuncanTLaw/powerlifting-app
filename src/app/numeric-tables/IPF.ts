@@ -1,6 +1,6 @@
-import { GenderCoeffs } from './coefficient.model';
+import { GenderCoeff } from './coefficient.model';
 
-export const IPFCOEFF: GenderCoeffs = {
+export const IPFCOEFF: GenderCoeff = {
   male: {
     c1: 310.67,
     c2: 857.785,
