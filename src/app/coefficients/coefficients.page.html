@@ -8,19 +8,25 @@
   <ion-card>
     <form #coeff="ngForm">
       <ion-card-header>
-        <ion-card-title>{{ points }} Points</ion-card-title>
+        <ion-card-title>{{ pointsSelected }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-label position="fixed">Gender</ion-label>
-        <ion-select value="m" interface="popover">
-          <ion-select-option value="m">Male</ion-select-option>
-          <ion-select-option value="f">Female</ion-select-option>
+        <ion-select
+          [(ngModel)]="userMale"
+          [ngModelOptions]="{standalone: true}"
+          (ngModelChange)="onChangeGender()"
+          interface="popover"
+        >
+          <ion-select-option [value]="true">Male</ion-select-option>
+          <ion-select-option [value]="false">Female</ion-select-option>
         </ion-select>
         <ion-label position="fixed">Point system</ion-label>
         <ion-select
-          interface="popover"
-          [(ngModel)]="points"
+          [(ngModel)]="pointsSelected"
           [ngModelOptions]="{standalone: true}"
+          (ngModelChange)="onCalcPoints(coeff)"
+          interface="popover"
         >
           <ion-select-option value="IPF GL">IPF GL</ion-select-option>
           <ion-select-option value="IPF">IPF</ion-select-option>
@@ -47,46 +53,58 @@
             <ion-label position="fixed">bodyweight</ion-label>
             <ion-input
               type="number"
-              ngModel
-              name="bw"
+              [ngModel]="userBw"
+              name="weight"
+              (ngModelChange)="onCalcPoints(coeff)"
             ></ion-input>
           </ion-item>
           <ion-item *ngIf="totalSelected">
             <ion-label position="fixed">total</ion-label>
             <ion-input
               type="number"
-              ngModel
+              [(ngModel)]="userTotal"
               name="total"
+              (ngModelChange)="onCalcPoints(coeff)"
             ></ion-input>
           </ion-item>
           <ion-item *ngIf="!totalSelected">
             <ion-label position="fixed">squat</ion-label>
             <ion-input
               type="number"
-              ngModel
+              [ngModel]="userSq"
               name="sq"
+              (ngModelChange)="onCalcPoints(coeff)"
             ></ion-input>
           </ion-item>
           <ion-item *ngIf="!totalSelected">
             <ion-label position="fixed">bench</ion-label>
             <ion-input
               type="number"
-              ngModel
+              [ngModel]="userBp"
               name="bp"
+              (ngModelChange)="onCalcPoints(coeff)"
             ></ion-input>
           </ion-item>
           <ion-item *ngIf="!totalSelected">
             <ion-label position="fixed">deadlift</ion-label>
             <ion-input
               type="number"
-              ngModel
               name="dl"
+              [ngModel]="userDl"
+              (ngModelChange)="onCalcPoints(coeff)"
             ></ion-input>
           </ion-item>
         </ion-list>
         <br>
-        <ion-row id="result">
-          <ion-text class="ion-padding-end" color="success">{{ 'yes' }}</ion-text> {{ points }} points
+        <ion-row id="result" *ngIf="!bluesSelected">
+          <ion-text class="ion-padding-end" color="success">
+            {{ userPoints | number : '1.2-2'}}
+          </ion-text> {{ pointsSelected }} points
+        </ion-row>
+        <ion-row id="result" *ngIf="bluesSelected">
+          <ion-text class="ion-padding-end" id="blues">
+            {{ userPoints }}
+          </ion-text> achieved
         </ion-row>
       </ion-card-content>
     </form>

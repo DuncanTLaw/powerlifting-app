@@ -11,26 +11,18 @@ import { WILKSCOEFF } from '../numeric-tables/wilks';
 })
 export class CoeffService {
   male = true;
-  total: number;
   benchOnly: false;
-  pointSelected: string;
 
   dotsScale: GenderCoeff = DOTSCOEFF;
-  dotsPoints: number;
 
   glScale: GenderCoeff = GLCOEFF;
-  glPoints: number;
 
   ipfScale: GenderCoeff = IPFCOEFF;
-  ipfPoints: number;
 
   wilksScale: GenderCoeff = WILKSCOEFF;
-  wilksPoints: number;
 
-  calcDOTS(form: NgForm): void {
-    this.male = form.value.gender;
-    const bw = form.value.weight;
-    this.total = form.value.total;
+  calcDOTS(form: NgForm, total: number): number {
+    const bw: number = form.value.weight;
 
     const c1 = this.male ? this.dotsScale.male.c1 : this.dotsScale.female.c1;
     const c2 = this.male ? this.dotsScale.male.c2 : this.dotsScale.female.c2;
@@ -38,13 +30,11 @@ export class CoeffService {
     const c4 = this.male ? this.dotsScale.male.c4 : this.dotsScale.female.c4;
     const c5 = this.male ? this.dotsScale.male.c5 : this.dotsScale.female.c5;
 
-    this.dotsPoints = (this.total > 0)? this.total * 500 / (-c1*bw**4 + c2*bw**3 - c3*bw**2 + c4*bw - c5) : 0;
+    return (total > 0)? total * 500 / (-c1*bw**4 + c2*bw**3 - c3*bw**2 + c4*bw - c5) : 0;
   }
 
-  calcGL(form: NgForm): void {
-    this.male = form.value.gender;
-    const bw = form.value.weight;
-    this.total = form.value.total;
+  calcGL(form: NgForm, total: number): number {
+    const bw: number = form.value.weight;
 
     let c1: number;
     let c2: number;
@@ -60,13 +50,11 @@ export class CoeffService {
       c3 = this.male ? this.glScale.male.c3b : this.glScale.female.c3b;
     }
 
-    this.glPoints = (this.total > 0)? this.total * 100 / (c1 - c2*Math.E**(-c3*bw)) : 0;
+    return (total > 0)? total * 100 / (c1 - c2*Math.E**(-c3*bw)) : 0;
   }
 
-  calcIPF(form: NgForm): void {
-    this.male = form.value.gender;
-    const bw = form.value.weight;
-    this.total = form.value.total;
+  calcIPF(form: NgForm, total: number): number {
+    const bw: number = form.value.weight;
 
     let c1: number;
     let c2: number;
@@ -85,17 +73,15 @@ export class CoeffService {
       c4 = this.male ? this.ipfScale.male.c4b : this.ipfScale.female.c4b;
     }
 
-    this.ipfPoints = (this.total > 0)?
+    return (total > 0)?
       500 + 100 * (
-      (this.total - (c1 * Math.log(form.value.weight) - c2)) /
+      (total - (c1 * Math.log(bw) - c2)) /
       (c3 * Math.log(form.value.weight) - c4)
       ) : 0;
   }
 
-  calcWilks(form: NgForm): void {
-    this.male = form.value.gender;
-    const bw = form.value.weight;
-    this.total = form.value.total;
+  calcWilks(form: NgForm, total: number): number {
+    const bw: number = form.value.weight;
 
     const c1 = this.male ? -this.dotsScale.male.c1 : this.dotsScale.female.c1;
     const c2 = this.male ? this.dotsScale.male.c2 : -this.dotsScale.female.c2;
@@ -104,7 +90,19 @@ export class CoeffService {
     const c5 = this.male ? this.dotsScale.male.c5 : this.dotsScale.female.c5;
     const c6 = this.male ? -this.dotsScale.male.c5 : -this.dotsScale.female.c5;
 
-    this.wilksPoints = (this.total > 0)?
-      500 / (c1 + c2*bw + c3*bw**2 + c4*bw**3 + c5*bw**4 + c6*bw**5) : 0;
+    return (total > 0)?
+      total * 500 / (c1 + c2*bw + c3*bw**2 + c4*bw**3 + c5*bw**4 + c6*bw**5) : 0;
   }
+
+  calcBlues(form: NgForm, total: number): string {
+    const ipfPoints: number = this.calcIPF(form, total);
+    if (ipfPoints < 500) {
+      return 'None';
+    } else if (ipfPoints >= 500 && ipfPoints < 560) {
+      return'Half Blue';
+    } else {
+      return 'Full Blue';
+    }
+  }
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 import { CoeffService } from './coefficients.service';
 
@@ -8,12 +9,57 @@ import { CoeffService } from './coefficients.service';
   styleUrls: ['./coefficients.page.scss'],
 })
 export class CoefficientsPage implements OnInit {
-  points = 'IPF GL';
+  pointsSelected = 'IPF GL';
   totalSelected = true;
+  bluesSelected = false;
+  userMale = true;
+  userBw: number;
+  userTotal: number;
+  userSq: number;
+  userBp: number;
+  userDl: number;
+  userPoints: any;
 
   constructor(private coeffService: CoeffService) { }
 
   ngOnInit() {
+  }
+
+  onChangeGender(): void {
+    this.coeffService.male = this.userMale;
+  }
+
+  onCalcPoints(form: NgForm): void {
+    if (!this.totalSelected) {
+      this.userTotal = form.value.sq + form.value.bp + form.value.dl;
+      this.userSq = form.value.sq;
+      this.userBp = form.value.bp;
+      this.userDl = form.value.dl;
+    } else {
+      this.userTotal = form.value.total;
+    }
+    this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
+  }
+
+  onSwitchPoints(form: NgForm, pointSelected: string, total: number): void {
+    switch (pointSelected) {
+      case 'IPF GL':
+        this.userPoints = this.coeffService.calcGL(form, total);
+        break;
+      case 'IPF':
+        this.userPoints = this.coeffService.calcIPF(form, total);
+        break;
+      case 'Dots':
+        this.userPoints = this.coeffService.calcDOTS(form, total);
+        break;
+      case 'Wilks':
+        this.userPoints = this.coeffService.calcWilks(form, total);
+        break;
+      case 'Blues':
+        this.bluesSelected = true;
+        this.userPoints = this.coeffService.calcBlues(form, total);
+        break;
+    }
   }
 
 }
