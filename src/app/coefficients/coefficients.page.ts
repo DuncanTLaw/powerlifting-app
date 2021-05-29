@@ -9,6 +9,7 @@ import { CoeffService } from './coefficients.service';
 })
 export class CoefficientsPage implements OnInit {
   points = 'IPF GL';
+  totalSelected = true;
 
   constructor(private coeffService: CoeffService) { }
 

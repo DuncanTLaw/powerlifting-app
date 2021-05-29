@@ -17,59 +17,76 @@
           <ion-select-option value="f">Female</ion-select-option>
         </ion-select>
         <ion-label position="fixed">Point system</ion-label>
-        <ion-select value="gl" interface="popover">
-          <ion-select-option value="gl">IPF GL</ion-select-option>
-          <ion-select-option value="ipf">IPF</ion-select-option>
-          <ion-select-option value="dots">DOTS</ion-select-option>
-          <ion-select-option value="wilks">Wilks</ion-select-option>
-          <ion-select-option value="blues">Blues</ion-select-option>
+        <ion-select
+          interface="popover"
+          [(ngModel)]="points"
+          [ngModelOptions]="{standalone: true}"
+        >
+          <ion-select-option value="IPF GL">IPF GL</ion-select-option>
+          <ion-select-option value="IPF">IPF</ion-select-option>
+          <ion-select-option value="Dots">DOTS</ion-select-option>
+          <ion-select-option value="Wilks">Wilks</ion-select-option>
+          <ion-select-option value="Blues">Blues</ion-select-option>
         </ion-select>
-        <ion-radio-group value="total">
+        <ion-radio-group
+          [(ngModel)]="totalSelected"
+          [ngModelOptions]="{standalone: true}"
+        >
           <ion-item>
             <ion-label>Total</ion-label>
-            <ion-radio slot="start" value="total"></ion-radio>
+            <ion-radio slot="start" [value]="true"></ion-radio>
           </ion-item>
           <ion-item>
             <ion-label>SBD</ion-label>
-            <ion-radio slot="start" value="SBD"></ion-radio>
+            <ion-radio slot="start" [value]="false"></ion-radio>
           </ion-item>
         </ion-radio-group>
         <br>
         <ion-list>
           <ion-item>
-            <ion-label position="fixed">load</ion-label>
+            <ion-label position="fixed">bodyweight</ion-label>
             <ion-input
               type="number"
               ngModel
-              name="haveWeight"
+              name="bw"
             ></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label position="fixed">reps</ion-label>
+          <ion-item *ngIf="totalSelected">
+            <ion-label position="fixed">total</ion-label>
             <ion-input
               type="number"
               ngModel
-              name="haveReps"
-              step="1"
-              min="1"
-              max="15"
+              name="total"
             ></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-label position="fixed">RPE</ion-label>
+          <ion-item *ngIf="!totalSelected">
+            <ion-label position="fixed">squat</ion-label>
             <ion-input
               type="number"
               ngModel
-              name="haveRPE"
-              min="5"
-              max = "10"
-              step="0.5"
+              name="sq"
+            ></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!totalSelected">
+            <ion-label position="fixed">bench</ion-label>
+            <ion-input
+              type="number"
+              ngModel
+              name="bp"
+            ></ion-input>
+          </ion-item>
+          <ion-item *ngIf="!totalSelected">
+            <ion-label position="fixed">deadlift</ion-label>
+            <ion-input
+              type="number"
+              ngModel
+              name="dl"
             ></ion-input>
           </ion-item>
         </ion-list>
         <br>
         <ion-row id="result">
-            e1RM <ion-text class="ion-padding-start" color="success">{{ 'yes' }}</ion-text>
+          <ion-text class="ion-padding-end" color="success">{{ 'yes' }}</ion-text> {{ points }} points
         </ion-row>
       </ion-card-content>
     </form>
