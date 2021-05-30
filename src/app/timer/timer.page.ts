@@ -15,6 +15,9 @@ export class TimerPage implements OnInit {
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
 
+  setsSelected: number;
+  setsCompleted = 0;
+
   constructor() { }
 
   ngOnInit() {
@@ -58,6 +61,18 @@ export class TimerPage implements OnInit {
     } else {
       this.rhsButtonText = 'Resume';
       clearInterval(this.interval);
+    }
+  }
+
+  onRemoveSet(): void {
+    if (this.setsCompleted > 0 && this.setsSelected){
+      this.setsCompleted --;
+    }
+  }
+
+  onAddSet(): void {
+    if (this.setsSelected && this.setsCompleted < this.setsSelected) {
+      this.setsCompleted ++;
     }
   }
 

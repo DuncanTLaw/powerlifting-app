@@ -14,19 +14,18 @@
             display: flex;
             justify-content: center;
             ">
-              <div
-                style="font-size: xx-large;"
+              <ion-text
+                style="font-size: xxx-large;"
                 [ngClass]="{blink: !timerRunning}"
               >
                 {{ timeRemaining }}
-              </div>
+              </ion-text>
             </ion-row>
             <ion-row style="
             display: flex;
             justify-content: space-evenly;
             ">
               <ion-button
-                size="large"
                 color="light"
                 (click)="onClickLHS()"
                 [disabled]="!userInput"
@@ -34,10 +33,9 @@
                 {{ lhsButtonText }}
               </ion-button>
               <ion-button
-              size="large"
-              color="success"
-              (click)="onClickRHS()"
-              [disabled]="!userInput"
+                color="success"
+                (click)="onClickRHS()"
+                [disabled]="!userInput"
               >
               {{ rhsButtonText }}
               </ion-button>
@@ -61,7 +59,60 @@
     <ion-row>
       <ion-col>
         <ion-card>
-
+          <ion-card-content>
+            <ion-row style="
+              display: flex;
+              align-items: center;
+            ">
+              <ion-label position="fixed">Protocol:</ion-label>
+                <ion-input
+                  type="number"
+                  [(ngModel)]="setsSelected"
+                ></ion-input>
+                <ion-label position="fixed" style="order: 2;">sets</ion-label>
+            </ion-row>
+            <ion-row style="
+              display: flex;
+              align-items: center;
+            ">
+              <ion-col>
+                <ion-fab-button
+                  (click)="onRemoveSet()"
+                  size="small"
+                  color="light"
+                >
+                  <ion-icon name="remove"></ion-icon>
+                </ion-fab-button>
+              </ion-col>
+              <ion-col>
+                <ion-text
+                style="font-size: xx-large;"
+                *ngIf="setsSelected"
+              >
+                {{ setsCompleted }} / {{ setsSelected }}
+              </ion-text>
+              </ion-col>
+              <ion-col>
+                <ion-fab-button
+                  (click)="onAddSet()"
+                  size="small"
+                  color="light"
+                >
+                  <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
+              </ion-col>
+            </ion-row>
+            <ion-row
+              *ngIf="setsSelected"
+              style="
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              {{ setsSelected - setsCompleted }} sets remaining
+            </ion-row>
+          </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
