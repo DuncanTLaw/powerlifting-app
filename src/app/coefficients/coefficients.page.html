@@ -37,19 +37,17 @@
                 <ion-select-option value="Wilks">Wilks</ion-select-option>
                 <ion-select-option value="Blues">Blues</ion-select-option>
               </ion-select>
-              <ion-radio-group
-                [(ngModel)]="totalSelected"
-                [ngModelOptions]="{standalone: true}"
-              >
-                <ion-item>
+              <ion-segment (ionChange)="segmentChanged($event)" value="total">
+                <ion-segment-button value="total">
                   <ion-label>Total</ion-label>
-                  <ion-radio slot="start" [value]="true"></ion-radio>
-                </ion-item>
-                <ion-item>
+                </ion-segment-button>
+                <ion-segment-button value="threeLifts">
                   <ion-label>SBD</ion-label>
-                  <ion-radio slot="start" [value]="false"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
+                </ion-segment-button>
+                <ion-segment-button value="onlyBP">
+                  <ion-label>Bench</ion-label>
+                </ion-segment-button>
+              </ion-segment>
               <br/>
               <ion-list>
                 <ion-item>
@@ -61,7 +59,7 @@
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
                 </ion-item>
-                <ion-item *ngIf="totalSelected">
+                <ion-item *ngIf="segmentSelected === 'total'">
                   <ion-label position="fixed">total</ion-label>
                   <ion-input
                     type="number"
@@ -70,7 +68,7 @@
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
                 </ion-item>
-                <ion-item *ngIf="!totalSelected">
+                <ion-item *ngIf="segmentSelected === 'threeLifts'">
                   <ion-label position="fixed">squat</ion-label>
                   <ion-input
                     type="number"
@@ -79,7 +77,7 @@
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
                 </ion-item>
-                <ion-item *ngIf="!totalSelected">
+                <ion-item *ngIf="segmentSelected === 'threeLifts'">
                   <ion-label position="fixed">bench</ion-label>
                   <ion-input
                     type="number"
@@ -88,7 +86,7 @@
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
                 </ion-item>
-                <ion-item *ngIf="!totalSelected">
+                <ion-item *ngIf="segmentSelected === 'threeLifts'">
                   <ion-label position="fixed">deadlift</ion-label>
                   <ion-input
                     type="number"
@@ -101,7 +99,7 @@
               <br/>
               <ion-row id="result" *ngIf="!bluesSelected">
                 <ion-text class="ion-padding-end" color="success">
-                  {{ userPoints | number : '1.2-2'}}
+                  {{ (userPoints | number : '1.2-2') || '0.00' }}
                 </ion-text> {{ pointsSelected }} points
               </ion-row>
               <ion-row id="result" *ngIf="bluesSelected">

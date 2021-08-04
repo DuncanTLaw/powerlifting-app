@@ -10,7 +10,7 @@ import { CoeffService } from './coefficients.service';
 })
 export class CoefficientsPage implements OnInit {
   pointsSelected = 'IPF GL';
-  totalSelected = true;
+  segmentSelected = 'total';
   bluesSelected = false;
   userMale = true;
   userBw: number;
@@ -30,13 +30,17 @@ export class CoefficientsPage implements OnInit {
     this.onCalcPoints(form);
   }
 
+  segmentChanged(event: any): void {
+    this.segmentSelected = event.target.value;
+  }
+
   onCalcPoints(form: NgForm): void {
-    if (!this.totalSelected) {
+    if (this.segmentSelected === 'threeLifts') {
       this.userTotal = form.value.sq + form.value.bp + form.value.dl;
       this.userSq = form.value.sq;
       this.userBp = form.value.bp;
       this.userDl = form.value.dl;
-    } else {
+    } else if (this.segmentSelected === 'total') {
       this.userTotal = form.value.total;
     }
     this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
