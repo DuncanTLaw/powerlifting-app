@@ -24,6 +24,7 @@
             <ion-row style="
             display: flex;
             justify-content: space-evenly;
+            margin-bottom: 5px;
             ">
               <ion-button
                 color="light"
@@ -40,18 +41,16 @@
               {{ rhsButtonText }}
               </ion-button>
             </ion-row>
-            <ion-row style="
-              display: flex;
-              align-items: center;
-            ">
-              <ion-label position="fixed">Rest:</ion-label>
-              <ion-input
-                type="number"
-                [(ngModel)]="timeSelected"
-                (input)="onInputChange($event)"
-              ></ion-input>
-              <ion-label position="fixed" style="order: 2;">seconds</ion-label>
-            </ion-row>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label position="fixed">Rest:</ion-label>
+                <ion-input
+                  type="number"
+                  [(ngModel)]="timeSelected"
+                  (input)="onInputChange($event)"
+                ></ion-input>
+              </ion-item>
+            </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -60,17 +59,16 @@
       <ion-col>
         <ion-card>
           <ion-card-content>
-            <ion-row style="
-              display: flex;
-              align-items: center;
-            ">
-              <ion-label position="fixed">Protocol:</ion-label>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label position="fixed">Protocol:</ion-label>
                 <ion-input
                   type="number"
                   [(ngModel)]="setsSelected"
                 ></ion-input>
                 <ion-label position="fixed" style="order: 2;">sets</ion-label>
-            </ion-row>
+              </ion-item>
+            </ion-list>
             <ion-row style="
               display: flex;
               align-items: center;
