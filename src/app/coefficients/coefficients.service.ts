@@ -6,6 +6,11 @@ import { GLCOEFF } from '../numeric-tables/GL';
 import { IPFCOEFF } from '../numeric-tables/IPF';
 import { WILKSCOEFF } from '../numeric-tables/wilks';
 
+export interface Blues {
+  half: number;
+  full: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +25,11 @@ export class CoeffService {
   ipfScale: GenderCoeff = IPFCOEFF;
 
   wilksScale: GenderCoeff = WILKSCOEFF;
+
+  bluesConst: Blues = {
+    half: 500,
+    full: 560
+  };
 
   calcDOTS(form: NgForm, total: number): number {
     const bw: number = form.value.weight;
@@ -96,9 +106,9 @@ export class CoeffService {
 
   calcBlues(form: NgForm, total: number): string {
     const ipfPoints: number = this.calcIPF(form, total);
-    if (ipfPoints < 500) {
+    if (ipfPoints < this.bluesConst.half) {
       return 'None';
-    } else if (ipfPoints >= 500 && ipfPoints < 560) {
+    } else if (ipfPoints >= this.bluesConst.half && ipfPoints < this.bluesConst.full) {
       return'Half Blue';
     } else {
       return 'Full Blue';

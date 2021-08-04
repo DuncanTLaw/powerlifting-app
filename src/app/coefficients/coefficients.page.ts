@@ -25,8 +25,9 @@ export class CoefficientsPage implements OnInit {
   ngOnInit() {
   }
 
-  onChangeGender(): void {
+  onChangeGender(form: NgForm): void {
     this.coeffService.male = this.userMale;
+    this.onCalcPoints(form);
   }
 
   onCalcPoints(form: NgForm): void {
@@ -44,15 +45,19 @@ export class CoefficientsPage implements OnInit {
   onSwitchPoints(form: NgForm, pointSelected: string, total: number): void {
     switch (pointSelected) {
       case 'IPF GL':
+        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcGL(form, total);
         break;
       case 'IPF':
+        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcIPF(form, total);
         break;
       case 'Dots':
+        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcDOTS(form, total);
         break;
       case 'Wilks':
+        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcWilks(form, total);
         break;
       case 'Blues':

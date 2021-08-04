@@ -18,7 +18,7 @@
               <ion-select
                 [(ngModel)]="userMale"
                 [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="onChangeGender()"
+                (ngModelChange)="onChangeGender(coeff)"
                 interface="popover"
               >
                 <ion-select-option [value]="true">Male</ion-select-option>
