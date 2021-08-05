@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LoaderService } from './loader.service';
+import { LoaderService, Plates } from './loader.service';
 
 @Component({
   selector: 'app-loader',
@@ -18,16 +18,17 @@ export class LoaderPage implements OnInit {
 
   showPlates = false;
   plateText = 'Configure available plates';
-  plateCount: {[plateWeight: string]: number} = {
-    '50kg': 0,
-    '25kg': 8,
-    '20kg': 1,
-    '15kg': 1,
-    '10kg': 1,
-    '5kg': 1,
-    '2.5kg': 1,
-    '1.25kg': 1
-  };
+  plateCount: Array<Plates> = [
+    { weight: 50, pairs: 0 },
+    { weight: 25, pairs: 8 },
+    { weight: 20, pairs: 1 },
+    { weight: 15, pairs: 1 },
+    { weight: 10, pairs: 1 },
+    { weight: 5, pairs: 1 },
+    { weight: 2.5, pairs: 1 },
+    { weight: 1.25, pairs: 1 }
+  ];
+  barLoaded: any[];
 
   constructor(private loaderService: LoaderService) { }
 
@@ -35,12 +36,9 @@ export class LoaderPage implements OnInit {
   }
 
   onCalcBar(): void {
-
-  }
-
-  asIsOrder(a: any, b: any): number {
-    // This sort method is from https://github.com/angular/angular/issues/31420
-    return 1;
+    this.barLoaded = this.loaderService.weightToBarLoad(
+      this.tWeight, this.plateCount, this.barWeight, this.compCollars
+    );
   }
 
   onExpandAdvanced(): void {
