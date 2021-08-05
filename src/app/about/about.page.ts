@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.page.scss'],
 })
 export class AboutPage implements OnInit {
+  expandDev = false;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onExpandDev(): void {
+    this.expandDev = !this.expandDev;
   }
 
 }

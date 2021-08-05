@@ -5,5 +5,49 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-button expand="full" class="ion-no-padding" (click)="onExpandDev()">
+    <span style="font-size: 16pt; padding-right: 16pt;">About the developer</span>
+    <ion-icon name="chevron-down" slot="end" *ngIf="!expandDev"></ion-icon>
+    <ion-icon name="chevron-up" slot="end" *ngIf="expandDev"></ion-icon>
+  </ion-button>
+  <ion-list *ngIf="expandDev">
+    <p class="ion-margin" style="text-align: justify;">
+      Duncan Law is currently a third-year undergraduate student studying Engineering Science
+      in the University of Oxford. He also competes in
+      <a href="https://www.britishpowerlifting.org/">British Powerlifting</a>
+      (under the
+      <a href="https://www.powerlifting.sport/">International Powerlifting Federation</a>
+      ) as a Junior lifter in the 83kg weight category.
+    </p>
+    <ion-item>
+      <ion-button fill="none" size="clear" href="https://www.openpowerlifting.org/u/duncanlaw">
+        <ion-icon class="ion-padding-end" name="list"></ion-icon>
+        Open Powerlifting
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-button fill="none" size="clear" href="https://www.instagram.com/lawkout/">
+        <ion-icon class="ion-padding-end" name="logo-instagram"></ion-icon>
+        @lawkout
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-button fill="none" size="clear" href="https://github.com/DuncanTLaw">
+        <ion-icon class="ion-padding-end" name="logo-github"></ion-icon>
+        GitHub
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-button fill="none" size="clear" href="www.linkedin.com/in/duncan-law-1ba6501b2">
+        <ion-icon class="ion-padding-end" name="logo-linkedin"></ion-icon>
+        LinkedIn
+      </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer class="ion-padding" style="text-align: justify;">
+  Have an issue, or want to suggest a feature? Send an email
+  <a href="mailto:lawdtk@gmail.com">here</a>
+  and we will get back to you as soon as possible!
+</ion-footer>
