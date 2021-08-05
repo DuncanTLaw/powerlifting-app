@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large" color="success">Loader</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-content>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label position="fixed">TOT weight:</ion-label>
+                <ion-input
+                  type="number"
+                  [(ngModel)]="tWeight"
+                  (ngModelChange)="onCalcBar()"
+                ></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-button
+              size="small"
+              expand="block"
+              (click)="onExpandAdvanced()"
+            >
+              {{ advText }} advanced options
+            </ion-button>
+            <div *ngIf="showAdvanced">
+              <div style="text-align: center;">Collar weight</div>
+              <ion-segment (ionChange)="collarSegmentChanged($event)" value="true">
+                <ion-segment-button [value]="false">
+                  <ion-label>0kg</ion-label>
+                </ion-segment-button>
+                <ion-segment-button [value]="true">
+                  <ion-label>2.5kg</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+              <div style="text-align: center;">Round</div>
+              <ion-segment (ionChange)="roundSegmentChanged($event)" value="true">
+                <ion-segment-button [value]="true">
+                  <ion-label>Down</ion-label>
+                </ion-segment-button>
+                <ion-segment-button [value]="false">
+                  <ion-label>Up</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+              <ion-button
+                size="small"
+                expand="block"
+                (click)="onExpandPlates()"
+              >
+                {{ plateText }}
+              </ion-button>
+              <div *ngIf="showPlates">
+                <ion-list>
+                  <ion-item *ngFor="let weight of plateCount | keyvalue: asIsOrder;">
+                    <ion-label position="fixed">{{ weight.key }}</ion-label>
+                    <ion-input
+                      type="number"
+                      [(ngModel)]="weight.value"
+                    ></ion-input>
+                  </ion-item>
+                </ion-list>
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
