@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { CoefficientsPage } from './coefficients.page';
+import { CoeffService } from './coefficients.service';
 
 describe('CoefficientsPage', () => {
   let component: CoefficientsPage;
@@ -20,5 +21,10 @@ describe('CoefficientsPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should use service', () => {
+    const coeffService = fixture.debugElement.injector.get(CoeffService);
+    expect(coeffService).toBeTruthy();
   });
 });
