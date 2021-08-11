@@ -96,6 +96,9 @@
                   ></ion-input>
                 </ion-item>
               </ion-list>
+              <ion-row *ngIf="segmentSelected === 'threeLifts'" class="ion-justify-content-end ion-padding-top">
+                = {{ userTotal || 0 }}kg total
+              </ion-row>
               <br/>
               <ion-row id="result" *ngIf="!bluesSelected">
                 <ion-text class="ion-padding-end" color="success">

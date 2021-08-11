@@ -5,83 +5,12 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-card>
-          <ion-card-content>
-            <ion-list lines="none">
-              <ion-item>
-                <ion-label position="fixed">TOT weight:</ion-label>
-                <ion-input
-                  type="number"
-                  [(ngModel)]="tWeight"
-                  (ngModelChange)="onCalcBar()"
-                ></ion-input>
-              </ion-item>
-            </ion-list>
-            <!-- <ion-button
-              size="small"
-              expand="block"
-              (click)="onExpandAdvanced()"
-            >
-              {{ advText }} advanced options
-            </ion-button> -->
-            <div *ngIf="showAdvanced">
-              <div style="text-align: center;">Collar weight</div>
-              <ion-segment (ionChange)="collarSegmentChanged($event)" value="true">
-                <ion-segment-button [value]="false">
-                  <ion-label>0kg</ion-label>
-                </ion-segment-button>
-                <ion-segment-button [value]="true">
-                  <ion-label>2.5kg</ion-label>
-                </ion-segment-button>
-              </ion-segment>
-              <div style="text-align: center;">Round</div>
-              <ion-segment (ionChange)="roundSegmentChanged($event)" value="true">
-                <ion-segment-button [value]="true">
-                  <ion-label>Down</ion-label>
-                </ion-segment-button>
-                <ion-segment-button [value]="false">
-                  <ion-label>Up</ion-label>
-                </ion-segment-button>
-              </ion-segment>
-              <ion-button
-                size="small"
-                expand="block"
-                (click)="onExpandPlates()"
-              >
-                {{ plateText }}
-              </ion-button>
-              <div *ngIf="showPlates">
-                <ion-list>
-                  <ion-item *ngFor="let plate of plateCount">
-                    <ion-label position="fixed">{{ plate.weight }}kg</ion-label>
-                    <ion-input
-                      type="number"
-                      [(ngModel)]="plate.pairs"
-                    ></ion-input>
-                  </ion-item>
-                </ion-list>
-              </div>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-list *ngIf="tWeight&&barLoaded">
-        <ion-item>
-          Load {{ barWeight }}kg barbell with:
-        </ion-item>
-        <ion-item *ngFor="let plate of barLoaded">
-          {{ plate }}kg pairs
-        </ion-item>
-        <ion-item *ngIf="compCollars">
-          a pair of 2.5kg competition collars.
-        </ion-item>
-      </ion-list>
-    </ion-row>
-    <div class="ion-text-center" *ngIf="!tWeight">Input weight to load bar.</div>
-  </ion-grid>
+  <ion-slides pager="true">
+    <ion-slide>
+      <app-bar-loader></app-bar-loader>
+    </ion-slide>
+    <ion-slide>
+      <app-bar-loaded></app-bar-loaded>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
