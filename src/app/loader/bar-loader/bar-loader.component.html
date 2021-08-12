@@ -72,6 +72,7 @@
                       <ion-input
                         type="number"
                         [(ngModel)]="plateCount[i].pairs"
+                        (ngModelChange)="onCalcBar()"
                       ></ion-input>
                     </ion-col>
                     <ion-col>
