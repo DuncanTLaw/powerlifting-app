@@ -49,6 +49,7 @@
                   [(ngModel)]="timeSelected"
                   (input)="onInputChange($event)"
                 ></ion-input>
+                <ion-note slot="end">seconds</ion-note>
               </ion-item>
             </ion-list>
           </ion-card-content>
@@ -66,7 +67,7 @@
                   type="number"
                   [(ngModel)]="setsSelected"
                 ></ion-input>
-                <ion-label position="fixed" style="order: 2;">sets</ion-label>
+                <ion-note slot="end">sets</ion-note>
               </ion-item>
             </ion-list>
             <ion-row style="

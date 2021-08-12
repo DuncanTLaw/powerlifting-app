@@ -58,6 +58,7 @@
                     name="weight"
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
+                  <ion-note slot="end">kg</ion-note>
                 </ion-item>
                 <ion-item *ngIf="segmentSelected === 'total'">
                   <ion-label position="fixed">total</ion-label>
@@ -67,6 +68,7 @@
                     name="total"
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
+                  <ion-note slot="end">kg</ion-note>
                 </ion-item>
                 <ion-item *ngIf="segmentSelected === 'threeLifts'">
                   <ion-label position="fixed">squat</ion-label>
@@ -76,6 +78,7 @@
                     name="sq"
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
+                  <ion-note slot="end">kg</ion-note>
                 </ion-item>
                 <ion-item *ngIf="segmentSelected === 'threeLifts'">
                   <ion-label position="fixed">bench</ion-label>
@@ -85,6 +88,7 @@
                     name="bp"
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
+                  <ion-note slot="end">kg</ion-note>
                 </ion-item>
                 <ion-item *ngIf="segmentSelected === 'threeLifts'">
                   <ion-label position="fixed">deadlift</ion-label>
@@ -94,6 +98,7 @@
                     [ngModel]="userDl"
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
+                  <ion-note slot="end">kg</ion-note>
                 </ion-item>
               </ion-list>
               <ion-row *ngIf="segmentSelected === 'threeLifts'" class="ion-justify-content-end ion-padding-top">
