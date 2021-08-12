@@ -11,8 +11,8 @@
         <ion-card>
           <ion-card-content>
             <ion-row style="
-            display: flex;
-            justify-content: center;
+              display: flex;
+              justify-content: center;
             ">
               <ion-text
                 style="font-size: 36pt;"
@@ -22,9 +22,9 @@
               </ion-text>
             </ion-row>
             <ion-row style="
-            display: flex;
-            justify-content: space-evenly;
-            margin-bottom: 5px;
+                display: flex;
+                justify-content: space-evenly;
+                margin-bottom: 5px;
             ">
               <ion-button
                 color="light"
@@ -70,10 +70,14 @@
                 <ion-note slot="end">sets</ion-note>
               </ion-item>
             </ion-list>
-            <ion-row style="
-              display: flex;
-              justify-content: space-between;
-            ">
+            <ion-row
+              class="ion-margin-top"
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
               <ion-fab-button
                 (click)="onRemoveSet()"
                 size="small"
