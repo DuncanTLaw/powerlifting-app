@@ -54,7 +54,7 @@
             </ion-button>
             <div *ngIf="showPlates">
               <ion-list>
-                <ion-item *ngFor="let plate of plateCount">
+                <ion-item *ngFor="let plate of plateCount; let i = index;">
                   <ion-row style="align-items: center;">
                     <ion-col>
                       <ion-badge
@@ -66,7 +66,7 @@
                     <ion-col>
                       <ion-input
                         type="number"
-                        [(ngModel)]="plate.pairs"
+                        [(ngModel)]="plateCount[i].pairs"
                       ></ion-input>
                     </ion-col>
                     <ion-col>
@@ -90,7 +90,7 @@
         {{ plate }}kg pairs
       </ion-item>
       <ion-item *ngIf="compCollars">
-        a pair of 2.5kg competition collars.
+        and a pair of 2.5kg competition collars.
       </ion-item>
     </ion-list>
   </ion-row>
