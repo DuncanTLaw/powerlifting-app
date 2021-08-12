@@ -8,10 +8,6 @@ export interface Plate {
   weight: number; count: number;
 };
 
-export interface Count {
-  [weight: number]: number;
-}
-
 @Injectable({
   providedIn: 'root',
 })
