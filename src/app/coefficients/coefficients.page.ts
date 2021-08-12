@@ -35,15 +35,17 @@ export class CoefficientsPage implements OnInit {
   }
 
   onCalcPoints(form: NgForm): void {
-    if (this.segmentSelected === 'threeLifts') {
-      this.userTotal = form.value.sq + form.value.bp + form.value.dl;
-      this.userSq = form.value.sq;
-      this.userBp = form.value.bp;
-      this.userDl = form.value.dl;
-    } else if (this.segmentSelected === 'total') {
-      this.userTotal = form.value.total;
+    if (form.value.weight && this.userTotal) {
+      if (this.segmentSelected === 'threeLifts') {
+        this.userTotal = form.value.sq + form.value.bp + form.value.dl;
+        this.userSq = form.value.sq;
+        this.userBp = form.value.bp;
+        this.userDl = form.value.dl;
+      } else if (this.segmentSelected === 'total') {
+        this.userTotal = form.value.total;
+      }
+      this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
     }
-    this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
   }
 
   onSwitchPoints(form: NgForm, pointSelected: string, total: number): void {
