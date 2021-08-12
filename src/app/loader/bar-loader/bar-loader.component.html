@@ -84,13 +84,33 @@
   <ion-row>
     <ion-list *ngIf="tWeight&&barLoaded">
       <ion-item>
-        Load {{ barWeight }}kg barbell with:
+        Load
+        <ion-badge
+          class="ion-margin"
+          [color]="loaderService.getBadgeColor(barWeight)"
+        >
+          {{ barWeight }}kg
+        </ion-badge>
+        barbell with:
       </ion-item>
       <ion-item *ngFor="let plate of barLoaded">
-        {{ plate }}kg pairs
+        <ion-badge
+          class="ion-margin"
+          [color]="loaderService.getBadgeColor(plate)"
+        >
+          {{ plate }}kg
+        </ion-badge>
+        pairs
       </ion-item>
       <ion-item *ngIf="compCollars">
-        and a pair of 2.5kg competition collars.
+        and a pair of
+        <ion-badge
+          class="ion-margin"
+          [color]="loaderService.getBadgeColor(2.5)"
+        >
+          2.5kg
+        </ion-badge>
+        competition collars.
       </ion-item>
     </ion-list>
   </ion-row>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderService, Plates } from '../loader.service';
+import { LoaderService, Plates, Count } from '../loader.service';
 
 @Component({
   selector: 'app-bar-loader',
@@ -33,10 +33,20 @@ export class BarLoaderComponent implements OnInit {
 
   ngOnInit() {}
 
+  onCountDupes(array: any[]): Count {
+    const counts: Count = {};
+    array.forEach(weight => {
+      counts[weight] = (counts[weight] || 0) + 1;
+    });
+    return counts;
+  }
+
   onCalcBar(): void {
     this.barLoaded = this.loaderService.weightToBarLoad(
       this.tWeight, this.plateCount, this.barWeight, this.compCollars
     );
+    const dupes = this.onCountDupes(this.barLoaded);
+    console.log(dupes);
   }
 
   onExpandAdvanced(): void {
