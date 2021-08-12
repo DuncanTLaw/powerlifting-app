@@ -29,7 +29,7 @@ export class BarLoaderComponent implements OnInit {
   ];
   barLoaded: any[];
 
-  constructor(private loaderService: LoaderService) { }
+  constructor(public loaderService: LoaderService) { }
 
   ngOnInit() {}
 

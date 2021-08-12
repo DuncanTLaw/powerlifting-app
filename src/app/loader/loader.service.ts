@@ -125,4 +125,25 @@ export class LoaderService {
 
     return barLoad;
   };
+
+  getBadgeColor(plate: number): string {
+    switch (plate) {
+      case 25:
+        return 'danger';
+      case 20:
+        return 'primary';
+      case 15:
+        return 'warning';
+      case 10:
+        return 'success';
+      case 5:
+        return 'light';
+      case 2.5:
+        return 'dark';
+      case 1.25:
+        return 'medium';
+      default:
+        return 'dark';
+    }
+  }
 }
