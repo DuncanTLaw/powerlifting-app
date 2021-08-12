@@ -45,6 +45,14 @@ export class CoefficientsPage implements OnInit {
         this.userTotal = form.value.total;
       }
       this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
+    } else {
+      if (this.pointsSelected!=='Blues') {
+        this.bluesSelected = false;
+        this.userPoints = null;
+      } else {
+        this.bluesSelected = true;
+        this.userPoints = 'None';
+      }
     }
   }
 
