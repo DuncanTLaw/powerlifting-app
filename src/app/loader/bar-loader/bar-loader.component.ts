@@ -10,6 +10,7 @@ export class BarLoaderComponent implements OnInit {
   tWeight: number;
   compCollars = true;
   barWeight = 20;
+  collarsWeight = 5;
 
   showAdvanced = false;
   advText = 'Show';
@@ -42,11 +43,17 @@ export class BarLoaderComponent implements OnInit {
   }
 
   onCalcBar(): void {
-    this.barLoaded = this.loaderService.weightToBarLoad(
-      this.tWeight, this.plateCount, this.barWeight, this.compCollars
-    );
-    const dupes = this.onCountDupes(this.barLoaded);
-    console.log(dupes);
+    if (
+      (this.compCollars && (this.tWeight > (this.barWeight + this.collarsWeight))) ||
+      (!this.compCollars && (this.tWeight > this.barWeight + this.collarsWeight))
+    ) {
+      this.barLoaded = this.loaderService.weightToBarLoad(
+        this.tWeight, this.plateCount, this.barWeight, this.compCollars
+      );
+      const dupes = this.onCountDupes(this.barLoaded);
+    } else {
+      this.barLoaded = null;
+    }
   }
 
   onExpandAdvanced(): void {
@@ -55,7 +62,7 @@ export class BarLoaderComponent implements OnInit {
   }
 
   collarSegmentChanged(event: any): void {
-    this.compCollars = event.target.value;
+    this.compCollars = (event.target.value === 'false') ? false : true;
   }
 
   roundSegmentChanged(event: any): void {
