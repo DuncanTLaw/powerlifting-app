@@ -32,19 +32,24 @@ export class CoefficientsPage implements OnInit {
 
   segmentChanged(event: any): void {
     this.segmentSelected = event.target.value;
+    if(this.segmentSelected === 'onlyBP') {
+      this.coeffService.benchOnly = true;
+    }
   }
 
   onCalcPoints(form: NgForm): void {
+    if (this.segmentSelected === 'threeLifts') {
+      this.userTotal = form.value.sq + form.value.bp + form.value.dl;
+      this.userSq = form.value.sq;
+      this.userBp = form.value.bp;
+      this.userDl = form.value.dl;
+    } else if (this.segmentSelected === 'total') {
+      this.userTotal = form.value.total;
+    }
     if (form.value.weight && this.userTotal) {
-      if (this.segmentSelected === 'threeLifts') {
-        this.userTotal = form.value.sq + form.value.bp + form.value.dl;
-        this.userSq = form.value.sq;
-        this.userBp = form.value.bp;
-        this.userDl = form.value.dl;
-      } else if (this.segmentSelected === 'total') {
-        this.userTotal = form.value.total;
-      }
       this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
+    } else if (this.coeffService.benchOnly && form.value.bp){
+      this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
     } else {
       if (this.pointsSelected!=='Blues') {
         this.bluesSelected = false;

@@ -16,7 +16,7 @@ export interface Blues {
 })
 export class CoeffService {
   male = true;
-  benchOnly: false;
+  benchOnly = false;
 
   dotsScale: GenderCoeff = DOTSCOEFF;
 

@@ -37,6 +37,7 @@
                 <ion-select-option value="Wilks">Wilks</ion-select-option>
                 <ion-select-option value="Blues">Blues</ion-select-option>
               </ion-select>
+              <br/>
               <ion-segment (ionChange)="segmentChanged($event)" value="total">
                 <ion-segment-button value="total">
                   <ion-label>Total</ion-label>
@@ -96,6 +97,16 @@
                     type="number"
                     name="dl"
                     [ngModel]="userDl"
+                    (ngModelChange)="onCalcPoints(coeff)"
+                  ></ion-input>
+                  <ion-note slot="end">kg</ion-note>
+                </ion-item>
+                <ion-item *ngIf="segmentSelected === 'onlyBP'">
+                  <ion-label position="fixed">bench</ion-label>
+                  <ion-input
+                    type="number"
+                    [ngModel]="userBp"
+                    name="bp"
                     (ngModelChange)="onCalcPoints(coeff)"
                   ></ion-input>
                   <ion-note slot="end">kg</ion-note>
