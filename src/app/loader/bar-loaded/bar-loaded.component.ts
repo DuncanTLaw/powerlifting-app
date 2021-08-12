@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoaderService } from '../loader.service';
+import { LoaderService, Plate } from '../loader.service';
 
 @Component({
   selector: 'app-bar-loaded',
@@ -7,10 +7,28 @@ import { LoaderService } from '../loader.service';
   styleUrls: ['./bar-loaded.component.scss'],
 })
 export class BarLoadedComponent implements OnInit {
-  kgPlates: number[] = [25, 20, 15, 10, 5, 2.5, 1.25, 1, 0.5, 0.25];
+  plateCount: Array<Plate> = [
+    { weight: 25, count: null },
+    { weight: 20, count: null },
+    { weight: 15, count: null },
+    { weight: 10, count: null },
+    { weight: 5, count: null },
+    { weight: 2.5, count: null },
+    { weight: 1.25, count: null }
+  ];
+  barLoaded: number;
 
   constructor(public loaderService: LoaderService) { }
 
   ngOnInit() {}
 
+  onCountPlates(): void {
+    const filteredPlates = this.loaderService.filterPlates(this.plateCount);
+    const collarWeight = 2.5;
+    let plateWeight = 0;
+    for(const plate of filteredPlates) {
+      plateWeight += plate.weight*plate.count;
+    }
+    this.barLoaded = 20 + 2*(collarWeight + plateWeight);
+  }
 }

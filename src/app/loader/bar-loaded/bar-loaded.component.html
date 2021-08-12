@@ -3,25 +3,30 @@
     <ion-col>
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Bar Loaded</ion-card-title>
-          <ion-card-subtitle>Plates on one side (collars automatically added)</ion-card-subtitle>
+          <ion-card-title>Bar Loaded: {{ barLoaded || 0 }}kg</ion-card-title>
+          <ion-card-subtitle>Plates on one side</ion-card-subtitle>
+          <ion-card-subtitle>(collars automatically added)</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <ion-list>
             <ion-item
-              *ngFor="let plate of kgPlates"
+              *ngFor="let plate of plateCount; let i = index;"
             >
               <ion-row style="align-items: center;">
                 <ion-col>
                   <ion-badge
-                    [color]="loaderService.getBadgeColor(plate)"
+                    [color]="loaderService.getBadgeColor(plate.weight)"
                   >
-                    {{ plate }}kg
+                    {{ plate.weight }}kg
                   </ion-badge>
                 </ion-col>
                 <ion-col>
                   <ion-input
                     type="number"
+                    [(ngModel)]="plateCount[i].count"
+                    [name]="plate.weight.toString()"
+                    placeholder="0"
+                    (ngModelChange)="onCountPlates()"
                   ></ion-input>
                 </ion-col>
               </ion-row>

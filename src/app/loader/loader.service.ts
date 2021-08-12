@@ -4,6 +4,10 @@ export interface Plates {
   weight: number; pairs: number;
 };
 
+export interface Plate {
+  weight: number; count: number;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -89,12 +93,16 @@ export class LoaderService {
     return weight.toFixed(2).replace('.00', '');
   };
 
-  filterPlates(plates: Array<Plates>): Array<Plates> { // Filter out plates that have 0 pairs
+  filterPlates(plates: Array<Plate>): Array<Plate> {
+    return plates.filter(plate => plate.count > 0);
+  }
+
+  filterPair(plates: Array<Plates>): Array<Plates> {
     return plates.filter(plate => plate.pairs > 0);
   }
 
   weightToBarLoad = (weight: number, plates: any, barWeight: number, compCollar: boolean) => {
-    const filteredPlates = this.filterPlates(plates);
+    const filteredPairs = this.filterPair(plates);
 
     // The plates that will go on one side of the bar
     const barLoad = [];
@@ -107,9 +115,9 @@ export class LoaderService {
     // Amount of weight to go on one side of the bar
     let sideWeight = (weight - barAndCollarWeight) / 2;
 
-    for (const i in filteredPlates) {
+    for (const i in filteredPairs) {
       if (i) {
-        const plate = filteredPlates[i];
+        const plate = filteredPairs[i];
         let pairsAvailable = plate.pairs;
         while (plate.weight <= sideWeight && pairsAvailable > 0) {
           barLoad.push(plate.weight);

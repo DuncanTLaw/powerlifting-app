@@ -24,6 +24,7 @@
           >
             {{ advText }} advanced options
           </ion-button>
+          <hr/>
           <div *ngIf="showAdvanced">
             <div style="text-align: center;">Collar weight</div>
             <ion-segment (ionChange)="collarSegmentChanged($event)" value="true">
@@ -34,7 +35,7 @@
                 <ion-label>2.5kg</ion-label>
               </ion-segment-button>
             </ion-segment>
-            <div style="text-align: center;">Round</div>
+            <div class="ion-padding-top" style="text-align: center;">Round</div>
             <ion-segment (ionChange)="roundSegmentChanged($event)" value="true">
               <ion-segment-button [value]="true">
                 <ion-label>Down</ion-label>
@@ -43,6 +44,7 @@
                 <ion-label>Up</ion-label>
               </ion-segment-button>
             </ion-segment>
+            <br/>
             <ion-button
               size="small"
               expand="block"
