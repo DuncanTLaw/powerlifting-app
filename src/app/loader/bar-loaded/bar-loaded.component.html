@@ -6,7 +6,16 @@
           <ion-card-title>Bar Loaded</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-
+          <ion-list>
+            <ion-item
+              *ngFor="let plate of kgPlates"
+            >
+              <ion-label position="fixed">{{ plate }}kg</ion-label>
+              <ion-input
+                type="number"
+              ></ion-input>
+            </ion-item>
+          </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-col>

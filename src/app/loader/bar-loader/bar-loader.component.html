@@ -16,13 +16,13 @@
               ></ion-input>
             </ion-item>
           </ion-list>
-          <!-- <ion-button
+          <ion-button
             size="small"
             expand="block"
             (click)="onExpandAdvanced()"
           >
             {{ advText }} advanced options
-          </ion-button> -->
+          </ion-button>
           <div *ngIf="showAdvanced">
             <div style="text-align: center;">Collar weight</div>
             <ion-segment (ionChange)="collarSegmentChanged($event)" value="true">

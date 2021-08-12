@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bar-loaded.component.scss'],
 })
 export class BarLoadedComponent implements OnInit {
+  kgPlates: number[] = [25, 20, 15, 10, 5, 2.5, 1.25, 1, 0.5, 0.25];
 
   constructor() { }
 

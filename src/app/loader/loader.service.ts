@@ -8,7 +8,7 @@ export interface Plates {
   providedIn: 'root',
 })
 export class LoaderService {
-  kgHeights(plate: number) {
+  kgHeights(plate: number): number {
     const maxHeight = 160;
 
     let height: number;
