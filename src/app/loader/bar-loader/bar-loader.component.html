@@ -17,14 +17,14 @@
               <ion-note slot="end">kg</ion-note>
             </ion-item>
           </ion-list>
-          <ion-button
+          <!-- <ion-button
             size="small"
             expand="block"
             (click)="onExpandAdvanced()"
           >
             {{ advText }} advanced options
           </ion-button>
-          <hr/>
+          <hr/> -->
           <div *ngIf="showAdvanced">
             <div style="text-align: center;">Collar weight</div>
             <ion-segment (ionChange)="collarSegmentChanged($event)" value="true">
