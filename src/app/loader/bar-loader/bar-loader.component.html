@@ -26,6 +26,17 @@
           </ion-button>
           <hr/>
           <div *ngIf="showAdvanced">
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label position="fixed">Bar weight:</ion-label>
+                <ion-input
+                  type="number"
+                  [(ngModel)]="barWeight"
+                  (ngModelChange)="onCalcBar()"
+                ></ion-input>
+                <ion-note slot="end">kg</ion-note>
+              </ion-item>
+            </ion-list>
             <div style="text-align: center;">Collar weight</div>
             <ion-segment
               (ionChange)="collarSegmentChanged($event); onCalcBar();"
@@ -36,15 +47,6 @@
               </ion-segment-button>
               <ion-segment-button [value]="true">
                 <ion-label>2.5kg</ion-label>
-              </ion-segment-button>
-            </ion-segment>
-            <div class="ion-padding-top" style="text-align: center;">Round</div>
-            <ion-segment (ionChange)="roundSegmentChanged($event); onCalcBar();" value="true">
-              <ion-segment-button [value]="true">
-                <ion-label>Down</ion-label>
-              </ion-segment-button>
-              <ion-segment-button [value]="false">
-                <ion-label>Up</ion-label>
               </ion-segment-button>
             </ion-segment>
             <br/>

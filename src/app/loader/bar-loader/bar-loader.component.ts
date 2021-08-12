@@ -65,10 +65,6 @@ export class BarLoaderComponent implements OnInit {
     this.compCollars = (event.target.value === 'false') ? false : true;
   }
 
-  roundSegmentChanged(event: any): void {
-    this.roundDown = event.target.value;
-  }
-
   onExpandPlates(): void {
     this.showPlates = !this.showPlates;
     this.plateText = (this.showPlates) ? 'Hide plate configuration' : 'Configure available plates';
