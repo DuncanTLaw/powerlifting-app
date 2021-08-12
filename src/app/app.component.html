@@ -1,24 +1,40 @@
 <ion-app>
-    <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" menuId="first" contentId="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title color="secondary">About</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <app-about></app-about>
+    </ion-content>
+    <ion-footer class="ion-padding" style="text-align: justify;">
+      Have an issue, or want to suggest a feature? Send an email
+      <a href="mailto:lawdtk@gmail.com">here</a>
+      and we will get back to you as soon as possible!
+    </ion-footer>
+  </ion-menu>
 
-    <ion-tabs>
-      <ion-tab-bar>
-        <ion-tab-button tab="rpe">
-          <ion-icon name="stats-chart"></ion-icon>
-          <ion-label>RPE</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="coeff">
-          <ion-icon name="calculator"></ion-icon>
-          <ion-label>Coefficients</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="timer">
-          <ion-icon name="timer-sharp"></ion-icon>
-          <ion-label>Timer</ion-label>
-        </ion-tab-button>
-        <ion-tab-button tab="loader">
-          <ion-icon name="barbell-sharp"></ion-icon>
-          <ion-label>Loader</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
+  <ion-router-outlet id="main"></ion-router-outlet>
+
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button tab="rpe">
+        <ion-icon name="stats-chart"></ion-icon>
+        <ion-label>RPE</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="coeff">
+        <ion-icon name="calculator"></ion-icon>
+        <ion-label>Coefficients</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="timer">
+        <ion-icon name="timer-sharp"></ion-icon>
+        <ion-label>Timer</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="loader">
+        <ion-icon name="barbell-sharp"></ion-icon>
+        <ion-label>Loader</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-app>
