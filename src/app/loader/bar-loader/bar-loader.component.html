@@ -38,7 +38,7 @@
                 <ion-note slot="end">kg</ion-note>
               </ion-item>
             </ion-list>
-            <div style="text-align: center;">Collar weight</div>
+            <div class="ion-text-center">Collar weight</div>
             <ion-segment
               (ionChange)="collarSegmentChanged($event); onCalcBar();"
               value="true"
@@ -61,7 +61,7 @@
             <div *ngIf="showPlates">
               <ion-list>
                 <ion-item *ngFor="let plate of plateCount; let i = index;">
-                  <ion-row style="align-items: center;">
+                  <ion-row class="ion-align-items-center">
                     <ion-col>
                       <ion-badge
                         [color]="loaderService.getBadgeColor(plate.weight)"

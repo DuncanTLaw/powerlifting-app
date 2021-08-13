@@ -10,10 +10,7 @@
       <ion-col>
         <ion-card>
           <ion-card-content>
-            <ion-row style="
-              display: flex;
-              justify-content: center;
-            ">
+            <ion-row class="ion-justify-content-center">
               <ion-text
                 style="font-size: 36pt;"
                 [ngClass]="{blink: !timerRunning}"
@@ -21,11 +18,10 @@
                 {{ timeRemaining }}
               </ion-text>
             </ion-row>
-            <ion-row style="
-                display: flex;
-                justify-content: space-evenly;
-                margin-bottom: 5px;
-            ">
+            <ion-row
+              class="ion-justify-content-evenly"
+              style="margin-bottom: 5px;"
+            >
               <ion-button
                 color="light"
                 (click)="onClickLHS()"
@@ -71,12 +67,7 @@
               </ion-item>
             </ion-list>
             <ion-row
-              class="ion-margin-top"
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              "
+              class="ion-margin-top ion-justify-content-between ion-align-items-center"
             >
               <ion-fab-button
                 (click)="onRemoveSet()"
@@ -101,11 +92,7 @@
             </ion-row>
             <ion-row
               *ngIf="setsSelected"
-              style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              "
+              class="ion-align-items-center ion-justify-content-center"
             >
               {{ setsSelected - setsCompleted }} sets remaining
             </ion-row>

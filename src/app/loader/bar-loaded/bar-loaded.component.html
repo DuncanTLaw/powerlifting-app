@@ -12,7 +12,7 @@
             <ion-item
               *ngFor="let plate of plateCount; let i = index;"
             >
-              <ion-row style="align-items: center;">
+              <ion-row class="ion-align-items-center">
                 <ion-col>
                   <ion-badge
                     [color]="loaderService.getBadgeColor(plate.weight)"
