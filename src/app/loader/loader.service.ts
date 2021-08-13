@@ -13,7 +13,7 @@ export interface Plate {
 })
 export class LoaderService {
   kgHeights(plate: number): number {
-    const maxHeight = 160;
+    const maxHeight = 80;
 
     let height: number;
     switch (plate) {
@@ -74,20 +74,26 @@ export class LoaderService {
     }
   }
 
-  textColours(plateColour: string): string {
-    const darkColours = ['black', 'blue'];
-    return (darkColours.includes(plateColour)) ? 'white' : 'black';
+  getBadgeColor(plate: number): string {
+    switch (plate) {
+      case 25:
+        return 'danger';
+      case 20:
+        return 'primary';
+      case 15:
+        return 'warning';
+      case 10:
+        return 'success';
+      case 5:
+        return 'light';
+      case 2.5:
+        return 'dark';
+      case 1.25:
+        return 'medium';
+      default:
+        return 'dark';
+    }
   }
-
-  getColour(plate: number): {[colour: string]: string} {
-    const plateColour = this.kgColours(plate);
-    const textColour = this.textColours(plateColour);
-
-    return {
-      plateColourKey: plateColour,
-      textColourKey: textColour
-    };
-  };
 
   displayWeight(weight: number): string {
     return weight.toFixed(2).replace('.00', '');
@@ -133,25 +139,4 @@ export class LoaderService {
 
     return barLoad;
   };
-
-  getBadgeColor(plate: number): string {
-    switch (plate) {
-      case 25:
-        return 'danger';
-      case 20:
-        return 'primary';
-      case 15:
-        return 'warning';
-      case 10:
-        return 'success';
-      case 5:
-        return 'light';
-      case 2.5:
-        return 'dark';
-      case 1.25:
-        return 'medium';
-      default:
-        return 'dark';
-    }
-  }
 }

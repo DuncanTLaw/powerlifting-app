@@ -88,39 +88,33 @@
       </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row>
-    <ion-list *ngIf="tWeight&&barLoaded">
-      <ion-item>
-        Load
-        <ion-badge
-          class="ion-margin"
+  <ion-row class="ion-align-items-center ion-justify-content-center" *ngIf="tWeight&&barLoaded">
+    <ion-col class="ion-no-padding" style="margin: 0 3px;" size="auto">
+      <ion-badge
           [color]="loaderService.getBadgeColor(barWeight)"
         >
-          {{ barWeight }}kg
+          BAR
         </ion-badge>
-        barbell with:
-      </ion-item>
-      <ion-item *ngFor="let plate of barLoaded">
-        <ion-badge
-          class="ion-margin"
+    </ion-col>
+    <ion-col class="ion-no-padding" style="margin: 0 3px;" size="auto" *ngFor="let plate of barLoaded">
+      <ion-badge
           [color]="loaderService.getBadgeColor(plate)"
+          [style.padding-top]="loaderService.getHeight(plate)"
+          [style.padding-bottom]="loaderService.getHeight(plate)"
+          style="padding-left: 3px; padding-right: 3px;"
         >
-          {{ plate }}kg
+          {{ plate }}
         </ion-badge>
-        pairs
-      </ion-item>
-      <ion-item *ngIf="compCollars">
-        and a pair of
-        <ion-badge
-          class="ion-margin"
-          [color]="loaderService.getBadgeColor(2.5)"
-        >
-          2.5kg
-        </ion-badge>
-        competition collars.
-      </ion-item>
-    </ion-list>
+    </ion-col>
+    <ion-col class="ion-no-padding" style="margin: 0 3px;" size="auto" *ngIf="compCollars">
+      <ion-badge
+        [color]="loaderService.getBadgeColor(2.5)"
+        style="padding-top: 5px; padding-bottom: 5px;"
+      >
+        C
+      </ion-badge>
+    </ion-col>
   </ion-row>
-  <div class="ion-text-center" *ngIf="!tWeight">Input weight to load bar.</div>
+  <ion-row class="ion-justify-content-center" *ngIf="!tWeight">Input weight to load bar.</ion-row>
 </ion-grid>
 
