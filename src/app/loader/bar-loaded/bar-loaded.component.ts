@@ -16,7 +16,7 @@ export class BarLoadedComponent implements OnInit {
     { weight: 2.5, count: null },
     { weight: 1.25, count: null }
   ];
-  barLoaded: number;
+  barLoaded = 25;
 
   constructor(public loaderService: LoaderService) { }
 
