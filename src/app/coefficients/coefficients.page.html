@@ -38,7 +38,7 @@
                 <ion-select-option value="Blues">Blues</ion-select-option>
               </ion-select>
               <br/>
-              <ion-segment (ionChange)="segmentChanged($event)" value="total">
+              <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentSelected">
                 <ion-segment-button value="total">
                   <ion-label>Total</ion-label>
                 </ion-segment-button>
@@ -61,7 +61,7 @@
                   ></ion-input>
                   <ion-note slot="end">kg</ion-note>
                 </ion-item>
-                <ion-item *ngIf="segmentSelected === 'total'">
+                <ion-item [hidden]="segmentSelected !== 'total'">
                   <ion-label position="fixed">total</ion-label>
                   <ion-input
                     type="number"
@@ -71,7 +71,7 @@
                   ></ion-input>
                   <ion-note slot="end">kg</ion-note>
                 </ion-item>
-                <ion-item *ngIf="segmentSelected === 'threeLifts'">
+                <ion-item [hidden]="segmentSelected !== 'threeLifts'">
                   <ion-label position="fixed">squat</ion-label>
                   <ion-input
                     type="number"
@@ -81,7 +81,7 @@
                   ></ion-input>
                   <ion-note slot="end">kg</ion-note>
                 </ion-item>
-                <ion-item *ngIf="segmentSelected === 'threeLifts'">
+                <ion-item [hidden]="segmentSelected !== 'threeLifts'">
                   <ion-label position="fixed">bench</ion-label>
                   <ion-input
                     type="number"
@@ -91,7 +91,7 @@
                   ></ion-input>
                   <ion-note slot="end">kg</ion-note>
                 </ion-item>
-                <ion-item *ngIf="segmentSelected === 'threeLifts'">
+                <ion-item [hidden]="segmentSelected !== 'threeLifts'">
                   <ion-label position="fixed">deadlift</ion-label>
                   <ion-input
                     type="number"
@@ -101,7 +101,7 @@
                   ></ion-input>
                   <ion-note slot="end">kg</ion-note>
                 </ion-item>
-                <ion-item *ngIf="segmentSelected === 'onlyBP'">
+                <ion-item [hidden]="segmentSelected !== 'onlyBP'">
                   <ion-label position="fixed">bench</ion-label>
                   <ion-input
                     type="number"
@@ -112,7 +112,7 @@
                   <ion-note slot="end">kg</ion-note>
                 </ion-item>
               </ion-list>
-              <ion-row *ngIf="segmentSelected === 'threeLifts'" class="ion-justify-content-end ion-padding-top">
+              <ion-row [hidden]="segmentSelected !== 'threeLifts'" class="ion-justify-content-end ion-padding-top">
                 = {{ userTotal || 0 }}kg total
               </ion-row>
               <br/>
