@@ -24,7 +24,7 @@ describe('CoefficientsPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should use service', () => {
+  it('should import service', () => {
     const coeffService = fixture.debugElement.injector.get(CoeffService);
     expect(coeffService).toBeTruthy();
   });

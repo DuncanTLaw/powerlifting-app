@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { BarLoadedComponent } from './bar-loaded/bar-loaded.component';
+import { BarLoaderComponent } from './bar-loader/bar-loader.component';
 
 import { LoaderPage } from './loader.page';
+import { LoaderService } from './loader.service';
 
 describe('LoaderPage', () => {
   let component: LoaderPage;
@@ -9,7 +12,7 @@ describe('LoaderPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoaderPage ],
+      declarations: [ LoaderPage, BarLoadedComponent, BarLoaderComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
@@ -20,5 +23,10 @@ describe('LoaderPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should import service', () => {
+    const loaderService = fixture.debugElement.injector.get(LoaderService);
+    expect(loaderService).toBeTruthy();
   });
 });
