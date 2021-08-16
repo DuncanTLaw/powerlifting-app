@@ -12,7 +12,7 @@ export class CoefficientsPage implements OnInit {
   pointsSelected = 'IPF GL';
   segmentSelected = 'total';
   bluesSelected = false;
-  userMale = true;
+  userMale: boolean;
   userBw: number;
   userTotal: number;
   userSq: number;
