@@ -20,5 +20,5 @@ export const IPFCOEFF: GenderCoeff = {
     c2b: 43.848,
     c3b: 6.7172,
     c4b: 13.952
-  },
+  }
 };

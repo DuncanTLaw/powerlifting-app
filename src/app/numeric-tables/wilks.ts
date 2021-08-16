@@ -16,5 +16,5 @@ export const WILKSCOEFF: GenderCoeff = {
     c4: 0.00930733913,
     c5: 4.731582*10**(-5),
     c6: 9.054*10**(-8)
-  },
+  }
 };

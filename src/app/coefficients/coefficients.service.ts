@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { GenderCoeff } from '../numeric-tables/coefficient.model';
+import { GenderCoeff, GLModel } from '../numeric-tables/coefficient.model';
 import { DOTSCOEFF } from '../numeric-tables/dots';
 import { GLCOEFF } from '../numeric-tables/GL';
 import { IPFCOEFF } from '../numeric-tables/IPF';
@@ -20,7 +20,7 @@ export class CoeffService {
 
   dotsScale: GenderCoeff = DOTSCOEFF;
 
-  glScale: GenderCoeff = GLCOEFF;
+  glScale: GLModel = GLCOEFF;
 
   ipfScale: GenderCoeff = IPFCOEFF;
 
@@ -31,36 +31,57 @@ export class CoeffService {
     full: 560
   };
 
+  dotsPoly(a: number, b: number, c: number, d: number, e: number, x: number): number {
+    const x2 = x*x;
+    const x3 = x2*x;
+    const x4 = x3*x;
+    return 500.0 / (a*x4 + b*x3 + c*x2 + d*x + e);
+  }
+
+  dotsFunction(bw: number, isMale: boolean): number {
+    const lBw = 40.0;
+    const uBw = (isMale)? 210.0 : 150.0;
+    bw = Math.min(Math.max(bw, lBw), uBw);
+    if (isMale) {
+      return this.dotsPoly(
+        -this.dotsScale.male.c1,
+        this.dotsScale.male.c2,
+        -this.dotsScale.male.c3,
+        this.dotsScale.male.c4,
+        -this.dotsScale.male.c5,
+        bw);
+    } else if (!isMale) {
+      return this.dotsPoly(
+        -this.dotsScale.female.c1,
+        this.dotsScale.female.c2,
+        -this.dotsScale.female.c3,
+        this.dotsScale.female.c4,
+        -this.dotsScale.female.c5,
+        bw);
+    }
+  }
+
   calcDOTS(form: NgForm, total: number): number {
     const bw: number = form.value.weight;
-
-    const c1 = this.male ? this.dotsScale.male.c1 : this.dotsScale.female.c1;
-    const c2 = this.male ? this.dotsScale.male.c2 : this.dotsScale.female.c2;
-    const c3 = this.male ? this.dotsScale.male.c3 : this.dotsScale.female.c3;
-    const c4 = this.male ? this.dotsScale.male.c4 : this.dotsScale.female.c4;
-    const c5 = this.male ? this.dotsScale.male.c5 : this.dotsScale.female.c5;
-
-    return (total > 0) ? total * 500 / (-c1*bw**4 + c2*bw**3 - c3*bw**2 + c4*bw - c5) : 0;
+    return total*this.dotsFunction(bw, this.male);
   }
 
   calcGL(form: NgForm, total: number): number {
     const bw: number = form.value.weight;
+    const sex = (this.male) ? 'male' : 'female';
+    const event = (this.benchOnly) ? 'b' : 'sbd';
+    const equipment = 'raw'; // hardcoded for now until later implementation of an 'Equipped' selector
 
-    let c1: number;
-    let c2: number;
-    let c3: number;
+    const params = this.glScale[sex][equipment][event];
+    const denom = params[0] - (params[1] * Math.exp(-1.0 * params[2] * bw));
 
-    if (!this.benchOnly) {
-      c1 = this.male ? this.glScale.male.c1 : this.glScale.female.c1;
-      c2 = this.male ? this.glScale.male.c2 : this.glScale.female.c2;
-      c3 = this.male ? this.glScale.male.c3 : this.glScale.female.c3;
-    } else {
-      c1 = this.male ? this.glScale.male.c1b : this.glScale.female.c1b;
-      c2 = this.male ? this.glScale.male.c2b : this.glScale.female.c2b;
-      c3 = this.male ? this.glScale.male.c3b : this.glScale.female.c3b;
+    let glp = (denom === 0) ? 0 : Math.max(0, total * 100.0 / denom);
+
+    if (isNaN(glp) || bw < 35) {
+      glp = 0;
     }
 
-    return (total > 0) ? total * 100 / (c1 - c2*Math.E**(-c3*bw)) : 0;
+    return glp;
   }
 
   calcIPF(form: NgForm, total: number): number {

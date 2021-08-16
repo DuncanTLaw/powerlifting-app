@@ -169,5 +169,5 @@ export const RPEPCTTABLE: RPEPct = {
   },
   15: {
     10: 59.9,
-  },
+  }
 };

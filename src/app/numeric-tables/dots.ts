@@ -14,5 +14,5 @@ export const DOTSCOEFF: GenderCoeff = {
     c3: 0.1126655495,
     c4: 13.6175032,
     c5: 57.96288
-  },
+  }
 };

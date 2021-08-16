@@ -3,3 +3,12 @@ export interface GenderCoeff {
     [coeff: string]: number;
   };
 }
+
+export interface GLModel {
+  [gender: string]: {
+    [equipment: string]: {
+      sbd: number[];
+      b: number[];
+    };
+  };
+}
