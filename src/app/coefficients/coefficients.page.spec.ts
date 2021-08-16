@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { CoefficientsPage } from './coefficients.page';
 import { CoeffService } from './coefficients.service';
+import { FormsModule } from '@angular/forms';
 
 describe('CoefficientsPage', () => {
   let component: CoefficientsPage;
@@ -11,7 +12,7 @@ describe('CoefficientsPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CoefficientsPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), FormsModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CoefficientsPage);
