@@ -139,4 +139,9 @@ export class LoaderService {
 
     return barLoad;
   };
+
+  // from https://ionicframework.com/docs/angular/performance
+  trackItems(index: number, itemObject: any) {
+    return itemObject.id;
+  }
 }

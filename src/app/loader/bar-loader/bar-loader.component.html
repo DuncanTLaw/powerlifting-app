@@ -60,7 +60,7 @@
             </ion-button>
             <div [hidden]="!showPlates">
               <ion-list>
-                <ion-item *ngFor="let plate of plateCount; let i = index;">
+                <ion-item *ngFor="let plate of plateCount; trackBy:loaderService.trackItems; let i = index;">
                   <ion-row class="ion-align-items-center">
                     <ion-col>
                       <ion-badge
