@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "short_name": "app",
+  "name": "Powerlifting Toolbox",
+  "short_name": "Toolbox",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
