@@ -37,7 +37,7 @@ export class CoefficientsPage implements OnInit {
     }
   }
 
-  onCalcPoints(form: NgForm): void {
+  checkSegment(form: NgForm): void {
     if (this.segmentSelected === 'threeLifts') {
       this.userTotal = form.value.sq + form.value.bp + form.value.dl;
       this.userSq = form.value.sq;
@@ -45,13 +45,23 @@ export class CoefficientsPage implements OnInit {
       this.userDl = form.value.dl;
     } else if (this.segmentSelected === 'total') {
       this.userTotal = form.value.total;
+    } else if (this.segmentSelected === 'onlyBP') {
+      if (form.value.total) {
+        this.userTotal = null; // when user switches to `Bench` the value from `Total` should be wiped
+      }
+      this.userBp = form.value.bp;
     }
+  }
+
+  onCalcPoints(form: NgForm): void {
+    this.checkSegment(form);
+
     if (form.value.weight && this.userTotal) {
       this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
     } else if (this.coeffService.benchOnly && form.value.bp){
       this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
     } else {
-      if (this.pointsSelected!=='Blues') {
+      if (this.pointsSelected !== 'Blues') {
         this.bluesSelected = false;
         this.userPoints = null;
       } else {
@@ -85,5 +95,4 @@ export class CoefficientsPage implements OnInit {
         break;
     }
   }
-
 }
