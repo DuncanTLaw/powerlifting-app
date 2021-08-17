@@ -1,8 +1,8 @@
 {
   "name": "powerlifting-app",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Duncan Law",
+  "homepage": "https://dlaw-powerlifting.web.app/rpe",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -25,17 +25,24 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-ion-toolbar {
-  padding-bottom: 5px;
-}
-
 :root {
   --ion-safe-area-top: 15px !important;
   padding-top: env(safe-area-inset-top); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
 }
 
+ion-toolbar {
+  padding-bottom: 5px;
+}
+
+ion-col {
+  display: flex;
+}
+ion-card {
+  width: 100%;
+}
+
+// from https://codepen.io/liamdebeasi/pen/YzwNzao
 hr {
-  // from https://codepen.io/liamdebeasi/pen/YzwNzao
   margin-top: 1rem;
   margin-bottom: 0;
   border: 0;

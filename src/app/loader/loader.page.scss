@@ -3,8 +3,8 @@ ion-slides {
   height: 100%;
 }
 
+// from https://forum.ionicframework.com/t/solved-prevent-ion-slides-from-centering/61785
 .swiper-slide {
-  // from https://forum.ionicframework.com/t/solved-prevent-ion-slides-from-centering/61785
   align-items: baseline !important;
 }
 
