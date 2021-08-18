@@ -19,21 +19,21 @@ export class ModalPage implements OnInit {
       title: 'RPE',
       overview: 'Calculate E1RM and weight for prescribed RPE.',
       help:
-        'The first card takes in input for load and reps and RPE to give an estimated one rep max.\
-        The second calculates the weight based on the previous E1RM from a prescribed rep and RPE input.',
+        'The first card takes in inputs for load and reps and RPE to give an estimated one rep max.\
+        The second card calculates the weight based on the previous E1RM from a prescribed rep and RPE.',
       icon: '',
     },
     {
       title: 'Coefficients',
       overview: 'Calculate scores from popular coefficients.',
-      help: 'Input your gender, total/SBD split/bench-only total for the scores of popular coefficients.',
+      help: 'Input your gender and total/SBD split/bench-only total for the scores of popular coefficients.',
       icon: '',
     },
     {
       title: 'Timer',
       overview: 'Set a timer, and tally your reps.',
-      help: 'The first card is a conventional timer that can take in a time limit in seconds.\
-      The second tallies up your reps - add how many reps you are prescribed and keep track of how many you\'ve done.',
+      help: 'The first card is a timer that can take in a time limit in seconds.\
+      The second card tallies up your reps - put in how many reps you are prescribed and keep track of how many you\'ve done.',
       icon: '',
     },
     {
