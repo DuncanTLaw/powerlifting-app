@@ -17,26 +17,31 @@ export class ModalPage implements OnInit {
   pages: Array<Pages> = [
     {
       title: 'RPE',
-      overview: 'Calculates E1RM and weight for prescribed RPE.',
-      help: '',
+      overview: 'Calculate E1RM and weight for prescribed RPE.',
+      help:
+        'The first card takes in input for load and reps and RPE to give an estimated one rep max.\
+        The second calculates the weight based on the previous E1RM from a prescribed rep and RPE input.',
       icon: '',
     },
     {
       title: 'Coefficients',
-      overview: 'Calculates scores from popular coefficients.',
-      help: '',
+      overview: 'Calculate scores from popular coefficients.',
+      help: 'Input your gender, total/SBD split/bench-only total for the scores of popular coefficients.',
       icon: '',
     },
     {
       title: 'Timer',
       overview: 'Set a timer, and tally your reps.',
-      help: '',
+      help: 'The first card is a conventional timer that can take in a time limit in seconds.\
+      The second tallies up your reps - add how many reps you are prescribed and keep track of how many you\'ve done.',
       icon: '',
     },
     {
       title: 'Loader',
-      overview: 'Figure out what plates.',
-      help: '',
+      overview: 'Figure out the number of plates required.',
+      help: 'This page has two slides - the first slide takes in a required weight and displays the plate layout.\
+      Toggle the weight of the bar, the collars and the number of availble plates.\
+      The second slide can tell you how much weight there is on a bar in competition.',
       icon: '',
     }
   ];
