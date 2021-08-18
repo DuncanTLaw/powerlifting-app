@@ -11,11 +11,11 @@
   <ion-list>
 		<ion-item *ngFor="let page of pages">
       <ion-label class="ion-text-wrap">
-				<h2>{{ page.title }}</h2>
+				<h2><ion-icon [name]="page.icon"></ion-icon>{{ page.title }}</h2>
 				<p>
           <details>
             <summary>{{ page.overview }}</summary>
-          {{ page.help }}
+          <div class="detail-expanded">{{ page.help }}</div>
         </details>
       </p>
 			</ion-label>
