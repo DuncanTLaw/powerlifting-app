@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-timer',
@@ -18,7 +19,7 @@ export class TimerPage implements OnInit {
   setsSelected: number;
   setsCompleted = 0;
 
-  constructor() { }
+  constructor(public toastController: ToastController) { }
 
   ngOnInit() {
   }
@@ -56,6 +57,7 @@ export class TimerPage implements OnInit {
           this.timerRunning = false;
           this.timeEnded = true;
           clearInterval(this.interval);
+          setTimeout(() => this.presentToast(), this.timeRemaining*1000);
         }
       }, 1000);
     } else {
@@ -76,4 +78,20 @@ export class TimerPage implements OnInit {
     }
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      header: 'Timer',
+      message: 'Completed',
+      cssClass: 'custom-class',
+      duration: 3000,
+      buttons: [
+        {
+          side: 'start',
+          icon: 'timer-sharp',
+        }
+      ],
+      color: 'dark'
+    });
+    await toast.present();
+  }
 }

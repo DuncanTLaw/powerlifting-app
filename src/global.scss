@@ -34,6 +34,12 @@ ion-toolbar {
   padding-bottom: 5px;
 }
 
+ion-toast.custom-class {
+  font-size: large;
+  position: fixed;
+  top: -50px;
+}
+
 // from https://codepen.io/liamdebeasi/pen/YzwNzao
 hr {
   margin-top: 1rem;
