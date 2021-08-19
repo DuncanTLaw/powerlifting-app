@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TimerPageRoutingModule } from './timer-routing.module';
 
 import { TimerPage } from './timer.page';
+import { AboutComponent } from '../about/about.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { TimerPage } from './timer.page';
     IonicModule,
     TimerPageRoutingModule
   ],
-  declarations: [TimerPage]
+  declarations: [TimerPage, AboutComponent]
 })
 export class TimerPageModule {}
