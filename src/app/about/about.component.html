@@ -1,0 +1,66 @@
+<ion-menu side="start" menuId="about" contentId="main" [swipeGesture]="false">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title size="large" color="secondary">About</ion-title>
+      <ion-buttons slot="end">
+        <ion-button [routerLink]="['/help']" (click)="onClickButton()">
+          <ion-icon name="help-circle"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <details class="ion-margin-bottom">
+      <summary>About the developer</summary>
+      <ion-list lines="none">
+        <p class="ion-text-justify">
+          Duncan Law is currently a third-year undergraduate student studying Engineering Science
+          in the University of Oxford. He also competes in
+          <a href="https://www.britishpowerlifting.org/">British Powerlifting</a>
+          (under the
+          <a href="https://www.powerlifting.sport/">IPF</a>)
+          as a Junior lifter in the 83kg weight category.
+        </p>
+        <ion-item>
+          <ion-button fill="none" size="clear" href="https://www.openpowerlifting.org/u/duncanlaw">
+            <ion-icon class="ion-margin-end" name="list"></ion-icon>
+            Open Powerlifting
+          </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-button fill="none" size="clear" href="https://www.instagram.com/lawkout/">
+            <ion-icon class="ion-margin-end" name="logo-instagram"></ion-icon>
+            @lawkout
+          </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-button fill="none" size="clear" href="https://github.com/DuncanTLaw">
+            <ion-icon class="ion-margin-end" name="logo-github"></ion-icon>
+            GitHub
+          </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-button fill="none" size="clear" href="https://www.linkedin.com/in/duncan-law-1ba6501b2">
+            <ion-icon class="ion-margin-end" name="logo-linkedin"></ion-icon>
+            LinkedIn
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </details>
+    Love the app? Buy us a coffee so we can keep making it beautiful :)
+    <br/>
+    <ion-button
+      fill="none"
+      size="clear"
+      href="https://www.paypal.com/donate?business=lawdtk%40gmail.com&no_recurring=0&currency_code=GBP"
+    >
+      <ion-icon class="ion-margin-end" name="logo-paypal"></ion-icon>
+      Donate with PayPal
+    </ion-button>
+  </ion-content>
+  <ion-footer class="ion-padding ion ion-text-justify">
+    Have an issue, or want to suggest a feature? Send an email
+    <a href="mailto:lawdtk@gmail.com">here</a>
+    and we will get back to you ASAP!
+  </ion-footer>
+</ion-menu>

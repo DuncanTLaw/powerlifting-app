@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large" color="dark">Help</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/rpe']">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-slides pager="true">
+    <ion-slide class="ion-padding" *ngFor="let page of pages">
+      <div class="ion-slide-content">
+        <ion-icon class="display-icons" [name]="page.icon"></ion-icon>
+        <h1><b>{{ page.title }}</b></h1>
+        <h4>{{ page.overview }}</h4>
+        <p *ngFor="let help of page.help">{{ help }}</p>
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

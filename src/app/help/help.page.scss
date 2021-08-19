@@ -1,0 +1,19 @@
+.ion-slide-content {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.display-icons {
+  font-size: 84px;
+}
+
+b {
+  font-weight: 750;
+}
+
+// from https://github.com/ionic-team/ionic-docs/blob/legacy/src/demos/api/slides/index.html
+p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ion-color-step-600, #60646b);
+}
