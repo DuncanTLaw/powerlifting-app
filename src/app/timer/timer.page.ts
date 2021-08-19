@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-timer',
@@ -19,9 +19,16 @@ export class TimerPage implements OnInit {
   setsSelected: number;
   setsCompleted = 0;
 
-  constructor(public toastController: ToastController) { }
+  constructor(
+    private menu: MenuController,
+    public toastController: ToastController
+  ) { }
 
   ngOnInit() {
+  }
+
+  openMenu(): void {
+    this.menu.open('about');
   }
 
   onInputChange(event: Event) {

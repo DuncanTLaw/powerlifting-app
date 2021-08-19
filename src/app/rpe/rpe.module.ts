@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { RpePageRoutingModule } from './rpe-routing.module';
 
 import { RpePage } from './rpe.page';
-import { AboutComponent } from '../about/about.component';
 
 @NgModule({
   imports: [
@@ -16,6 +15,6 @@ import { AboutComponent } from '../about/about.component';
     IonicModule,
     RpePageRoutingModule
   ],
-  declarations: [RpePage, AboutComponent]
+  declarations: [RpePage]
 })
 export class RpePageModule {}

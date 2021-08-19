@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { CoefficientsPageRoutingModule } from './coefficients-routing.module';
 
 import { CoefficientsPage } from './coefficients.page';
-import { AboutComponent } from '../about/about.component';
 
 @NgModule({
   imports: [
@@ -16,6 +15,6 @@ import { AboutComponent } from '../about/about.component';
     IonicModule,
     CoefficientsPageRoutingModule
   ],
-  declarations: [CoefficientsPage, AboutComponent]
+  declarations: [CoefficientsPage]
 })
 export class CoefficientsPageModule {}

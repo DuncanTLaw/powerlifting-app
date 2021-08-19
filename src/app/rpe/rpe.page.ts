@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MenuController } from '@ionic/angular';
 import { RPEPct, RPEPCTTABLE } from '../numeric-tables/RPE-pct';
 
 @Component({
@@ -13,9 +14,13 @@ export class RpePage implements OnInit {
 
   scale: RPEPct = RPEPCTTABLE;
 
-  constructor() { }
+  constructor(private menu: MenuController) { }
 
   ngOnInit() {
+  }
+
+  openMenu(): void {
+    this.menu.open('about');
   }
 
   calcMax(weight: number, reps: number, rpe: number): number | null {
