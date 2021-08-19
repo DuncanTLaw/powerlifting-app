@@ -12,18 +12,9 @@
     <ion-slide class="ion-padding" *ngFor="let page of pages">
       <div class="ion-slide-content">
         <ion-icon class="display-icons" [name]="page.icon"></ion-icon>
-        <h2>{{ page.title }}</h2>
-        <h6>{{ page.overview }}</h6>
+        <h1><b>{{ page.title }}</b></h1>
+        <h4>{{ page.overview }}</h4>
         <p *ngFor="let help of page.help">{{ help }}</p>
-      </div>
-    </ion-slide>
-
-    <ion-slide class="ion-padding">
-      <div class="ion-slide-content">
-        <h2>Ready to lift some weights?</h2>
-        <ion-button fill="clear" [routerLink]="['/rpe']">
-          Continue <ion-icon slot="end" name="arrow-forward"></ion-icon>
-        </ion-button>
       </div>
     </ion-slide>
   </ion-slides>
