@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ModalPageRoutingModule } from './modal-routing.module';
+import { HelpPageRoutingModule } from './help-routing.module';
 
-import { ModalPage } from './modal.page';
+import { HelpPage } from './help.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ModalPageRoutingModule
+    HelpPageRoutingModule
   ],
-  declarations: [ModalPage]
+  declarations: [HelpPage]
 })
-export class ModalPageModule {}
+export class HelpPageModule {}
