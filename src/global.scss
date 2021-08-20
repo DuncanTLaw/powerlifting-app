@@ -25,11 +25,13 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-:root {
-  padding-top: env(safe-area-inset-top); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
-  --ion-safe-area-top: 15px !important;
-  // --ion-safe-area-bottom: 22px !important;
-}
+/* These styles TEMPORARILY commented as iOS notch covers itself */
+// :root {
+//   padding-top: env(safe-area-inset-top); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
+//   padding-bottom: env(safe-area-inset-bottom); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
+//   --ion-safe-area-top: 50px !important;
+//   --ion-safe-area-bottom: 22px !important;
+// }
 
 ion-toolbar {
   padding-bottom: 5px;

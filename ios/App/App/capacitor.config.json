@@ -1,0 +1,6 @@
+{
+	"appId": "web.app.dlaw-powerlifting",
+	"appName": "powerlifting-toolboxx",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
