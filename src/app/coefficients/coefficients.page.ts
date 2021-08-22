@@ -63,20 +63,14 @@ export class CoefficientsPage implements OnInit {
 
   onCalcPoints(form: NgForm): void {
     this.checkSegment(form);
+    this.bluesSelected = (this.pointsSelected !== 'Blues') ? false : true;
+    this.userPoints = (this.pointsSelected !== 'Blues') ? null : 'None';
 
     if (typeof this.userMale === 'boolean') {
       if (form.value.weight && this.userTotal) {
         this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
       } else if (this.coeffService.benchOnly && form.value.bp){
         this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
-      } else {
-        if (this.pointsSelected !== 'Blues') {
-          this.bluesSelected = false;
-          this.userPoints = null;
-        } else {
-          this.bluesSelected = true;
-          this.userPoints = 'None';
-        }
       }
     }
   }

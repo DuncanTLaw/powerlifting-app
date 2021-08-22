@@ -116,16 +116,19 @@
                 = {{ userTotal || 0 }}kg total
               </ion-row>
               <br/>
-              <ion-row id="result" *ngIf="!bluesSelected">
+              <ion-row id="result" *ngIf="!bluesSelected else bluesBlock">
                 <ion-text class="ion-padding-end" color="success">
                   {{ (userPoints | number : '1.2-2') || '0.00' }}
                 </ion-text> {{ pointsSelected }} points
               </ion-row>
-              <ion-row id="result" *ngIf="bluesSelected">
-                <ion-text class="ion-padding-end" id="blues">
-                  {{ userPoints }}
-                </ion-text> achieved
-              </ion-row>
+              <ng-template #bluesBlock>
+                <ion-row id="result">
+                  <ion-text class="ion-padding-end" id="blues">
+                    {{ userPoints }}
+                  </ion-text> achieved
+                </ion-row>
+              </ng-template>
+
             </ion-card-content>
           </form>
         </ion-card>
