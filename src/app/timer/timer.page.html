@@ -43,7 +43,7 @@
               <ion-input
                 type="number"
                 [(ngModel)]="timeSelected"
-                (input)="onInputChange($event)"
+                (input)="onTimerChange($event)"
               ></ion-input>
               <ion-note slot="end">seconds</ion-note>
             </ion-item>
@@ -60,6 +60,7 @@
               <ion-input
                 type="number"
                 [(ngModel)]="setsSelected"
+                (input)="onSetsChange()"
               ></ion-input>
               <ion-note slot="end">sets</ion-note>
             </ion-item>

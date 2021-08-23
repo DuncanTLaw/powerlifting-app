@@ -24,7 +24,7 @@ export class TimerPage implements OnInit {
   ngOnInit() {
   }
 
-  onInputChange(event: Event) {
+  onTimerChange(event: Event) {
     const target = event.target as HTMLInputElement;
     if(+target.value > 0){
       this.userInput = true;
@@ -57,13 +57,17 @@ export class TimerPage implements OnInit {
           this.timerRunning = false;
           this.timeEnded = true;
           clearInterval(this.interval);
-          setTimeout(() => this.presentToast(), this.timeRemaining*1000);
+          setTimeout(() => this.presentTimerToast(), this.timeRemaining*1000);
         }
       }, 1000);
     } else {
       this.rhsButtonText = 'Resume';
       clearInterval(this.interval);
     }
+  }
+
+  onSetsChange(): void {
+    this.setsCompleted = 0;
   }
 
   onRemoveSet(): void {
@@ -76,9 +80,12 @@ export class TimerPage implements OnInit {
     if (this.setsSelected && this.setsCompleted < this.setsSelected) {
       this.setsCompleted ++;
     }
+    if (this.setsCompleted === this.setsSelected) {
+      this.presentSetsToast();
+    }
   }
 
-  async presentToast() {
+  async presentTimerToast() {
     const toast = await this.toastController.create({
       header: 'Timer',
       message: 'Completed',
@@ -90,6 +97,16 @@ export class TimerPage implements OnInit {
           icon: 'timer-sharp',
         }
       ],
+      color: 'dark'
+    });
+    await toast.present();
+  }
+
+  async presentSetsToast() {
+    const toast = await this.toastController.create({
+      message: `All ${ this.setsSelected } sets completed.`,
+      cssClass: 'custom-class',
+      duration: 3000,
       color: 'dark'
     });
     await toast.present();
