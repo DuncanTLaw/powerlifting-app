@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Storage } from '@capacitor/storage';
 
 import { CoeffService } from './coefficients.service';
 
@@ -23,11 +24,29 @@ export class CoefficientsPage implements OnInit {
   constructor(private coeffService: CoeffService) { }
 
   ngOnInit() {
+    this.checkGender();
   }
+
+  setGender = async () => {
+    const gender = (this.userMale) ? 'male' : 'female';
+
+    await Storage.set({
+      key: 'gender',
+      value: gender
+    });
+  };
+
+  checkGender = async () => {
+    if (typeof this.userMale === 'boolean') {
+      const { value } = await Storage.get({ key: 'gender' });
+      this.userMale = (value === 'male') ? true : false;
+    }
+  };
 
   onChangeGender(form: NgForm): void {
     this.coeffService.male = this.userMale;
     this.onCalcPoints(form);
+    this.setGender();
   }
 
   segmentChanged(event: any): void {
