@@ -57,7 +57,7 @@ export class TimerPage implements OnInit {
           this.timerRunning = false;
           this.timeEnded = true;
           clearInterval(this.interval);
-          setTimeout(() => this.presentTimerToast(), this.timeRemaining*1000);
+          // setTimeout(() => this.presentTimerToast(), this.timeRemaining*1000);
         }
       }, 1000);
     } else {
@@ -83,23 +83,6 @@ export class TimerPage implements OnInit {
     if (this.setsCompleted === this.setsSelected) {
       this.presentSetsToast();
     }
-  }
-
-  async presentTimerToast() {
-    const toast = await this.toastController.create({
-      header: 'Timer',
-      message: 'Completed',
-      cssClass: 'toast-class',
-      duration: 3000,
-      buttons: [
-        {
-          side: 'start',
-          icon: 'timer-sharp',
-        }
-      ],
-      color: 'dark'
-    });
-    await toast.present();
   }
 
   async presentSetsToast() {
