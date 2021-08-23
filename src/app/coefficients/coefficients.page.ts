@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MenuController } from '@ionic/angular';
 
 import { CoeffService } from './coefficients.service';
 
@@ -21,16 +20,9 @@ export class CoefficientsPage implements OnInit {
   userDl: number;
   userPoints: any;
 
-  constructor(
-    private menu: MenuController,
-    private coeffService: CoeffService
-  ) { }
+  constructor(private coeffService: CoeffService) { }
 
   ngOnInit() {
-  }
-
-  openMenu(): void {
-    this.menu.open('about');
   }
 
   onChangeGender(form: NgForm): void {
