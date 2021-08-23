@@ -89,7 +89,7 @@ export class TimerPage implements OnInit {
     const toast = await this.toastController.create({
       header: 'Timer',
       message: 'Completed',
-      cssClass: 'custom-class',
+      cssClass: 'toast-class',
       duration: 3000,
       buttons: [
         {
@@ -104,8 +104,8 @@ export class TimerPage implements OnInit {
 
   async presentSetsToast() {
     const toast = await this.toastController.create({
-      message: `All ${ this.setsSelected } sets completed.`,
-      cssClass: 'custom-class',
+      message: `All sets completed.`,
+      cssClass: 'toast-class',
       duration: 3000,
       color: 'dark'
     });
