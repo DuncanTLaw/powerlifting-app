@@ -15,15 +15,19 @@
             </ion-card-header>
             <ion-card-content>
               <ion-label position="fixed">Gender</ion-label>
-              <ion-select
+              <ion-segment
                 [(ngModel)]="userMale"
                 [ngModelOptions]="{standalone: true}"
                 (ngModelChange)="onChangeGender(coeff); onCalcPoints(coeff);"
-                interface="popover"
               >
-                <ion-select-option [value]="true">Male</ion-select-option>
-                <ion-select-option [value]="false">Female</ion-select-option>
-              </ion-select>
+                <ion-segment-button [value]="true">
+                  <ion-label>Male</ion-label>
+                </ion-segment-button>
+                <ion-segment-button [value]="false">
+                  <ion-label>Female</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+              <br/>
               <ion-label position="fixed">Point system</ion-label>
               <ion-select
                 [(ngModel)]="pointsSelected"
