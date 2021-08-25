@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, PickerController } from '@ionic/angular';
+import { PickerOptions } from '@ionic/core';
 import { KeepAwake } from '@capacitor-community/keep-awake';
 
 @Component({
@@ -20,8 +21,12 @@ export class TimerPage implements OnInit {
 
   setsSelected: number;
   setsCompleted = 0;
+  columnOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
-  constructor(public toastController: ToastController) { }
+  constructor(
+    public toastController: ToastController,
+    private pickerController: PickerController
+  ) { }
 
   ngOnInit() {
   }
@@ -70,6 +75,22 @@ export class TimerPage implements OnInit {
     }
   }
 
+  async keepAwake() {
+    await KeepAwake.keepAwake();
+  };
+
+  async allowSleep() {
+    await KeepAwake.allowSleep();
+  }
+
+  onToggleAwake(): void {
+    if(this.allowAwake && this.timerRunning ) {
+      this.keepAwake();
+    } else {
+      this.allowSleep();
+    }
+  }
+
   onSetsChange(): void {
     this.setsCompleted = 0;
   }
@@ -99,19 +120,15 @@ export class TimerPage implements OnInit {
     await toast.present();
   }
 
-  async keepAwake() {
-    await KeepAwake.keepAwake();
-  };
-
-  async allowSleep() {
-    await KeepAwake.allowSleep();
-  }
-
-  onToggleAwake(): void {
-    if(this.allowAwake && this.timerRunning ) {
-      this.keepAwake();
-    } else {
-      this.allowSleep();
-    }
-  }
+  // async showPicker() {
+  //   const options: PickerOptions = {
+  //     columns: [],
+  //     buttons: []
+  //   };
+  //   const picker = await this.pickerController.create(options);
+  //   picker.present();
+  //   picker.onDidDismiss().then(data => {
+  //     const sets = picker.getColumn()
+  //   });
+  // }
 }
