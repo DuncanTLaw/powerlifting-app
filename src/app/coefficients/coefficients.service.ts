@@ -15,7 +15,7 @@ export interface Blues {
   providedIn: 'root',
 })
 export class CoeffService {
-  male: boolean;
+  gender: string;
   benchOnly = false;
 
   dotsScale: GenderCoeff = DOTSCOEFF;
@@ -63,12 +63,13 @@ export class CoeffService {
 
   calcDOTS(form: NgForm, total: number): number {
     const bw: number = form.value.weight;
-    return total*this.dotsFunction(bw, this.male);
+    const isMale = (this.gender === 'male') ? true : (this.gender === 'female') ? false : null;
+    return total*this.dotsFunction(bw, isMale);
   }
 
   calcGL(form: NgForm, total: number): number {
     const bw: number = form.value.weight;
-    const sex = (this.male === true) ? 'male' : (this.male === false) ? 'female' : null;
+    const sex = this.gender;
     const event = (this.benchOnly) ? 'b' : 'sbd';
     const equipment = 'raw'; // hardcoded for now until later implementation of an 'Equipped' selector
 
@@ -93,15 +94,29 @@ export class CoeffService {
     let c4: number;
 
     if (!this.benchOnly) {
-      c1 = this.male ? this.ipfScale.male.c1 : this.ipfScale.female.c1;
-      c2 = this.male ? this.ipfScale.male.c2 : this.ipfScale.female.c2;
-      c3 = this.male ? this.ipfScale.male.c3 : this.ipfScale.female.c3;
-      c4 = this.male ? this.ipfScale.male.c4 : this.ipfScale.female.c4;
+      if (this.gender === 'male') {
+        c1 = this.ipfScale.male.c1;
+        c2 = this.ipfScale.male.c2;
+        c3 = this.ipfScale.male.c3;
+        c4 = this.ipfScale.male.c4;
+      } else if (this.gender === 'female') {
+        c1 = this.ipfScale.female.c1;
+        c2 = this.ipfScale.female.c2;
+        c3 = this.ipfScale.female.c3;
+        c4 = this.ipfScale.female.c4;
+      }
     } else {
-      c1 = this.male ? this.ipfScale.male.c1b : this.ipfScale.female.c1b;
-      c2 = this.male ? this.ipfScale.male.c2b : this.ipfScale.female.c2b;
-      c3 = this.male ? this.ipfScale.male.c3b : this.ipfScale.female.c3b;
-      c4 = this.male ? this.ipfScale.male.c4b : this.ipfScale.female.c4b;
+      if (this.gender === 'male') {
+        c1 = this.ipfScale.male.c1b;
+        c2 = this.ipfScale.male.c2b;
+        c3 = this.ipfScale.male.c3b;
+        c4 = this.ipfScale.male.c4b;
+      } else if (this.gender === 'female') {
+        c1 = this.ipfScale.female.c1b;
+        c2 = this.ipfScale.female.c2b;
+        c3 = this.ipfScale.female.c3b;
+        c4 = this.ipfScale.female.c4b;
+      }
     }
 
     return (total > 0) ?
@@ -114,12 +129,28 @@ export class CoeffService {
   calcWilks(form: NgForm, total: number): number {
     const bw: number = form.value.weight;
 
-    const c1 = this.male ? -this.wilksScale.male.c1 : this.wilksScale.female.c1;
-    const c2 = this.male ? this.wilksScale.male.c2 : -this.wilksScale.female.c2;
-    const c3 = this.male ? -this.wilksScale.male.c3 : this.wilksScale.female.c3;
-    const c4 = this.male ? -this.wilksScale.male.c4 : -this.wilksScale.female.c4;
-    const c5 = this.male ? this.wilksScale.male.c5 : this.wilksScale.female.c5;
-    const c6 = this.male ? -this.wilksScale.male.c6 : -this.wilksScale.female.c6;
+    let c1: number;
+    let c2: number;
+    let c3: number;
+    let c4: number;
+    let c5: number;
+    let c6: number;
+
+    if (this.gender === 'male') {
+      c1 = -this.wilksScale.male.c1;
+      c2 = this.wilksScale.male.c2;
+      c3 = -this.wilksScale.male.c3;
+      c4 = -this.wilksScale.male.c4;
+      c5 = this.wilksScale.male.c5;
+      c6 = -this.wilksScale.male.c6;
+    } else if (this.gender === 'female') {
+      c1 = this.wilksScale.female.c1;
+      c2 = -this.wilksScale.female.c2;
+      c3 = this.wilksScale.female.c3;
+      c4 = -this.wilksScale.female.c4;
+      c5 = this.wilksScale.female.c5;
+      c6 = -this.wilksScale.female.c6;
+    }
     return (total > 0) ?
       total * 500 / (c1 + c2*bw + c3*bw**2 + c4*bw**3 + c5*bw**4 + c6*bw**5) : 0;
   }

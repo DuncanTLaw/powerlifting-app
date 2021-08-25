@@ -16,14 +16,14 @@
             <ion-card-content>
               <ion-label position="fixed">Gender</ion-label>
               <ion-segment
-                [(ngModel)]="userMale"
+                [(ngModel)]="userGender"
                 [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="onChangeGender(coeff); onCalcPoints(coeff);"
+                (ionChange)="onChangeGender(coeff); onCalcPoints(coeff);"
               >
-                <ion-segment-button [value]="true">
+                <ion-segment-button value="male">
                   <ion-label>Male</ion-label>
                 </ion-segment-button>
-                <ion-segment-button [value]="false">
+                <ion-segment-button value="female">
                   <ion-label>Female</ion-label>
                 </ion-segment-button>
               </ion-segment>

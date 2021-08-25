@@ -13,7 +13,7 @@ export class CoefficientsPage implements OnInit {
   pointsSelected = 'IPF GL';
   segmentSelected = 'total';
   bluesSelected = false;
-  userMale: boolean;
+  userGender: string;
   userBw: number;
   userTotal: number;
   userSq: number;
@@ -28,7 +28,7 @@ export class CoefficientsPage implements OnInit {
   }
 
   setGender = async () => {
-    const gender = (this.userMale) ? 'male' : 'female';
+    const gender = (this.userGender) ? 'male' : 'female';
 
     await Storage.set({
       key: 'gender',
@@ -37,14 +37,14 @@ export class CoefficientsPage implements OnInit {
   };
 
   checkGender = async () => {
-    if (typeof this.userMale === 'boolean') {
+    if (this.userGender) {
       const { value } = await Storage.get({ key: 'gender' });
-      this.userMale = (value === 'male') ? true : false;
+      this.userGender = (value === 'male') ? 'male' : 'female';
     }
   };
 
   onChangeGender(form: NgForm): void {
-    this.coeffService.male = this.userMale;
+    this.coeffService.gender = this.userGender;
     this.onCalcPoints(form);
     this.setGender();
   }
@@ -77,7 +77,7 @@ export class CoefficientsPage implements OnInit {
     this.bluesSelected = (this.pointsSelected !== 'Blues') ? false : true;
     this.userPoints = (this.pointsSelected !== 'Blues') ? null : 'None';
 
-    if (typeof this.userMale === 'boolean') {
+    if (this.userGender) {
       if (form.value.weight && this.userTotal) {
         this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
       } else if (this.coeffService.benchOnly && form.value.bp){
