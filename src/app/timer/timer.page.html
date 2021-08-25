@@ -15,7 +15,7 @@
               style="font-size: 36pt;"
               [ngClass]="{blink: !timerRunning}"
             >
-              {{ timeRemaining }}
+              {{ timeRemaining }}<span *ngIf="timeRemaining">s</span>
             </ion-text>
           </ion-row>
           <ion-row
@@ -46,6 +46,12 @@
                 (input)="onTimerChange($event)"
               ></ion-input>
               <ion-note slot="end">seconds</ion-note>
+            </ion-item>
+          </ion-list>
+          <ion-list lines="none">
+            <ion-item>
+              <ion-label>Keep screen awake</ion-label>
+              <ion-toggle [(ngModel)]="allowAwake" (ionChange)="onToggleAwake()"></ion-toggle>
             </ion-item>
           </ion-list>
         </ion-card-content>

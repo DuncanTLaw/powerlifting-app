@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { KeepAwake } from '@capacitor-community/keep-awake';
 
 @Component({
   selector: 'app-timer',
@@ -15,6 +16,7 @@ export class TimerPage implements OnInit {
   interval: any;
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
+  allowAwake = true;
 
   setsSelected: number;
   setsCompleted = 0;
@@ -31,6 +33,7 @@ export class TimerPage implements OnInit {
       this.timeRemaining = +target.value;
     } else {
       this.userInput = false;
+      this.timeRemaining = 0;
     }
   }
 
@@ -43,6 +46,7 @@ export class TimerPage implements OnInit {
 
   onClickRHS(): void {
     this.timerRunning = !this.timerRunning;
+    this.onToggleAwake();
     if(this.timeEnded) {
       this.timeRemaining = this.timeSelected;
     }
@@ -93,5 +97,21 @@ export class TimerPage implements OnInit {
       color: 'dark'
     });
     await toast.present();
+  }
+
+  async keepAwake() {
+    await KeepAwake.keepAwake();
+  };
+
+  async allowSleep() {
+    await KeepAwake.allowSleep();
+  }
+
+  onToggleAwake(): void {
+    if(this.allowAwake && this.timerRunning ) {
+      this.keepAwake();
+    } else {
+      this.allowSleep();
+    }
   }
 }
