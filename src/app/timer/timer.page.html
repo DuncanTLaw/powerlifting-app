@@ -11,8 +11,8 @@
       <ion-card id="timerCard">
         <ion-progress-bar
           color="danger"
-          [attr.value]="(timeRemaining !== 0) ? timeRemaining/timeSelected : 0"
-          [attr.buffer]="(!timerRunning && timeRemaining) ? timeRemaining/timeSelected : 1"
+          [attr.value]="(timeRemaining !== 0) ? timeRemaining/secondsSelected : 0"
+          [attr.buffer]="(!timerRunning && timeRemaining) ? timeRemaining/secondsSelected : 1"
         ></ion-progress-bar>
         <ion-card-content>
           <ion-row class="ion-justify-content-center">
@@ -30,14 +30,14 @@
             <ion-button
               color="light"
               (click)="onClickLHS()"
-              [disabled]="!userInput"
+              [disabled]="!secondsSelected"
             >
               {{ lhsButtonText }}
             </ion-button>
             <ion-button
               color="success"
               (click)="onClickRHS()"
-              [disabled]="!userInput"
+              [disabled]="!secondsSelected"
             >
             {{ rhsButtonText }}
             </ion-button>
@@ -46,11 +46,10 @@
             <ion-item>
               <ion-label position="fixed">Rest:</ion-label>
               <ion-input
-                type="number"
+                readonly
                 [(ngModel)]="timeSelected"
-                (input)="onTimerChange($event)"
+                (click)="showTimePicker()"
               ></ion-input>
-              <ion-note slot="end">seconds</ion-note>
             </ion-item>
           </ion-list>
           <ion-list lines="none">
@@ -71,7 +70,7 @@
               <ion-input
                 readonly
                 [(ngModel)]="setsSelected"
-                (click)="showSetsPicker(); onSetsChange()"
+                (click)="showSetsPicker()"
               ></ion-input>
               <ion-note slot="end">sets</ion-note>
             </ion-item>

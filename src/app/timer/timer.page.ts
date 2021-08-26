@@ -10,14 +10,14 @@ import { KeepAwake } from '@capacitor-community/keep-awake';
 })
 export class TimerPage implements OnInit {
   timerRunning = false;
-  userInput = false;
-  timeSelected: number;
+  secondsSelected: number;
+  timeSelected: string;
   timeRemaining = 0;
   timeEnded = false;
   interval: any;
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
-  allowAwake = true;
+  allowAwake = false;
 
   setsSelected: number;
   setsCompleted = 0;
@@ -30,29 +30,78 @@ export class TimerPage implements OnInit {
   ngOnInit() {
   }
 
-  onTimerChange(event: Event) {
-    const target = event.target as HTMLInputElement;
-    if(+target.value > 0){
-      this.userInput = true;
-      this.timeRemaining = +target.value;
-    } else {
-      this.userInput = false;
-      this.timeRemaining = 0;
+  async showTimePicker() {
+    const seconds = [...Array(60).keys()];
+    const minutes = [...Array(16).keys()]; // you shouldn't even rest more than 10 mins
+    const secondsOptions: Array<PickerColumnOption> = [];
+    const minutesOptions: Array<PickerColumnOption> = [];
+    for(const second of seconds) {
+      secondsOptions.push({text: second.toString(), value: second});
     }
-  }
+    for(const minute of minutes) {
+      minutesOptions.push({text: minute.toString(), value: minute});
+    }
+
+    let pickerAction: string;
+
+		const options: PickerOptions = {
+			columns: [
+        {
+					name: 'minutes',
+					options: minutesOptions
+        },
+        {
+          name: ':',
+          options: [{text: ':'}]
+        },
+        {
+					name: 'seconds',
+					options: secondsOptions
+				},
+			],
+      buttons: [
+				{
+					text: 'Cancel',
+          handler: () => {
+            pickerAction = 'cancel';
+          }
+				},
+				{
+					text: 'Done',
+          handler: () => {
+            pickerAction = 'done';
+          }
+				},
+			]
+		};
+
+		const picker = await this.pickerController.create(options);
+		picker.present();
+		picker.onDidDismiss().then(async () => {
+      if (pickerAction === 'done') {
+        const second = await picker.getColumn('seconds');
+        const minute = await picker.getColumn('minutes');
+        const secondVal = second.options[second.selectedIndex].value;
+        const minuteVal = minute.options[minute.selectedIndex].value;
+        this.timeSelected = `${minuteVal}min ${secondVal}sec`;
+        this.secondsSelected = minuteVal * 60 + secondVal;
+        this.timeRemaining = this.secondsSelected;
+      }
+		});
+	}
 
   onClickLHS(): void {
     clearInterval(this.interval);
     this.timerRunning = false;
     this.rhsButtonText = 'Start';
-    this.timeRemaining = this.timeSelected;
+    this.timeRemaining = this.secondsSelected;
   }
 
   onClickRHS(): void {
     this.timerRunning = !this.timerRunning;
     this.onToggleAwake();
     if(this.timeEnded) {
-      this.timeRemaining = this.timeSelected;
+      this.timeRemaining = this.secondsSelected;
     }
     if(this.timerRunning) {
       this.timeEnded = false;
@@ -91,7 +140,7 @@ export class TimerPage implements OnInit {
   }
 
   async showSetsPicker() {
-    const sets = [...Array(50).keys()].map(x => ++x);
+    const sets = [...Array(25).keys()].map(x => ++x); // who does more than 7 sets tbh
     const setsOptions: Array<PickerColumnOption> = [];
     for(const set of sets) {
       setsOptions.push({text: set.toString(), value: set});
@@ -100,7 +149,13 @@ export class TimerPage implements OnInit {
     let pickerAction: string;
 
 		const options: PickerOptions = {
-			buttons: [
+			columns: [
+				{
+					name: 'sets',
+					options: setsOptions
+				},
+			],
+      buttons: [
 				{
 					text: 'Cancel',
           handler: () => {
@@ -113,22 +168,16 @@ export class TimerPage implements OnInit {
             pickerAction = 'done';
           }
 				},
-			],
-			columns: [
-				{
-					name: 'sets',
-					options: setsOptions
-				},
-			],
+			]
 		};
 
 		const picker = await this.pickerController.create(options);
-    picker.keyboardClose = true;
 		picker.present();
 		picker.onDidDismiss().then(async () => {
       if (pickerAction === 'done') {
         const col = await picker.getColumn('sets');
         this.setsSelected = col.options[col.selectedIndex].value;
+        this.setsCompleted = (this.setsSelected) ? 0 : null;
       }
 		});
 	}
