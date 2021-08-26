@@ -165,4 +165,30 @@ export class CoeffService {
       return 'Full Blue';
     }
   }
+
+  calcBluesGoal(form: NgForm): number {
+    let c1: number;
+    let c2: number;
+    let c3: number;
+    let c4: number;
+
+    if (this.gender === 'male') {
+      c1 = this.ipfScale.male.c1;
+      c2 = this.ipfScale.male.c2;
+      c3 = this.ipfScale.male.c3;
+      c4 = this.ipfScale.male.c4;
+    } else if (this.gender === 'female') {
+      c1 = this.ipfScale.female.c1;
+      c2 = this.ipfScale.female.c2;
+      c3 = this.ipfScale.female.c3;
+      c4 = this.ipfScale.female.c4;
+    }
+
+    const goalIPF = (form.value.goalBlue === 'full') ?
+      this.bluesConst.full : (form.value.goalBlue === 'half') ?
+      this.bluesConst.half : null;
+
+    return +(((goalIPF - 500) / 100) * (c3 * Math.log(form.value.goalBw) - c4) +
+      (c1 * Math.log(form.value.goalBw) - c2)).toFixed(2);
+  }
 }

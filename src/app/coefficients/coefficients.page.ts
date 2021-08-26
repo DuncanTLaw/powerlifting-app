@@ -21,6 +21,12 @@ export class CoefficientsPage implements OnInit {
   userDl: number;
   userPoints: any;
 
+  goalBlue = 'full';
+  goalTotal: number;
+  calcDiff = false;
+  blueDiff: string;
+  hBlueDiff: string;
+
   constructor(private coeffService: CoeffService) { }
 
   ngOnInit() {
@@ -45,7 +51,7 @@ export class CoefficientsPage implements OnInit {
 
   onChangeGender(form: NgForm): void {
     this.coeffService.gender = this.userGender;
-    this.onCalcPoints(form);
+    this.calcPoints(form);
     this.setGender();
   }
 
@@ -72,7 +78,7 @@ export class CoefficientsPage implements OnInit {
     }
   }
 
-  onCalcPoints(form: NgForm): void {
+  calcPoints(form: NgForm): void {
     this.checkSegment(form);
     this.bluesSelected = (this.pointsSelected !== 'Blues') ? false : true;
     this.userPoints = (this.pointsSelected !== 'Blues') ? null : 'None';
@@ -108,6 +114,28 @@ export class CoefficientsPage implements OnInit {
         this.bluesSelected = true;
         this.userPoints = this.coeffService.calcBlues(form, total);
         break;
+    }
+  }
+
+  calcGoal(form: NgForm): void {
+    if (this.userGender && form.value.goalBw && form.value.goalBlue) {
+    this.goalTotal = this.coeffService.calcBluesGoal(form);
+    }
+  }
+
+  onClickCalc(): void {
+    this.calcDiff = !this.calcDiff;
+  }
+
+  calcDelta(form: NgForm): void {
+    if (this.goalTotal && form.value.tTotal) {
+      if (this.goalTotal < form.value.tTotal) {
+        this.blueDiff = 'achieved';
+        this.hBlueDiff = 'achieved';
+      } else {
+        this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + ' kg remaining';
+        this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + ' kg remaining';
+      }
     }
   }
 }

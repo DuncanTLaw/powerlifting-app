@@ -89,7 +89,7 @@
     </ion-col>
   </ion-row>
   <ion-row class="ion-align-items-center ion-justify-content-center" *ngIf="tWeight&&barLoaded">
-    <ion-col class="ion-no-padding" style="margin: 0 3px;" size="auto">
+    <ion-col class="ion-no-padding" style="margin: 0 3px 8px 3px;" size="auto">
       <ion-badge
           [color]="loaderService.getBadgeColor(barWeight)"
         >
@@ -106,7 +106,7 @@
           {{ plate }}
         </ion-badge>
     </ion-col>
-    <ion-col class="ion-no-padding" style="margin: 0 3px;" size="auto" *ngIf="compCollars">
+    <ion-col class="ion-no-padding" style="margin: 0 3px 8px 3px;" size="auto" *ngIf="compCollars">
       <ion-badge
         [color]="loaderService.getBadgeColor(2.5)"
         style="padding-top: 5px; padding-bottom: 5px;"
