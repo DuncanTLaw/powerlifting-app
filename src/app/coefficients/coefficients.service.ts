@@ -156,13 +156,17 @@ export class CoeffService {
   }
 
   calcBlues(form: NgForm, total: number): string {
-    const ipfPoints: number = this.calcIPF(form, total);
-    if (ipfPoints < this.bluesConst.half) {
+    if (!this.benchOnly) { // Hard coded for now since Blues Committee does not give Blues for bench-only lifters (?)
+      const ipfPoints: number = this.calcIPF(form, total);
+      if (ipfPoints < this.bluesConst.half) {
+        return 'None';
+      } else if (ipfPoints >= this.bluesConst.half && ipfPoints < this.bluesConst.full) {
+        return'Half Blue';
+      } else {
+        return 'Full Blue';
+      }
+    } else{
       return 'None';
-    } else if (ipfPoints >= this.bluesConst.half && ipfPoints < this.bluesConst.full) {
-      return'Half Blue';
-    } else {
-      return 'Full Blue';
     }
   }
 
