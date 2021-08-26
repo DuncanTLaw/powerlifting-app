@@ -7,106 +7,106 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-    <ion-col size-xs="12" size-md="6">
-      <ion-card id="timerCard">
-        <ion-progress-bar
-          color="danger"
-          [attr.value]="(timeRemaining !== 0) ? timeRemaining/secondsSelected : 0"
-          [attr.buffer]="(!timerRunning && timeRemaining) ? timeRemaining/secondsSelected : 1"
-        ></ion-progress-bar>
-        <ion-card-content>
-          <ion-row class="ion-justify-content-center">
-            <ion-text
-              style="font-size: 36pt;"
-              [ngClass]="{blink: !timerRunning}"
+      <ion-col size-xs="12" size-md="6">
+        <ion-card id="timerCard">
+          <ion-progress-bar
+            color="danger"
+            [attr.value]="(timeRemaining !== 0) ? timeRemaining/secondsSelected : 0"
+            [attr.buffer]="(!timerRunning && timeRemaining) ? timeRemaining/secondsSelected : 1"
+          ></ion-progress-bar>
+          <ion-card-content>
+            <ion-row class="ion-justify-content-center">
+              <ion-text
+                style="font-size: 36pt;"
+                [ngClass]="{blink: !timerRunning}"
+              >
+                {{ timeRemaining }}<span *ngIf="timeRemaining">s</span>
+              </ion-text>
+            </ion-row>
+            <ion-row
+              class="ion-justify-content-evenly"
+              style="margin-bottom: 5px;"
             >
-              {{ timeRemaining }}<span *ngIf="timeRemaining">s</span>
+              <ion-button
+                color="light"
+                (click)="onClickLHS()"
+                [disabled]="!secondsSelected"
+              >
+                {{ lhsButtonText }}
+              </ion-button>
+              <ion-button
+                color="success"
+                (click)="onClickRHS()"
+                [disabled]="!secondsSelected"
+              >
+              {{ rhsButtonText }}
+              </ion-button>
+            </ion-row>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label position="fixed">Rest:</ion-label>
+                <ion-input
+                  readonly
+                  [(ngModel)]="timeSelected"
+                  (click)="showTimePicker()"
+                ></ion-input>
+              </ion-item>
+            </ion-list>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label>Keep screen awake</ion-label>
+                <ion-toggle [(ngModel)]="allowAwake" (ionChange)="onToggleAwake()"></ion-toggle>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size-xs="12" size-md="6">
+        <ion-card id="setsCard">
+          <ion-card-content>
+            <ion-list lines="none">
+              <ion-item>
+                <ion-label position="fixed">Protocol:</ion-label>
+                <ion-input
+                  readonly
+                  [(ngModel)]="setsSelected"
+                  (click)="showSetsPicker()"
+                ></ion-input>
+                <ion-note slot="end">sets</ion-note>
+              </ion-item>
+            </ion-list>
+            <ion-row
+              class="ion-margin-top ion-justify-content-between ion-align-items-center"
+            >
+              <ion-fab-button
+                (click)="onRemoveSet()"
+                size="small"
+                color="light"
+              >
+                <ion-icon name="remove"></ion-icon>
+              </ion-fab-button>
+              <ion-text
+              style="font-size: xx-large;"
+              *ngIf="setsSelected"
+            >
+              {{ setsCompleted }} / {{ setsSelected }}
             </ion-text>
-          </ion-row>
-          <ion-row
-            class="ion-justify-content-evenly"
-            style="margin-bottom: 5px;"
-          >
-            <ion-button
-              color="light"
-              (click)="onClickLHS()"
-              [disabled]="!secondsSelected"
+              <ion-fab-button
+                (click)="onAddSet()"
+                size="small"
+                color="light"
+              >
+                <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+            </ion-row>
+            <ion-row
+              *ngIf="setsSelected"
+              class="ion-align-items-center ion-justify-content-center"
             >
-              {{ lhsButtonText }}
-            </ion-button>
-            <ion-button
-              color="success"
-              (click)="onClickRHS()"
-              [disabled]="!secondsSelected"
-            >
-            {{ rhsButtonText }}
-            </ion-button>
-          </ion-row>
-          <ion-list lines="none">
-            <ion-item>
-              <ion-label position="fixed">Rest:</ion-label>
-              <ion-input
-                readonly
-                [(ngModel)]="timeSelected"
-                (click)="showTimePicker()"
-              ></ion-input>
-            </ion-item>
-          </ion-list>
-          <ion-list lines="none">
-            <ion-item>
-              <ion-label>Keep screen awake</ion-label>
-              <ion-toggle [(ngModel)]="allowAwake" (ionChange)="onToggleAwake()"></ion-toggle>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    <ion-col size-xs="12" size-md="6">
-      <ion-card id="setsCard">
-        <ion-card-content>
-          <ion-list lines="none">
-            <ion-item>
-              <ion-label position="fixed">Protocol:</ion-label>
-              <ion-input
-                readonly
-                [(ngModel)]="setsSelected"
-                (click)="showSetsPicker()"
-              ></ion-input>
-              <ion-note slot="end">sets</ion-note>
-            </ion-item>
-          </ion-list>
-          <ion-row
-            class="ion-margin-top ion-justify-content-between ion-align-items-center"
-          >
-            <ion-fab-button
-              (click)="onRemoveSet()"
-              size="small"
-              color="light"
-            >
-              <ion-icon name="remove"></ion-icon>
-            </ion-fab-button>
-            <ion-text
-            style="font-size: xx-large;"
-            *ngIf="setsSelected"
-          >
-            {{ setsCompleted }} / {{ setsSelected }}
-          </ion-text>
-            <ion-fab-button
-              (click)="onAddSet()"
-              size="small"
-              color="light"
-            >
-              <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-          </ion-row>
-          <ion-row
-            *ngIf="setsSelected"
-            class="ion-align-items-center ion-justify-content-center"
-          >
-            {{ setsSelected - setsCompleted }} sets remaining
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    </ion-row>
+              {{ setsSelected - setsCompleted }} sets remaining
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+  </ion-row>
 </ion-grid>

@@ -7,136 +7,227 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-card>
-          <form #coeff="ngForm">
-            <ion-card-header>
-              <ion-card-title>{{ pointsSelected }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-label position="fixed">Gender</ion-label>
-              <ion-segment
-                [(ngModel)]="userGender"
-                [ngModelOptions]="{standalone: true}"
-                (ionChange)="onChangeGender(coeff); onCalcPoints(coeff);"
-              >
-                <ion-segment-button value="male">
-                  <ion-label>Male</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="female">
-                  <ion-label>Female</ion-label>
-                </ion-segment-button>
-              </ion-segment>
-              <br/>
-              <ion-label position="fixed">Point system</ion-label>
-              <ion-select
-                [(ngModel)]="pointsSelected"
-                [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="onCalcPoints(coeff)"
-                interface="popover"
-              >
-                <ion-select-option value="IPF GL">IPF GL</ion-select-option>
-                <ion-select-option value="IPF">IPF</ion-select-option>
-                <ion-select-option value="Dots">DOTS</ion-select-option>
-                <ion-select-option value="Wilks">Wilks</ion-select-option>
-                <ion-select-option value="Blues">Blues</ion-select-option>
-              </ion-select>
-              <br/>
-              <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentSelected">
-                <ion-segment-button value="total">
-                  <ion-label>Total</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="threeLifts">
-                  <ion-label>SBD</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="onlyBP">
-                  <ion-label>Bench</ion-label>
-                </ion-segment-button>
-              </ion-segment>
-              <br/>
-              <ion-list>
-                <ion-item>
-                  <ion-label position="fixed">bodyweight</ion-label>
-                  <ion-input
-                    type="number"
-                    [ngModel]="userBw"
-                    name="weight"
-                    (ngModelChange)="onCalcPoints(coeff)"
-                  ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
-                </ion-item>
-                <ion-item [hidden]="segmentSelected !== 'total'">
-                  <ion-label position="fixed">total</ion-label>
-                  <ion-input
-                    type="number"
-                    [(ngModel)]="userTotal"
-                    name="total"
-                    (ngModelChange)="onCalcPoints(coeff)"
-                  ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
-                </ion-item>
-                <ion-item [hidden]="segmentSelected !== 'threeLifts'">
-                  <ion-label position="fixed">squat</ion-label>
-                  <ion-input
-                    type="number"
-                    [ngModel]="userSq"
-                    name="sq"
-                    (ngModelChange)="onCalcPoints(coeff)"
-                  ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
-                </ion-item>
-                <ion-item [hidden]="segmentSelected !== 'threeLifts'">
-                  <ion-label position="fixed">bench</ion-label>
-                  <ion-input
-                    type="number"
-                    [ngModel]="userBp"
-                    name="bp"
-                    (ngModelChange)="onCalcPoints(coeff)"
-                  ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
-                </ion-item>
-                <ion-item [hidden]="segmentSelected !== 'threeLifts'">
-                  <ion-label position="fixed">deadlift</ion-label>
-                  <ion-input
-                    type="number"
-                    name="dl"
-                    [ngModel]="userDl"
-                    (ngModelChange)="onCalcPoints(coeff)"
-                  ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
-                </ion-item>
-                <ion-item [hidden]="segmentSelected !== 'onlyBP'">
-                  <ion-label position="fixed">bench</ion-label>
-                  <ion-input
-                    type="number"
-                    [ngModel]="userBp"
-                    name="bp"
-                    (ngModelChange)="onCalcPoints(coeff)"
-                  ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
-                </ion-item>
-              </ion-list>
-              <ion-row [hidden]="segmentSelected !== 'threeLifts'" class="ion-justify-content-end ion-padding-top">
-                = {{ userTotal || 0 }}kg total
-              </ion-row>
-              <br/>
-              <ion-row id="result" *ngIf="!bluesSelected else bluesBlock">
-                <ion-text class="ion-padding-end" color="success">
-                  {{ (userPoints | number : '1.2-2') || '0.00' }}
-                </ion-text> {{ pointsSelected }} points
-              </ion-row>
-              <ng-template #bluesBlock>
-                <ion-row id="result">
-                  <ion-text class="ion-padding-end" id="blues">
-                    {{ userPoints }}
-                  </ion-text> achieved
+        <ion-col size-xs="12" [attr.size-md]="pointsSelected!=='Blues'?12:6">
+          <ion-card>
+            <form #coeff="ngForm">
+              <ion-card-header>
+                <ion-card-title *ngIf="pointsSelected!=='Blues'">{{ pointsSelected }}</ion-card-title>
+                <ion-card-title *ngIf="pointsSelected==='Blues'">Oxford {{ pointsSelected }}</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-label position="fixed">Gender</ion-label>
+                <ion-segment
+                  [(ngModel)]="userGender"
+                  [ngModelOptions]="{standalone: true}"
+                  (ionChange)="onChangeGender(coeff); calcPoints(coeff); calcGoal(coeff)"
+                >
+                  <ion-segment-button value="male">
+                    <ion-label>Male</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="female">
+                    <ion-label>Female</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+                <br/>
+                <ion-label position="fixed">Point system</ion-label>
+                <ion-select
+                  [(ngModel)]="pointsSelected"
+                  [ngModelOptions]="{standalone: true}"
+                  (ngModelChange)="calcPoints(coeff)"
+                  interface="popover"
+                >
+                  <ion-select-option value="IPF GL">IPF GL</ion-select-option>
+                  <ion-select-option value="IPF">IPF</ion-select-option>
+                  <ion-select-option value="Dots">DOTS</ion-select-option>
+                  <ion-select-option value="Wilks">Wilks</ion-select-option>
+                  <ion-select-option value="Blues">Oxford Blues</ion-select-option>
+                </ion-select>
+                <br/>
+                <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentSelected">
+                  <ion-segment-button value="total">
+                    <ion-label>Total</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="threeLifts">
+                    <ion-label>SBD</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="onlyBP">
+                    <ion-label>Bench</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+                <br/>
+                <ion-list>
+                  <ion-item>
+                    <ion-label position="fixed">bodyweight</ion-label>
+                    <ion-input
+                      type="number"
+                      [ngModel]="userBw"
+                      name="weight"
+                      (ngModelChange)="calcPoints(coeff)"
+                    ></ion-input>
+                    <ion-note slot="end">kg</ion-note>
+                  </ion-item>
+                  <ion-item [hidden]="segmentSelected!=='total'">
+                    <ion-label position="fixed">total</ion-label>
+                    <ion-input
+                      type="number"
+                      [(ngModel)]="userTotal"
+                      name="total"
+                      (ngModelChange)="calcPoints(coeff)"
+                    ></ion-input>
+                    <ion-note slot="end">kg</ion-note>
+                  </ion-item>
+                  <ion-item [hidden]="segmentSelected!=='threeLifts'">
+                    <ion-label position="fixed">squat</ion-label>
+                    <ion-input
+                      type="number"
+                      [ngModel]="userSq"
+                      name="sq"
+                      (ngModelChange)="calcPoints(coeff)"
+                    ></ion-input>
+                    <ion-note slot="end">kg</ion-note>
+                  </ion-item>
+                  <ion-item [hidden]="segmentSelected!=='threeLifts'">
+                    <ion-label position="fixed">bench</ion-label>
+                    <ion-input
+                      type="number"
+                      [ngModel]="userBp"
+                      name="bp"
+                      (ngModelChange)="calcPoints(coeff)"
+                    ></ion-input>
+                    <ion-note slot="end">kg</ion-note>
+                  </ion-item>
+                  <ion-item [hidden]="segmentSelected!=='threeLifts'">
+                    <ion-label position="fixed">deadlift</ion-label>
+                    <ion-input
+                      type="number"
+                      name="dl"
+                      [ngModel]="userDl"
+                      (ngModelChange)="calcPoints(coeff)"
+                    ></ion-input>
+                    <ion-note slot="end">kg</ion-note>
+                  </ion-item>
+                  <ion-item [hidden]="segmentSelected!=='onlyBP'">
+                    <ion-label position="fixed">bench</ion-label>
+                    <ion-input
+                      type="number"
+                      [ngModel]="userBp"
+                      name="bp"
+                      (ngModelChange)="calcPoints(coeff)"
+                    ></ion-input>
+                    <ion-note slot="end">kg</ion-note>
+                  </ion-item>
+                </ion-list>
+                <ion-row [hidden]="segmentSelected!=='threeLifts'" class="ion-justify-content-end ion-margin-top">
+                  = {{ userTotal || 0 }}kg total
                 </ion-row>
-              </ng-template>
+                <br/>
+                <ion-row id="result" *ngIf="!bluesSelected else bluesBlock">
+                  <ion-text class="ion-padding-end" color="success">
+                    {{ (userPoints | number : '1.2-2') || '0.00' }}
+                  </ion-text> {{ pointsSelected }} points
+                </ion-row>
+                <ng-template #bluesBlock>
+                  <ion-row id="result">
+                    <ion-text class="ion-padding-end" id="blues">
+                      {{ userPoints }}
+                    </ion-text> achieved
+                  </ion-row>
+                </ng-template>
+              </ion-card-content>
+            </form>
+          </ion-card>
+        </ion-col>
 
-            </ion-card-content>
-          </form>
-        </ion-card>
-      </ion-col>
+        <ion-col size-xs="12" size-md="6" *ngIf="pointsSelected==='Blues'">
+          <ion-card>
+            <form #coeff="ngForm">
+              <ion-card-header>
+                <ion-card-title>Blues Goal Toggle</ion-card-title>
+                <ion-card-subtitle>
+                  Calculate what you need to total to obtain your goal Blues certification.
+                </ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list lines="none">
+                  <ion-item>
+                    <ion-label position="fixed">bodyweight</ion-label>
+                    <ion-input
+                      type="number"
+                      ngModel
+                      name="goalBw"
+                      (ionChange)="calcGoal(coeff)"
+                    ></ion-input>
+                    <ion-note slot="end">kg</ion-note>
+                  </ion-item>
+                </ion-list>
+                <ion-label position="fixed">Goal</ion-label>
+                <ion-segment
+                  [(ngModel)]="goalBlue"
+                  name="goalBlue"
+                  (ionChange)="calcGoal(coeff); calcDelta(coeff)"
+                >
+                  <ion-segment-button value="full">
+                    <ion-label>Full Blue</ion-label>
+                  </ion-segment-button>
+                  <ion-segment-button value="half">
+                    <ion-label>Half Blue</ion-label>
+                  </ion-segment-button>
+                </ion-segment>
+                <br/>
+
+                <ion-row class="ion-align-items-center">
+                  <ion-col size="auto">
+                    <ion-buttons>
+                      <ion-button [hidden]="calcDiff" (click)="onClickCalc()">
+                        <ion-icon size="large" name="add-circle"></ion-icon>
+                      </ion-button>
+                      <ion-button [hidden]="!calcDiff" (click)="onClickCalc()">
+                        <ion-icon size="large" name="close-circle"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-col>
+                  <ion-col>
+                    <ion-note>Calculate how far you are away from your goal</ion-note>
+                  </ion-col>
+                </ion-row>
+                <div [hidden]="!calcDiff">
+                  <ion-list lines="none">
+                    <ion-item>
+                      <ion-label position="fixed">total</ion-label>
+                      <ion-input
+                        type="number"
+                        ngModel
+                        name="tTotal"
+                        (ionChange)="calcDelta(coeff)"
+                      ></ion-input>
+                      <ion-note slot="end">kg</ion-note>
+                    </ion-item>
+                  </ion-list>
+                  <ion-row
+                    class="ion-justify-content-end ion-padding-top"
+                    [hidden]="goalBlue!=='half' || !coeff.value.tTotal || !coeff.value.goalBw"
+                  >
+                    Half Blue: {{ hBlueDiff }}
+                  </ion-row>
+                  <ion-row
+                    class="ion-justify-content-end ion-padding-top"
+                    [hidden]="goalBlue!=='full' || !coeff.value.tTotal || !coeff.value.goalBw"
+                  >
+                    Full Blue: {{ blueDiff }}
+                  </ion-row>
+                  <br/>
+                </div>
+
+                <ion-row id="result">
+                  Goal total
+                  <ion-text class="ion-padding-start" color="warning">
+                    {{ goalTotal || 0 }}kg
+                  </ion-text>
+                </ion-row>
+              </ion-card-content>
+            </form>
+          </ion-card>
+        </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
