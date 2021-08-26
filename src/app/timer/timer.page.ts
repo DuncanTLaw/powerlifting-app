@@ -114,7 +114,7 @@ export class TimerPage implements OnInit {
           this.timerRunning = false;
           this.timeEnded = true;
           clearInterval(this.interval);
-          // setTimeout(() => this.presentTimerToast(), this.timeRemaining*1000);
+          // this line to add notification
         }
       }, 1000);
     } else {
