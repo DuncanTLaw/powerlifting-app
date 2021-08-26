@@ -59,6 +59,8 @@ export class CoefficientsPage implements OnInit {
     this.segmentSelected = event.target.value;
     if(this.segmentSelected === 'onlyBP') {
       this.coeffService.benchOnly = true;
+    } else {
+      this.coeffService.benchOnly = false;
     }
   }
 
@@ -86,7 +88,7 @@ export class CoefficientsPage implements OnInit {
     if (this.userGender) {
       if (form.value.weight && this.userTotal) {
         this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
-      } else if (this.coeffService.benchOnly && form.value.bp){
+      } else if (this.segmentSelected === 'onlyBP' && form.value.bp){
         this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
       }
     }
