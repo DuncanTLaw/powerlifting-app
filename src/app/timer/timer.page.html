@@ -69,9 +69,9 @@
             <ion-item>
               <ion-label position="fixed">Protocol:</ion-label>
               <ion-input
-                type="number"
+                readonly
                 [(ngModel)]="setsSelected"
-                (input)="onSetsChange()"
+                (click)="showSetsPicker(); onSetsChange()"
               ></ion-input>
               <ion-note slot="end">sets</ion-note>
             </ion-item>

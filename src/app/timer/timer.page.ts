@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController, PickerController } from '@ionic/angular';
-import { PickerOptions } from '@ionic/core';
+import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { KeepAwake } from '@capacitor-community/keep-awake';
 
 @Component({
@@ -21,7 +21,6 @@ export class TimerPage implements OnInit {
 
   setsSelected: number;
   setsCompleted = 0;
-  columnOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
   constructor(
     public toastController: ToastController,
@@ -91,6 +90,49 @@ export class TimerPage implements OnInit {
     }
   }
 
+  async showSetsPicker() {
+    const sets = [...Array(50).keys()].map(x => ++x);
+    const setsOptions: Array<PickerColumnOption> = [];
+    for(const set of sets) {
+      setsOptions.push({text: set.toString(), value: set});
+    }
+
+    let pickerAction: string;
+
+		const options: PickerOptions = {
+			buttons: [
+				{
+					text: 'Cancel',
+          handler: () => {
+            pickerAction = 'cancel';
+          }
+				},
+				{
+					text: 'Done',
+          handler: () => {
+            pickerAction = 'done';
+          }
+				},
+			],
+			columns: [
+				{
+					name: 'sets',
+					options: setsOptions
+				},
+			],
+		};
+
+		const picker = await this.pickerController.create(options);
+    picker.keyboardClose = true;
+		picker.present();
+		picker.onDidDismiss().then(async () => {
+      if (pickerAction === 'done') {
+        const col = await picker.getColumn('sets');
+        this.setsSelected = col.options[col.selectedIndex].value;
+      }
+		});
+	}
+
   onSetsChange(): void {
     this.setsCompleted = 0;
   }
@@ -119,16 +161,4 @@ export class TimerPage implements OnInit {
     });
     await toast.present();
   }
-
-  // async showPicker() {
-  //   const options: PickerOptions = {
-  //     columns: [],
-  //     buttons: []
-  //   };
-  //   const picker = await this.pickerController.create(options);
-  //   picker.present();
-  //   picker.onDidDismiss().then(data => {
-  //     const sets = picker.getColumn()
-  //   });
-  // }
 }
