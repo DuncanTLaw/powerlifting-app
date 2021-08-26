@@ -96,7 +96,7 @@
           BAR
         </ion-badge>
     </ion-col>
-    <ion-col class="ion-no-padding ion-margin-bottom" style="margin: 0 3px;" size="auto" *ngFor="let plate of barLoaded">
+    <ion-col class="ion-no-padding" style="margin: 0 3px 8px 3px;" size="auto" *ngFor="let plate of barLoaded">
       <ion-badge
           [color]="loaderService.getBadgeColor(plate)"
           [style.padding-top]="loaderService.getHeight(plate)"
