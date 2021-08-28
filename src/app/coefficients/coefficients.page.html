@@ -220,7 +220,7 @@
                 <ion-row id="result">
                   Goal total
                   <ion-text class="ion-padding-start" color="warning">
-                    {{ goalTotal || 0 }}{{ weightUnitService.userUnit }}
+                    {{ (goalTotal | number : '1.2-2') || 0 }}{{ weightUnitService.userUnit }}
                   </ion-text>
                 </ion-row>
               </ion-card-content>

@@ -128,8 +128,8 @@ export class CoefficientsPage implements OnInit {
         this.blueDiff = 'achieved';
         this.hBlueDiff = 'achieved';
       } else {
-        this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + ' kg remaining';
-        this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + ' kg remaining';
+        this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + this.weightUnitService.userUnit + ' remaining';
+        this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + this.weightUnitService.userUnit + ' remaining';
       }
     }
   }
