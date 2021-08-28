@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@capacitor/storage';
+
 import { NgForm } from '@angular/forms';
 import { GenderCoeff, GLModel } from '../numeric-tables/coefficient.model';
 import { DOTSCOEFF } from '../numeric-tables/dots';
@@ -29,6 +31,22 @@ export class CoeffService {
   bluesConst: Blues = {
     half: 500,
     full: 560
+  };
+
+  setGender = async (userGender: string) => {
+    const storeGender = (userGender === 'male') ? 'male' : 'female';
+
+    await Storage.set({
+      key: 'gender',
+      value: storeGender
+    });
+  };
+
+  checkGender = async () => {
+    const { value } = await Storage.get({ key: 'gender' });
+    if (value) {
+      this.gender = (value === 'male') ? 'male' : 'female';
+    }
   };
 
   dotsPoly(a: number, b: number, c: number, d: number, e: number, x: number): number {
