@@ -9,7 +9,9 @@ const LB_IN_KG = 2.2046226218488;
 export class WeightUnitService {
   userUnit = 'kg';
 
-  constructor() { }
+  constructor() {
+    this.checkUnit();
+  }
 
   setUnit = async (): Promise<void> => {
     const storeUnit = (this.userUnit === 'kg') ? 'kg' : 'lb';

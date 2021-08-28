@@ -59,6 +59,18 @@
     </ion-button>
   </ion-content>
   <ion-footer class="ion-padding ion-text-justify">
+    <ion-segment
+      [(ngModel)]="weightUnitService.userUnit"
+      (ionChange)="weightUnitService.setUnit()"
+    >
+      <ion-segment-button value="kg">
+        <ion-label>kg</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="lb">
+        <ion-label>lb</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <br/>
     <ion-note>
       Have an issue, or want to suggest a feature? Send an email
       <a href="mailto:lawdtk@gmail.com">here</a>
