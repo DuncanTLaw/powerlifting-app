@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 
-
-type WeightUnit = 'kg' | 'lbs';
-
-const KG: WeightUnit = 'kg';
-const LBS: WeightUnit = 'lbs';
-
 const LB_IN_KG = 2.2046226218488;
 
 @Injectable({
@@ -32,4 +26,12 @@ export class WeightUnitService {
       this.userUnit = (value === 'kg') ? 'kg' : 'lb';
     }
   };
+
+  convertToKilo(weight: number): number {
+    return (this.userUnit === 'lb') ? weight * LB_IN_KG : weight;
+  }
+
+  converToLb(weight: number): number {
+    return (this.userUnit === 'lb') ? weight / LB_IN_KG : weight;
+  }
 }
