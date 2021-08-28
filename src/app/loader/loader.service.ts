@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WeightUnitService } from '../settings/weight-unit.service';
 
 export interface Plates {
   weight: number; pairs: number;
@@ -8,10 +9,30 @@ export interface Plate {
   weight: number; count: number;
 };
 
+interface FunctionHandler {
+  [unit: string]: {
+    heights(plate: number): number;
+    colours(plate: number): string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class LoaderService {
+  handleUnits: FunctionHandler = {
+    kg: {
+      heights: (plate) => this.kgHeights(plate),
+      colours: (plate) => this.getKGBadgeColor(plate)
+    },
+    lb: {
+      heights: (plate) => this.lbHeights(plate),
+      colours: () => 'medium'
+    },
+  };
+
+  constructor(private weightUnitService: WeightUnitService){}
+
   kgHeights(plate: number): number {
     const maxHeight = 80;
 
@@ -48,33 +69,49 @@ export class LoaderService {
     return height;
   };
 
-  getHeight(plate: number): string {
-    const heights = this.kgHeights;
-    return `${heights(plate)}px`;
+  lbHeights(plate: number): number {
+    const maxHeight = 80;
+
+    let height: number;
+    switch (plate) {
+      // 45 is default maxHeight
+      case 25:
+        height = maxHeight * 0.9;
+        break;
+      case 10:
+        height = maxHeight * 0.8;
+        break;
+      case 5:
+        height = maxHeight * 0.7;
+        break;
+      case 2.5:
+        height = maxHeight * 0.6;
+        break;
+      case 1.25:
+        height = maxHeight * 0.5;
+        break;
+      case 1:
+        height = maxHeight * 0.4;
+        break;
+      case 0.5:
+        height = maxHeight * 0.3;
+        break;
+      case 0.25:
+        height = maxHeight * 0.2;
+        break;
+      default:
+        height = maxHeight;
+    }
+    return height;
   };
 
-  kgColours(plate: number): string {
-    switch (plate) {
-      case 25:
-        return 'red';
-      case 20:
-        return 'blue';
-      case 15:
-        return 'yellow';
-      case 10:
-        return 'green';
-      case 5:
-        return 'white';
-      case 2.5:
-        return 'black';
-      case 1.25:
-        return 'gray';
-      default:
-        return 'black';
-    }
-  }
+  getHeight(plate: number): string {
+    const heights = (this.weightUnitService.userUnit === 'lb') ?
+      this.handleUnits.lb.heights(plate) : this.handleUnits.kg.heights(plate);
+    return `${heights}px`;
+  };
 
-  getBadgeColor(plate: number): string {
+  getKGBadgeColor(plate: number): string {
     switch (plate) {
       case 25:
         return 'danger';
