@@ -28,10 +28,10 @@ export class WeightUnitService {
   };
 
   convertToKilo(weight: number): number {
-    return (this.userUnit === 'lb') ? weight * LB_IN_KG : weight;
+    return (this.userUnit === 'lb') ? weight / LB_IN_KG : weight;
   }
 
-  converToLb(weight: number): number {
-    return (this.userUnit === 'lb') ? weight / LB_IN_KG : weight;
+  convertToLb(weight: number): number {
+    return (this.userUnit === 'lb') ? weight * LB_IN_KG : weight;
   }
 }
