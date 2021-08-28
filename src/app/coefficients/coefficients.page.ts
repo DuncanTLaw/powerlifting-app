@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { WeightUnitService } from '../settings/weight-unit.service';
 
 import { CoeffService } from './coefficients.service';
 
@@ -26,7 +27,10 @@ export class CoefficientsPage implements OnInit {
   blueDiff: string;
   hBlueDiff: string;
 
-  constructor(private coeffService: CoeffService) { }
+  constructor(
+    public weightUnitService: WeightUnitService,
+    private coeffService: CoeffService
+  ) { }
 
   ngOnInit() {
     this.coeffService.checkGender().then(
