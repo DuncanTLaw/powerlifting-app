@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RPEPct, RPEPCTTABLE } from '../numeric-tables/RPE-pct';
+import { WeightUnitService } from '../settings/weight-unit.service';
 
 @Component({
   selector: 'app-rpe',
@@ -13,7 +14,7 @@ export class RpePage implements OnInit {
 
   scale: RPEPct = RPEPCTTABLE;
 
-  constructor() { }
+  constructor(public weightUnitService: WeightUnitService) { }
 
   ngOnInit() {
   }

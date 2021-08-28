@@ -23,7 +23,7 @@
                     name="haveWeight"
                     (ngModelChange)="onCalcERM(projected); onCalcELOAD(required)"
                   ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
+                  <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
                 </ion-item>
                 <ion-item>
                   <ion-label position="fixed">reps</ion-label>
