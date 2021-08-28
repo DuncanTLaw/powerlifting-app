@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WeightUnitService } from 'src/app/settings/weight-unit.service';
 import { LoaderService, Plates } from '../loader.service';
 
 @Component({
@@ -30,17 +31,20 @@ export class BarLoaderComponent implements OnInit {
   ];
   barLoaded: any[];
 
-  constructor(public loaderService: LoaderService) { }
+  constructor(
+    public weightUnitService: WeightUnitService,
+    public loaderService: LoaderService
+  ) { }
 
   ngOnInit() {}
 
   onCalcBar(): void {
     if (
-      (this.compCollars && (this.tWeight > (this.barWeight + this.collarsWeight))) ||
-      (!this.compCollars && (this.tWeight > this.barWeight + this.collarsWeight))
+      (this.compCollars && (this.weightUnitService.convertToKilo(this.tWeight) > (this.barWeight + this.collarsWeight))) ||
+      (!this.compCollars && (this.weightUnitService.convertToKilo(this.tWeight) > this.barWeight + this.collarsWeight))
     ) {
       this.barLoaded = this.loaderService.weightToBarLoad(
-        this.tWeight, this.plateCount, this.barWeight, this.compCollars
+        this.weightUnitService.convertToKilo(this.tWeight), this.plateCount, this.barWeight, this.compCollars
       );
     } else {
       this.barLoaded = null;

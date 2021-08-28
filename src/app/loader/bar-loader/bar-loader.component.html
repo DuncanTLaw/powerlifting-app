@@ -14,7 +14,7 @@
                 [(ngModel)]="tWeight"
                 (ngModelChange)="onCalcBar()"
               ></ion-input>
-              <ion-note slot="end">kg</ion-note>
+              <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
             </ion-item>
           </ion-list>
           <ion-button
