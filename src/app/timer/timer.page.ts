@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController, PickerController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { KeepAwake } from '@capacitor-community/keep-awake';
+import { AwakeService } from '../settings/awake.service';
 
 @Component({
   selector: 'app-timer',
@@ -17,17 +18,18 @@ export class TimerPage implements OnInit {
   interval: any;
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
-  allowAwake = false;
 
   setsSelected: number;
   setsCompleted = 0;
 
   constructor(
     public toastController: ToastController,
-    private pickerController: PickerController
+    private pickerController: PickerController,
+    public awakeService: AwakeService
   ) { }
 
   ngOnInit() {
+    this.awakeService.checkAwake();
   }
 
   async showTimePicker() {
@@ -132,7 +134,8 @@ export class TimerPage implements OnInit {
   }
 
   onToggleAwake(): void {
-    if(this.allowAwake && this.timerRunning ) {
+    this.awakeService.setAwake();
+    if(this.awakeService.allowAwake && this.timerRunning ) {
       this.keepAwake();
     } else {
       this.allowSleep();
