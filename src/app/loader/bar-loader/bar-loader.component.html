@@ -41,7 +41,7 @@
             <div class="ion-text-center">Collar weight</div>
             <ion-segment
               (ionChange)="collarSegmentChanged($event); onCalcBar();"
-              [value]="weightUnitService.userUnit==='lb' ? false : compCollars"
+              [value]="compCollars"
               [disabled]="weightUnitService.userUnit==='lb'"
             >
               <ion-segment-button [value]="false">
