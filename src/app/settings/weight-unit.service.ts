@@ -14,7 +14,7 @@ export class WeightUnitService {
   }
 
   setUnit = async (): Promise<void> => {
-    const storeUnit = (this.userUnit === 'kg') ? 'kg' : 'lb';
+    const storeUnit = (this.userUnit === 'lb') ? 'lb' : 'kg';
 
     await Storage.set({
       key: 'unit',
@@ -25,7 +25,7 @@ export class WeightUnitService {
   checkUnit = async (): Promise<void> => {
     const { value } = await Storage.get({ key: 'unit' });
     if (value) {
-      this.userUnit = (value === 'kg') ? 'kg' : 'lb';
+      this.userUnit = (value === 'lb') ? 'lb' : 'kg';
     }
   };
 
