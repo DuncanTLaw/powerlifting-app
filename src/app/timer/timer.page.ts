@@ -125,13 +125,9 @@ export class TimerPage implements OnInit {
     }
   }
 
-  async keepAwake() {
-    await KeepAwake.keepAwake();
-  };
+  keepAwake = async (): Promise<void> => await KeepAwake.keepAwake();
 
-  async allowSleep() {
-    await KeepAwake.allowSleep();
-  }
+  allowSleep = async (): Promise<void> => await KeepAwake.allowSleep();
 
   onToggleAwake(): void {
     this.awakeService.setAwake();
@@ -185,9 +181,7 @@ export class TimerPage implements OnInit {
 		});
 	}
 
-  onSetsChange(): void {
-    this.setsCompleted = 0;
-  }
+  onSetsChange = (): number => this.setsCompleted = 0;
 
   onRemoveSet(): void {
     if (this.setsCompleted > 0 && this.setsSelected){

@@ -118,9 +118,7 @@ export class CoefficientsPage implements OnInit {
     }
   }
 
-  onClickCalc(): void {
-    this.calcDiff = !this.calcDiff;
-  }
+  onClickCalc = (): boolean => this.calcDiff = !this.calcDiff;;
 
   calcDelta(form: NgForm): void {
     if (this.goalTotal && form.value.tTotal) {

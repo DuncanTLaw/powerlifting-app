@@ -17,8 +17,6 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
   }
 
-  onClickButton(): void {
-    this.menuController.close();
-  }
+  onClickButton = (): Promise<boolean> => this.menuController.close();
 
 }
