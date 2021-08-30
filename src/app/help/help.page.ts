@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HelpService } from './help.service';
 
 interface Pages {
   title: string;
@@ -53,7 +54,7 @@ export class HelpPage implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(public helpService: HelpService) { }
 
   ngOnInit() {
   }
