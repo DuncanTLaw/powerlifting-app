@@ -108,9 +108,23 @@ export class TimerPage implements OnInit {
     if(this.timerRunning) {
       this.timeEnded = false;
       this.rhsButtonText = 'Pause';
+
+      let prevTimestamp = Date.now();
       this.interval = setInterval(() => {
         if(this.timeRemaining > 0) {
           this.timeRemaining--;
+
+          let timeInBackground = 0;
+          const currentTimestamp = Date.now();
+          const timeDelta = currentTimestamp - prevTimestamp;
+          timeInBackground += Math.round(timeDelta / 1000);
+          if (timeInBackground > 1) {
+            this.timeRemaining = this.timeRemaining - timeInBackground;
+            if (this.timeRemaining < 0) {
+              this.timeRemaining = 0;
+            }
+          }
+          prevTimestamp = currentTimestamp;
         } else {
           this.rhsButtonText = 'Start';
           this.timerRunning = false;
