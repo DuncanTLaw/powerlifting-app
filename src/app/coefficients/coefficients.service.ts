@@ -36,7 +36,7 @@ export class CoeffService {
 
   constructor(private weightUnitService: WeightUnitService) {}
 
-  setGender = async (userGender: string) => {
+  setGender = async (userGender: string): Promise<void> => {
     const storeGender = (userGender === 'male') ? 'male' : 'female';
 
     await Storage.set({
@@ -45,7 +45,7 @@ export class CoeffService {
     });
   };
 
-  checkGender = async () => {
+  checkGender = async (): Promise<void> => {
     const { value } = await Storage.get({ key: 'gender' });
     if (value) {
       this.gender = (value === 'male') ? 'male' : 'female';
