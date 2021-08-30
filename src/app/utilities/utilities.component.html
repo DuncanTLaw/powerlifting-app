@@ -31,7 +31,7 @@
 </ion-list>
 <ion-row class="ion-align-items-center ion-margin-top">
   <ion-col size="auto">
-     <ion-button size="small" (click)="writeToClipboard()">
+     <ion-button size="small" (click)="writeToClipboard()" [disabled]="!totalNum">
       Copy
     </ion-button>
   </ion-col>

@@ -44,13 +44,11 @@ export class UtilitiesComponent implements OnInit {
   }
 
   writeToClipboard = async () => {
-    if (this.totalNum) {
-      await Clipboard.write({
-      // eslint-disable-next-line id-blacklist
-        string: this.totalNum.toString()
-      });
-      this.presentSetsToast();
-    }
+    await Clipboard.write({
+    // eslint-disable-next-line id-blacklist
+      string: this.totalNum.toString()
+    });
+    this.presentSetsToast();
   };
 
   async presentSetsToast() {
