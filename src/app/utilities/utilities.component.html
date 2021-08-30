@@ -29,8 +29,15 @@
     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
   </ion-item>
 </ion-list>
-<ion-row class="ion-justify-content-end ion-margin-top">
-  = {{ totalNum || 0 }}{{ weightUnitService.userUnit | async }} total
+<ion-row class="ion-align-items-center ion-margin-top">
+  <ion-col size="auto">
+     <ion-button size="small" (click)="writeToClipboard()">
+      Copy
+    </ion-button>
+  </ion-col>
+  <ion-col class="ion-text-end">
+    = {{ totalNum || 0 }}{{ weightUnitService.userUnit | async }} total
+  </ion-col>
 </ion-row>
 
 <hr/>
@@ -46,17 +53,22 @@
   </ion-item>
 </ion-list>
 <ion-row class="ion-align-items-center">
-  <ion-buttons class="ion-margin-end">
-    <ion-button (click)="onSwitchConversion()">
-      <ion-icon name="swap-vertical"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  <div [hidden]="convertedNum">
-    convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
-  </div>
-  <div [hidden]="!convertedNum">
-    converts to {{ convertedNum| number : '1.2-2' }} {{ convertedUnit }}
-  </div>
+  <ion-col size="auto">
+    <ion-buttons class="ion-margin-end">
+      <ion-button (click)="onSwitchConversion()">
+        <ion-icon name="swap-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-col>
+  <ion-col>
+    <div [hidden]="convertedNum">
+      convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
+    </div>
+    <div [hidden]="!convertedNum">
+      converts to {{ convertedNum| number : '1.2-2' }} {{ convertedUnit }}
+    </div>
+  </ion-col>
+
 </ion-row>
   </ion-card-content>
 </ion-card>

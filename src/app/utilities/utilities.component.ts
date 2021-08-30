@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Clipboard } from '@capacitor/clipboard';
 import { WeightUnitService } from '../settings/weight-unit.service';
 
 const LB_IN_KG = 2.2046226218488;
@@ -37,6 +38,16 @@ export class UtilitiesComponent implements OnInit {
     const dl = (!this.deadliftNum) ? 0 : this.deadliftNum;
     this.totalNum = sq + bp + dl;
   }
+
+  writeToClipboard = async () => {
+    if (this.totalNum) {
+      await Clipboard.write({
+      // eslint-disable-next-line id-blacklist
+        string: this.totalNum.toString()
+      });
+    }
+
+  };
 
   onSwitchConversion(): void {
     if (this.conversionUnit === 'lb') {
