@@ -10,7 +10,7 @@
           <ion-card-subtitle>(collars automatically added)</ion-card-subtitle>
           <ion-list>
             <ion-item
-              *ngFor="let plate of plateCount; trackBy:loaderService.trackItems; let i = index;"
+              *ngFor="let plate of plateCount; trackBy:loaderService.trackItems"
             >
               <ion-row class="ion-align-items-center">
                 <ion-col>
@@ -23,7 +23,7 @@
                 <ion-col>
                   <ion-input
                     type="number"
-                    [(ngModel)]="plateCount[i].count"
+                    [(ngModel)]="plate.count"
                     [name]="plate.weight.toString()"
                     placeholder="0"
                     (ngModelChange)="onCountPlates()"
