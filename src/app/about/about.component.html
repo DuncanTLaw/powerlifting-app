@@ -14,12 +14,12 @@
       <summary><ion-note>About the developer</ion-note></summary>
       <ion-list lines="none">
         <p class="ion-text-justify">
-          Duncan Law is currently a third-year undergraduate student studying Engineering Science
-          in the University of Oxford. He also competes in
+          Duncan Law is currently a third-year undergraduate studying Engineering Science
+          in the University of Oxford. He competes in
           <a href="https://www.britishpowerlifting.org/">British Powerlifting</a>
           (under the
           <a href="https://www.powerlifting.sport/">IPF</a>)
-          as a Junior lifter in the 83kg weight category.
+          as a Junior lifter in the 83kg weight class.
         </p>
         <ion-item>
           <ion-button fill="none" size="clear" href="https://www.openpowerlifting.org/u/duncanlaw">
@@ -59,6 +59,9 @@
     </ion-button>
   </ion-content>
   <ion-footer class="ion-padding ion-text-justify">
+    <ion-note>
+      <ion-label position="fixed">Units</ion-label>
+    </ion-note>
     <ion-segment
       [(ngModel)]="weightUnitService.userUnit"
       (ionChange)="weightUnitService.setUnit()"
