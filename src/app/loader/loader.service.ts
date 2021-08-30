@@ -34,7 +34,7 @@ export class LoaderService {
   constructor(private weightUnitService: WeightUnitService){}
 
   getHeight(plate: number): string {
-    const heights = (this.weightUnitService.userUnit === 'lb') ?
+    const heights = (this.weightUnitService.userUnit.value === 'lb') ?
       this.handleUnits.lb.heights(plate) : this.handleUnits.kg.heights(plate);
     return `${heights}px`;
   };

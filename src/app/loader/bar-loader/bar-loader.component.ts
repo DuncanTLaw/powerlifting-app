@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WeightUnitService } from 'src/app/settings/weight-unit.service';
 import { LoaderService, Plates } from '../loader.service';
 
@@ -7,7 +7,7 @@ import { LoaderService, Plates } from '../loader.service';
   templateUrl: './bar-loader.component.html',
   styleUrls: ['./bar-loader.component.scss'],
 })
-export class BarLoaderComponent implements OnInit {
+export class BarLoaderComponent implements OnInit, OnDestroy {
   tWeight: number;
   compCollars = true;
   barWeight = 20;
@@ -46,22 +46,33 @@ export class BarLoaderComponent implements OnInit {
     public loaderService: LoaderService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.weightUnitService.userUnit.subscribe(() =>
+      this.onCalcBar()
+    );
+  }
+
+  ngOnDestroy() {
+    this.weightUnitService.userUnit.unsubscribe();
+  }
+
 
   onCalcBar(): void {
-    if (this.weightUnitService.userUnit === 'kg') {
+    const unitUsed = this.weightUnitService.userUnit.value;
+
+    if (unitUsed === 'kg') {
       if (
         (this.compCollars && (this.tWeight > (this.barWeight + this.collarsWeight))) ||
         (!this.compCollars && (this.tWeight > this.barWeight + this.collarsWeight))
       ) {
         this.barLoaded = this.loaderService.weightToBarLoad(
-          this.tWeight, this.plateCount[this.weightUnitService.userUnit], this.barWeight, this.compCollars
+          this.tWeight, this.plateCount[unitUsed], this.barWeight, this.compCollars
         );
       }
-    } else if (this.weightUnitService.userUnit === 'lb') {
+    } else if (unitUsed === 'lb') {
       if (this.tWeight > this.barWeight) {
         this.barLoaded = this.loaderService.weightToBarLoad(
-          this.tWeight, this.plateCount[this.weightUnitService.userUnit], 45, false
+          this.tWeight, this.plateCount[unitUsed], 45, false
         );
       }
     }

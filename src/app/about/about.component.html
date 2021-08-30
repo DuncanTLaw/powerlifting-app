@@ -63,8 +63,8 @@
       <ion-label position="fixed">Units</ion-label>
     </ion-note>
     <ion-segment
-      [(ngModel)]="weightUnitService.userUnit"
-      (ionChange)="weightUnitService.setUnit()"
+      [ngModel]="weightUnitService.userUnit | async"
+      (ionChange)="weightUnitService.setUnit($event)"
     >
       <ion-segment-button value="kg">
         <ion-label>kilogram</ion-label>

@@ -64,7 +64,7 @@
                       name="weight"
                       (ngModelChange)="calcPoints(coeff)"
                     ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='total'">
                     <ion-label position="fixed">total</ion-label>
@@ -74,7 +74,7 @@
                       name="total"
                       (ngModelChange)="calcPoints(coeff)"
                     ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='threeLifts'">
                     <ion-label position="fixed">squat</ion-label>
@@ -84,7 +84,7 @@
                       name="sq"
                       (ngModelChange)="calcPoints(coeff)"
                     ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='threeLifts'">
                     <ion-label position="fixed">bench</ion-label>
@@ -94,7 +94,7 @@
                       name="bp"
                       (ngModelChange)="calcPoints(coeff)"
                     ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='threeLifts'">
                     <ion-label position="fixed">deadlift</ion-label>
@@ -104,7 +104,7 @@
                       [ngModel]="userDl"
                       (ngModelChange)="calcPoints(coeff)"
                     ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='onlyBP'">
                     <ion-label position="fixed">bench</ion-label>
@@ -114,11 +114,11 @@
                       name="bp"
                       (ngModelChange)="calcPoints(coeff)"
                     ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
                 </ion-list>
                 <ion-row [hidden]="segmentSelected!=='threeLifts'" class="ion-justify-content-end ion-margin-top">
-                  = {{ userTotal || 0 }}{{ weightUnitService.userUnit }} total
+                  = {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }} total
                 </ion-row>
                 <br/>
                 <ion-row id="result" *ngIf="!bluesSelected else bluesBlock">
@@ -157,7 +157,7 @@
                       name="goalBw"
                       (ionChange)="calcGoal(coeff)"
                     ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
                 </ion-list>
                 <ion-label position="fixed">Goal</ion-label>
@@ -200,7 +200,7 @@
                         name="tTotal"
                         (ionChange)="calcDelta(coeff)"
                       ></ion-input>
-                      <ion-note slot="end">{{ weightUnitService.userUnit }}</ion-note>
+                      <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                     </ion-item>
                   </ion-list>
                   <ion-row
@@ -220,7 +220,7 @@
                 <ion-row id="result">
                   Goal total
                   <ion-text class="ion-padding-start" color="warning">
-                    {{ (goalTotal | number : '1.2-2') || 0 }}{{ weightUnitService.userUnit }}
+                    {{ (goalTotal | number : '1.2-2') || 0 }}{{ weightUnitService.userUnit | async }}
                   </ion-text>
                 </ion-row>
               </ion-card-content>

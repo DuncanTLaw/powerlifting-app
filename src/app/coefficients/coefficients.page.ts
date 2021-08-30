@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { WeightUnitService } from '../settings/weight-unit.service';
 
@@ -9,7 +9,11 @@ import { CoeffService } from './coefficients.service';
   templateUrl: './coefficients.page.html',
   styleUrls: ['./coefficients.page.scss'],
 })
-export class CoefficientsPage implements OnInit {
+export class CoefficientsPage implements OnInit, OnDestroy {
+  // get TD form from template
+  // https://stackoverflow.com/questions/37093432/angular-2-template-driven-form-access-ngform-in-component
+  @ViewChild('coeff', { static: true }) coeffForm: NgForm;
+
   pointsSelected = 'IPF GL';
   segmentSelected = 'total';
   bluesSelected = false;
@@ -40,6 +44,15 @@ export class CoefficientsPage implements OnInit {
         }
       }
     );
+    this.weightUnitService.userUnit.subscribe(() => {
+      this.calcPoints(this.coeffForm);
+      this.calcGoal(this.coeffForm);
+      this.calcDelta(this.coeffForm);
+    });
+  }
+
+  ngOnDestroy() {
+    this.weightUnitService.userUnit.unsubscribe();
   }
 
   onChangeGender(form: NgForm): void {
@@ -114,20 +127,21 @@ export class CoefficientsPage implements OnInit {
 
   calcGoal(form: NgForm): void {
     if (this.userGender && form.value.goalBw && form.value.goalBlue) {
-    this.goalTotal = this.coeffService.calcBluesGoal(form);
+      this.goalTotal = this.coeffService.calcBluesGoal(form);
     }
   }
 
   onClickCalc = (): boolean => this.calcDiff = !this.calcDiff;;
 
   calcDelta(form: NgForm): void {
+    const unitUsed = this.weightUnitService.userUnit.value;
     if (this.goalTotal && form.value.tTotal) {
       if (this.goalTotal < form.value.tTotal) {
         this.blueDiff = 'achieved';
         this.hBlueDiff = 'achieved';
       } else {
-        this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + this.weightUnitService.userUnit + ' remaining';
-        this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + this.weightUnitService.userUnit + ' remaining';
+        this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
+        this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
       }
     }
   }
