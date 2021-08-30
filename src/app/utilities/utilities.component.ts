@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Clipboard } from '@capacitor/clipboard';
+import { ToastController } from '@ionic/angular';
 import { WeightUnitService } from '../settings/weight-unit.service';
 
 const LB_IN_KG = 2.2046226218488;
@@ -20,7 +21,10 @@ export class UtilitiesComponent implements OnInit {
   convertedNum: number;
   convertedUnit: string;
 
-  constructor(public weightUnitService: WeightUnitService) { }
+  constructor(
+    public weightUnitService: WeightUnitService,
+    private toastController: ToastController
+  ) { }
 
   ngOnInit() {
     if (this.weightUnitService.userUnit.value === 'lb') {
@@ -45,9 +49,19 @@ export class UtilitiesComponent implements OnInit {
       // eslint-disable-next-line id-blacklist
         string: this.totalNum.toString()
       });
+      this.presentSetsToast();
     }
-
   };
+
+  async presentSetsToast() {
+    const toast = await this.toastController.create({
+      message: `Calculated total copied to clipboard.`,
+      cssClass: 'copy-toast-class',
+      duration: 2000,
+      color: 'dark'
+    });
+    await toast.present();
+  }
 
   onSwitchConversion(): void {
     if (this.conversionUnit === 'lb') {
@@ -67,5 +81,4 @@ export class UtilitiesComponent implements OnInit {
       this.convertedNum = this.conversionNum * LB_IN_KG;
     }
   }
-
 }
