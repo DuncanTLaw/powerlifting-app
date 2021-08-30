@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
-
-
-type WeightUnit = 'kg' | 'lbs';
-
-const KG: WeightUnit = 'kg';
-const LBS: WeightUnit = 'lbs';
+import { BehaviorSubject } from 'rxjs';
 
 const LB_IN_KG = 2.2046226218488;
 
@@ -13,12 +8,18 @@ const LB_IN_KG = 2.2046226218488;
   providedIn: 'root'
 })
 export class WeightUnitService {
-  userUnit = 'kg';
+  userUnit = new BehaviorSubject<string>('kg');
 
-  constructor() { }
+  constructor() {
+    this.checkUnit();
+  }
 
-  setUnit = async (): Promise<void> => {
-    const storeUnit = (this.userUnit === 'kg') ? 'kg' : 'lb';
+  setUnit = async (event: any): Promise<void> => {
+  this.userUnit.next(event.detail.value);
+    let storeUnit: string;
+    this.userUnit.subscribe(
+      unit => {storeUnit = (unit === 'lb') ? 'lb' : 'kg';}
+    );
 
     await Storage.set({
       key: 'unit',
@@ -29,7 +30,15 @@ export class WeightUnitService {
   checkUnit = async (): Promise<void> => {
     const { value } = await Storage.get({ key: 'unit' });
     if (value) {
-      this.userUnit = (value === 'kg') ? 'kg' : 'lb';
+      this.userUnit.next((value === 'lb') ? 'lb' : 'kg');
     }
   };
+
+  convertToKilo(weight: number): number {
+    return (this.userUnit.value === 'lb') ? weight / LB_IN_KG : weight;
+  }
+
+  convertToLb(weight: number): number {
+    return (this.userUnit.value === 'lb') ? weight * LB_IN_KG : weight;
+  }
 }

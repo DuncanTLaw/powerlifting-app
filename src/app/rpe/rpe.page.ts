@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RPEPct, RPEPCTTABLE } from '../numeric-tables/RPE-pct';
+import { WeightUnitService } from '../settings/weight-unit.service';
 
 @Component({
   selector: 'app-rpe',
@@ -8,12 +9,12 @@ import { RPEPct, RPEPCTTABLE } from '../numeric-tables/RPE-pct';
   styleUrls: ['./rpe.page.scss'],
 })
 export class RpePage implements OnInit {
-  e1rm = '';
-  eLoad = '';
+  e1rm: number | string;
+  eLoad: number | string;
 
   scale: RPEPct = RPEPCTTABLE;
 
-  constructor() { }
+  constructor(public weightUnitService: WeightUnitService) { }
 
   ngOnInit() {
   }
@@ -55,14 +56,12 @@ export class RpePage implements OnInit {
           (form.value.haveReps === 14 && form.value.haveRPE >= 9) ||
           (form.value.haveReps === 15 && form.value.haveRPE === 10))
       ) {
-        const e1rm = this.calcMax(
+        this.e1rm = this.calcMax(
           form.value.haveWeight,
           form.value.haveReps,
           form.value.haveRPE
         );
-        if (e1rm) {
-          this.e1rm = e1rm.toFixed(2) + 'kg';
-        } else {
+        if (!this.e1rm) {
           this.e1rm = 'invalid';
         }
       } else {
@@ -90,14 +89,12 @@ export class RpePage implements OnInit {
           (form.value.wantReps === 14 && form.value.wantRPE >= 9) ||
           (form.value.wantReps === 15 && form.value.wantRPE === 10))
       ) {
-        const eLoad = this.calcLoad(
-          +this.e1rm.slice(0, -2),
+        this.eLoad = this.calcLoad(
+          +this.e1rm,
           form.value.wantReps,
           form.value.wantRPE
         );
-        if (eLoad) {
-          this.eLoad = eLoad.toFixed(2) + 'kg';
-        } else {
+        if (!this.eLoad) {
           this.eLoad = 'invalid';
         }
       } else {
@@ -106,5 +103,9 @@ export class RpePage implements OnInit {
     } else {
       this.eLoad = '';
     }
+  }
+
+  isNumber(val: any): boolean { // from https://stackoverflow.com/questions/37511055/how-to-check-type-of-variable-in-ngif-in-angular2
+    return typeof val === 'number';
   }
 }

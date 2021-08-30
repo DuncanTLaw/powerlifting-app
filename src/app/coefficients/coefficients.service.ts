@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
+import { WeightUnitService } from '../settings/weight-unit.service';
 
 import { NgForm } from '@angular/forms';
 import { GenderCoeff, GLModel } from '../numeric-tables/coefficient.model';
@@ -20,20 +21,22 @@ export class CoeffService {
   gender: string;
   benchOnly = false;
 
-  dotsScale: GenderCoeff = DOTSCOEFF;
+  private dotsScale: GenderCoeff = DOTSCOEFF;
 
-  glScale: GLModel = GLCOEFF;
+  private glScale: GLModel = GLCOEFF;
 
-  ipfScale: GenderCoeff = IPFCOEFF;
+  private ipfScale: GenderCoeff = IPFCOEFF;
 
-  wilksScale: GenderCoeff = WILKSCOEFF;
+  private wilksScale: GenderCoeff = WILKSCOEFF;
 
-  bluesConst: Blues = {
+  private bluesConst: Blues = {
     half: 500,
     full: 560
   };
 
-  setGender = async (userGender: string) => {
+  constructor(private weightUnitService: WeightUnitService) {}
+
+  setGender = async (userGender: string): Promise<void> => {
     const storeGender = (userGender === 'male') ? 'male' : 'female';
 
     await Storage.set({
@@ -42,51 +45,23 @@ export class CoeffService {
     });
   };
 
-  checkGender = async () => {
+  checkGender = async (): Promise<void> => {
     const { value } = await Storage.get({ key: 'gender' });
     if (value) {
       this.gender = (value === 'male') ? 'male' : 'female';
     }
   };
 
-  dotsPoly(a: number, b: number, c: number, d: number, e: number, x: number): number {
-    const x2 = x*x;
-    const x3 = x2*x;
-    const x4 = x3*x;
-    return 500.0 / (a*x4 + b*x3 + c*x2 + d*x + e);
-  }
-
-  dotsFunction(bw: number, isMale: boolean): number {
-    const lBw = 40.0;
-    const uBw = (isMale)? 210.0 : 150.0;
-    bw = Math.min(Math.max(bw, lBw), uBw);
-    if (isMale) {
-      return this.dotsPoly(
-        -this.dotsScale.male.c1,
-        this.dotsScale.male.c2,
-        -this.dotsScale.male.c3,
-        this.dotsScale.male.c4,
-        -this.dotsScale.male.c5,
-        bw);
-    } else {
-      return this.dotsPoly(
-        -this.dotsScale.female.c1,
-        this.dotsScale.female.c2,
-        -this.dotsScale.female.c3,
-        this.dotsScale.female.c4,
-        -this.dotsScale.female.c5,
-        bw);
-    }
-  }
-
   calcDOTS(form: NgForm, total: number): number {
-    const bw: number = form.value.weight;
+    total = this.weightUnitService.convertToKilo(total);
+    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
     const isMale = (this.gender === 'male') ? true : (this.gender === 'female') ? false : null;
     return total*this.dotsFunction(bw, isMale);
   }
 
   calcGL(form: NgForm, total: number): number {
-    const bw: number = form.value.weight;
+    total = this.weightUnitService.convertToKilo(total);
+    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
     const sex = this.gender;
     const event = (this.benchOnly) ? 'b' : 'sbd';
     const equipment = 'raw'; // hardcoded for now until later implementation of an 'Equipped' selector
@@ -104,7 +79,8 @@ export class CoeffService {
   }
 
   calcIPF(form: NgForm, total: number): number {
-    const bw: number = form.value.weight;
+    total = this.weightUnitService.convertToKilo(total);
+    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
 
     let c1: number;
     let c2: number;
@@ -140,12 +116,13 @@ export class CoeffService {
     return (total > 0) ?
       500 + 100 * (
       (total - (c1 * Math.log(bw) - c2)) /
-      (c3 * Math.log(form.value.weight) - c4)
+      (c3 * Math.log(bw) - c4)
       ) : 0;
   }
 
   calcWilks(form: NgForm, total: number): number {
-    const bw: number = form.value.weight;
+    total = this.weightUnitService.convertToKilo(total);
+    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
 
     let c1: number;
     let c2: number;
@@ -189,6 +166,8 @@ export class CoeffService {
   }
 
   calcBluesGoal(form: NgForm): number {
+    const goalBw: number = this.weightUnitService.convertToKilo(form.value.goalBw);
+
     let c1: number;
     let c2: number;
     let c3: number;
@@ -210,7 +189,39 @@ export class CoeffService {
       this.bluesConst.full : (form.value.goalBlue === 'half') ?
       this.bluesConst.half : null;
 
-    return +(((goalIPF - 500) / 100) * (c3 * Math.log(form.value.goalBw) - c4) +
-      (c1 * Math.log(form.value.goalBw) - c2)).toFixed(2);
+    return this.weightUnitService.convertToLb(
+      (((goalIPF - 500) / 100) * (c3 * Math.log(goalBw) - c4) +
+      (c1 * Math.log(goalBw) - c2))
+    );
+  }
+
+  private dotsPoly(a: number, b: number, c: number, d: number, e: number, x: number): number {
+    const x2 = x*x;
+    const x3 = x2*x;
+    const x4 = x3*x;
+    return 500.0 / (a*x4 + b*x3 + c*x2 + d*x + e);
+  }
+
+  private dotsFunction(bw: number, isMale: boolean): number {
+    const lBw = 40.0;
+    const uBw = (isMale)? 210.0 : 150.0;
+    bw = Math.min(Math.max(bw, lBw), uBw);
+    if (isMale) {
+      return this.dotsPoly(
+        -this.dotsScale.male.c1,
+        this.dotsScale.male.c2,
+        -this.dotsScale.male.c3,
+        this.dotsScale.male.c4,
+        -this.dotsScale.male.c5,
+        bw);
+    } else {
+      return this.dotsPoly(
+        -this.dotsScale.female.c1,
+        this.dotsScale.female.c2,
+        -this.dotsScale.female.c3,
+        this.dotsScale.female.c4,
+        -this.dotsScale.female.c5,
+        bw);
+    }
   }
 }

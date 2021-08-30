@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WeightUnitService } from '../settings/weight-unit.service';
 
 export interface Plates {
   weight: number; pairs: number;
@@ -8,73 +9,37 @@ export interface Plate {
   weight: number; count: number;
 };
 
+interface FunctionHandler {
+  [unit: string]: {
+    heights(plate: number): number;
+    colours(plate: number): string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class LoaderService {
-  kgHeights(plate: number): number {
-    const maxHeight = 80;
-
-    let height: number;
-    switch (plate) {
-      // 25 and 20 are default maxHeight
-      case 15:
-        height = maxHeight * 0.9;
-        break;
-      case 10:
-        height = maxHeight * 0.8;
-        break;
-      case 5:
-        height = maxHeight * 0.7;
-        break;
-      case 2.5:
-        height = maxHeight * 0.6;
-        break;
-      case 1.25:
-        height = maxHeight * 0.5;
-        break;
-      case 1:
-        height = maxHeight * 0.4;
-        break;
-      case 0.5:
-        height = maxHeight * 0.3;
-        break;
-      case 0.25:
-        height = maxHeight * 0.2;
-        break;
-      default:
-        height = maxHeight;
-    }
-    return height;
+  handleUnits: FunctionHandler = {
+    kg: {
+      heights: (plate) => this.kgHeights(plate),
+      colours: (plate) => this.getKGBadgeColor(plate)
+    },
+    lb: {
+      heights: (plate) => this.lbHeights(plate),
+      colours: () => 'medium'
+    },
   };
+
+  constructor(private weightUnitService: WeightUnitService){}
 
   getHeight(plate: number): string {
-    const heights = this.kgHeights;
-    return `${heights(plate)}px`;
+    const heights = (this.weightUnitService.userUnit.value === 'lb') ?
+      this.handleUnits.lb.heights(plate) : this.handleUnits.kg.heights(plate);
+    return `${heights}px`;
   };
 
-  kgColours(plate: number): string {
-    switch (plate) {
-      case 25:
-        return 'red';
-      case 20:
-        return 'blue';
-      case 15:
-        return 'yellow';
-      case 10:
-        return 'green';
-      case 5:
-        return 'white';
-      case 2.5:
-        return 'black';
-      case 1.25:
-        return 'gray';
-      default:
-        return 'black';
-    }
-  }
-
-  getBadgeColor(plate: number): string {
+  getKGBadgeColor(plate: number): string {
     switch (plate) {
       case 25:
         return 'danger';
@@ -101,10 +66,6 @@ export class LoaderService {
 
   filterPlates(plates: Array<Plate>): Array<Plate> {
     return plates.filter(plate => plate.count > 0);
-  }
-
-  filterPair(plates: Array<Plates>): Array<Plates> {
-    return plates.filter(plate => plate.pairs > 0);
   }
 
   weightToBarLoad = (weight: number, plates: any, barWeight: number, compCollar: boolean) => {
@@ -143,5 +104,81 @@ export class LoaderService {
   // from https://ionicframework.com/docs/angular/performance
   trackItems(index: number, itemObject: any) {
     return itemObject.id;
+  }
+
+  private kgHeights(plate: number): number {
+    const maxHeight = 80;
+
+    let height: number;
+    switch (plate) {
+      // 25 and 20 are default maxHeight
+      case 15:
+        height = maxHeight * 0.9;
+        break;
+      case 10:
+        height = maxHeight * 0.8;
+        break;
+      case 5:
+        height = maxHeight * 0.7;
+        break;
+      case 2.5:
+        height = maxHeight * 0.6;
+        break;
+      case 1.25:
+        height = maxHeight * 0.5;
+        break;
+      case 1:
+        height = maxHeight * 0.4;
+        break;
+      case 0.5:
+        height = maxHeight * 0.3;
+        break;
+      case 0.25:
+        height = maxHeight * 0.2;
+        break;
+      default:
+        height = maxHeight;
+    }
+    return height;
+  };
+
+  private lbHeights(plate: number): number {
+    const maxHeight = 80;
+
+    let height: number;
+    switch (plate) {
+      // 45 is default maxHeight
+      case 25:
+        height = maxHeight * 0.9;
+        break;
+      case 10:
+        height = maxHeight * 0.8;
+        break;
+      case 5:
+        height = maxHeight * 0.7;
+        break;
+      case 2.5:
+        height = maxHeight * 0.6;
+        break;
+      case 1.25:
+        height = maxHeight * 0.5;
+        break;
+      case 1:
+        height = maxHeight * 0.4;
+        break;
+      case 0.5:
+        height = maxHeight * 0.3;
+        break;
+      case 0.25:
+        height = maxHeight * 0.2;
+        break;
+      default:
+        height = maxHeight;
+    }
+    return height;
+  };
+
+  private filterPair(plates: Array<Plates>): Array<Plates> {
+    return plates.filter(plate => plate.pairs > 0);
   }
 }

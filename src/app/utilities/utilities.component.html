@@ -1,0 +1,75 @@
+<ion-card class="ion-no-margin ion-no-padding">
+  <ion-card-content>
+    <ion-list>
+  <ion-item>
+    <ion-label position="fixed">squat</ion-label>
+    <ion-input
+      type="number"
+      [(ngModel)]="squatNum"
+      (ngModelChange)="calcTotal()"
+    ></ion-input>
+    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">bench</ion-label>
+    <ion-input
+      type="number"
+      [(ngModel)]="benchNum"
+      (ngModelChange)="calcTotal()"
+    ></ion-input>
+    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
+  </ion-item>
+  <ion-item>
+    <ion-label position="fixed">deadlift</ion-label>
+    <ion-input
+      type="number"
+      [(ngModel)]="deadliftNum"
+      (ngModelChange)="calcTotal()"
+    ></ion-input>
+    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
+  </ion-item>
+</ion-list>
+<ion-row class="ion-align-items-center ion-margin-top">
+  <ion-col size="auto">
+     <ion-button size="small" (click)="writeToClipboard()">
+      Copy
+    </ion-button>
+  </ion-col>
+  <ion-col class="ion-text-end">
+    = {{ totalNum || 0 }}{{ weightUnitService.userUnit | async }} total
+  </ion-col>
+</ion-row>
+
+<hr/>
+
+<ion-list lines="none">
+  <ion-item>
+    <ion-input
+      type="number"
+      [(ngModel)]="conversionNum"
+      (ngModelChange)="convertNumber()"
+    ></ion-input>
+    <ion-note slot="end">{{ conversionUnit }}</ion-note>
+  </ion-item>
+</ion-list>
+<ion-row class="ion-align-items-center">
+  <ion-col size="auto">
+    <ion-buttons class="ion-margin-end">
+      <ion-button (click)="onSwitchConversion()">
+        <ion-icon name="swap-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-col>
+  <ion-col>
+    <div [hidden]="convertedNum">
+      convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
+    </div>
+    <div [hidden]="!convertedNum">
+      converts to {{ convertedNum| number : '1.2-2' }} {{ convertedUnit }}
+    </div>
+  </ion-col>
+
+</ion-row>
+  </ion-card-content>
+</ion-card>
+

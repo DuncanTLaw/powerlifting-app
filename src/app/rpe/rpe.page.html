@@ -23,7 +23,7 @@
                     name="haveWeight"
                     (ngModelChange)="onCalcERM(projected); onCalcELOAD(required)"
                   ></ion-input>
-                  <ion-note slot="end">kg</ion-note>
+                  <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                 </ion-item>
                 <ion-item>
                   <ion-label position="fixed">reps</ion-label>
@@ -55,7 +55,7 @@
               <ion-row id="e1rm">
                   e1RM
                   <ion-text class="ion-padding-start" color="danger">
-                    {{ e1rm }}
+                    {{ isNumber(e1rm) ? (e1rm | number : '1.2-2') + (weightUnitService.userUnit | async) : e1rm }}
                   </ion-text>
               </ion-row>
             </ion-card-content>
@@ -101,7 +101,7 @@
               <ion-row id="eLoad">
                 eLoad
                 <ion-text class="ion-padding-start" color="success">
-                  {{ eLoad }}
+                  {{ isNumber(eLoad) ? (eLoad | number : '1.2-2') + (weightUnitService.userUnit | async) : eLoad }}
                 </ion-text>
               </ion-row>
             </ion-card-content>
