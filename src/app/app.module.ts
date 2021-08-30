@@ -10,9 +10,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AboutComponent } from './about/about.component';
 import { FormsModule } from '@angular/forms';
+import { UtilitiesComponent } from './utilities/utilities.component';
 
 @NgModule({
-  declarations: [AppComponent, AboutComponent],
+  declarations: [AppComponent, AboutComponent, UtilitiesComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
