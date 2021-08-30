@@ -46,12 +46,17 @@
   </ion-item>
 </ion-list>
 <ion-row class="ion-align-items-center">
-  <ion-buttons>
+  <ion-buttons class="ion-margin-end">
     <ion-button (click)="onSwitchConversion()">
       <ion-icon name="swap-vertical"></ion-icon>
     </ion-button>
   </ion-buttons>
-  = {{ (convertedNum| number : '1.2-2') || 0.00 }} {{ convertedUnit }}
+  <div [hidden]="convertedNum">
+    convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
+  </div>
+  <div [hidden]="!convertedNum">
+    converts to {{ convertedNum| number : '1.2-2' }} {{ convertedUnit }}
+  </div>
 </ion-row>
   </ion-card-content>
 </ion-card>
