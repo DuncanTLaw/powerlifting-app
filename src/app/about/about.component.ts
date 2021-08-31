@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WeightUnitService } from '../settings/weight-unit.service';
 import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { HelpService } from '../help/help.service';
 
 @Component({
   selector: 'app-about',
@@ -8,15 +10,19 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-
   constructor(
     public weightUnitService: WeightUnitService,
-    private menuController: MenuController
+    private menuController: MenuController,
+    private router: Router,
+    private helpService: HelpService
   ) { }
 
   ngOnInit() {
   }
 
-  onClickButton = (): Promise<boolean> => this.menuController.close();
+  onClickButton(): void {
+    this.menuController.close();
+    this.helpService.currentRoute.next(this.router.url);
+  }
 
 }
