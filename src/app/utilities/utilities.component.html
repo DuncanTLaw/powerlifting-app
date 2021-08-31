@@ -31,7 +31,7 @@
 </ion-list>
 <ion-row class="ion-align-items-center ion-margin-top">
   <ion-col size="auto">
-     <ion-button size="small" (click)="writeToClipboard()" [disabled]="!totalNum">
+    <ion-button size="small" (click)="writeToClipboard()" [disabled]="!totalNum">
       Copy
     </ion-button>
   </ion-col>
@@ -54,21 +54,20 @@
 </ion-list>
 <ion-row class="ion-align-items-center">
   <ion-col size="auto">
-    <ion-buttons class="ion-margin-end">
+    <ion-buttons>
       <ion-button (click)="onSwitchConversion()">
         <ion-icon name="swap-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-col>
-  <ion-col>
+  <ion-col class="ion-text-end">
     <div [hidden]="convertedNum">
       convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
     </div>
     <div [hidden]="!convertedNum">
-      converts to {{ convertedNum| number : '1.2-2' }} {{ convertedUnit }}
+      converts to {{ convertedNum| number : '1.2-2' }}{{ convertedUnit }}
     </div>
   </ion-col>
-
 </ion-row>
   </ion-card-content>
 </ion-card>
