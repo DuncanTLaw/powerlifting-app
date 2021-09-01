@@ -3,6 +3,7 @@ import { ToastController, PickerController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { KeepAwake } from '@capacitor-community/keep-awake';
 import { AwakeService } from '../settings/awake.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-timer',
@@ -28,11 +29,12 @@ export class TimerPage implements OnInit {
     public awakeService: AwakeService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await LocalNotifications.requestPermissions();
     this.awakeService.checkAwake();
   }
 
-  async showTimePicker() {
+  async showTimePicker(): Promise<void> {
     const seconds = [...Array(60).keys()];
     const minutes = [...Array(16).keys()]; // you shouldn't even rest more than 10 mins
     const secondsOptions: Array<PickerColumnOption> = [];
@@ -92,20 +94,46 @@ export class TimerPage implements OnInit {
 		});
 	}
 
+  async scheduleNotification() {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Timer',
+          body: `${this.secondsSelected} seconds completed.`,
+          id: 0,
+          schedule: {at: new Date(Date.now() + this.timeRemaining * 1000)}
+        }
+      ]
+    });
+  }
+
+  async cancelNotification(): Promise<void> {
+    await LocalNotifications.cancel({
+      notifications: [
+        {
+          id: 0
+        }
+      ]
+    });
+  }
+
   onClickLHS(): void {
     clearInterval(this.interval);
     this.timerRunning = false;
     this.rhsButtonText = 'Start';
     this.timeRemaining = this.secondsSelected;
+    this.cancelNotification();
   }
 
   onClickRHS(): void {
-    this.timerRunning = !this.timerRunning;
     this.onToggleAwake();
+
+    this.timerRunning = !this.timerRunning;
     if(this.timeEnded) {
       this.timeRemaining = this.secondsSelected;
     }
     if(this.timerRunning) {
+      this.scheduleNotification();
       this.timeEnded = false;
       this.rhsButtonText = 'Pause';
 
@@ -130,12 +158,12 @@ export class TimerPage implements OnInit {
           this.timerRunning = false;
           this.timeEnded = true;
           clearInterval(this.interval);
-          // this line to add notification
         }
       }, 1000);
     } else {
       this.rhsButtonText = 'Resume';
       clearInterval(this.interval);
+      this.cancelNotification();
     }
   }
 
@@ -152,7 +180,7 @@ export class TimerPage implements OnInit {
     }
   }
 
-  async showSetsPicker() {
+  async showSetsPicker(): Promise<void> {
     const sets = [...Array(25).keys()].map(x => ++x); // who does more than 7 sets tbh
     const setsOptions: Array<PickerColumnOption> = [];
     for(const set of sets) {
