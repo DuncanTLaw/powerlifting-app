@@ -255,13 +255,13 @@ export class TimerPage implements OnInit {
 
   onRemoveSet(): void {
     if (this.setsCompleted > 0 && this.setsSelected){
-      this.setsCompleted --;
+      this.setsCompleted--;
     }
   }
 
   onAddSet(): void {
     if (this.setsSelected && this.setsCompleted < this.setsSelected) {
-      this.setsCompleted ++;
+      this.setsCompleted++;
     }
     if (this.setsCompleted === this.setsSelected) {
       this.presentSetsToast();
