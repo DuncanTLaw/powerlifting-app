@@ -19,8 +19,8 @@ export class TimerPage implements OnInit {
   interval: any;
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
-  secondsColIndex: number;
   minutesColIndex: number;
+  secondsColIndex: number;
 
   setsSelected: number;
   setsCompleted = 0;
@@ -268,7 +268,7 @@ export class TimerPage implements OnInit {
     }
   }
 
-  async presentSetsToast() {
+  async presentSetsToast(): Promise<void> {
     const toast = await this.toastController.create({
       message: `All sets completed.`,
       cssClass: 'toast-class',
