@@ -14,7 +14,9 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.titleService.setTitle(this.title);
     this.metaService.addTags([
-      {name: 'keywords', content: 'powerlifting, IPF points, GL points, Wilks, Dots points, bar loader, IPF, USAPL, GBPF'},
+      {name: 'keywords', content:
+        'powerlifting, RPE, rate of perceived exertion, IPF points, GL points, Wilks, Dots points, bar loader, IPF, USAPL, GBPF, gym'
+      },
       {name: 'description', content:
         'Powerlifting toolbox which includes RPE claculator, points calculations, timer, sets counter and what plates to load.'
       }
