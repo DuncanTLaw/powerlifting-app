@@ -19,9 +19,12 @@ export class TimerPage implements OnInit {
   interval: any;
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
+  secondsColIndex: number;
+  minutesColIndex: number;
 
   setsSelected: number;
   setsCompleted = 0;
+  setsColIndex: number;
 
   constructor(
     public toastController: ToastController,
@@ -52,7 +55,8 @@ export class TimerPage implements OnInit {
 			columns: [
         {
 					name: 'minutes',
-					options: minutesOptions
+					options: minutesOptions,
+          selectedIndex: this.minutesColIndex
         },
         {
           name: ':',
@@ -60,7 +64,8 @@ export class TimerPage implements OnInit {
         },
         {
 					name: 'seconds',
-					options: secondsOptions
+					options: secondsOptions,
+          selectedIndex: this.secondsColIndex
 				},
 			],
       buttons: [
@@ -90,6 +95,8 @@ export class TimerPage implements OnInit {
         this.timeSelected = `${minuteVal}min ${secondVal}sec`;
         this.secondsSelected = minuteVal * 60 + secondVal;
         this.timeRemaining = this.secondsSelected;
+        this.secondsColIndex = second.selectedIndex;
+        this.minutesColIndex = minute.selectedIndex;
       }
 		});
 	}
@@ -212,7 +219,8 @@ export class TimerPage implements OnInit {
 			columns: [
 				{
 					name: 'sets',
-					options: setsOptions
+					options: setsOptions,
+          selectedIndex: this.setsColIndex
 				},
 			],
       buttons: [
@@ -238,6 +246,7 @@ export class TimerPage implements OnInit {
         const col = await picker.getColumn('sets');
         this.setsSelected = col.options[col.selectedIndex].value;
         this.setsCompleted = (this.setsSelected) ? 0 : null;
+        this.setsColIndex = col.selectedIndex;
       }
 		});
 	}
