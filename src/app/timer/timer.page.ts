@@ -3,6 +3,7 @@ import { ToastController, PickerController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { KeepAwake } from '@capacitor-community/keep-awake';
 import { AwakeService } from '../settings/awake.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-timer',
@@ -18,9 +19,12 @@ export class TimerPage implements OnInit {
   interval: any;
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
+  minutesColIndex: number;
+  secondsColIndex: number;
 
   setsSelected: number;
   setsCompleted = 0;
+  setsColIndex: number;
 
   constructor(
     public toastController: ToastController,
@@ -28,11 +32,12 @@ export class TimerPage implements OnInit {
     public awakeService: AwakeService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await LocalNotifications.requestPermissions();
     this.awakeService.checkAwake();
   }
 
-  async showTimePicker() {
+  async showTimePicker(): Promise<void> {
     const seconds = [...Array(60).keys()];
     const minutes = [...Array(16).keys()]; // you shouldn't even rest more than 10 mins
     const secondsOptions: Array<PickerColumnOption> = [];
@@ -50,7 +55,8 @@ export class TimerPage implements OnInit {
 			columns: [
         {
 					name: 'minutes',
-					options: minutesOptions
+					options: minutesOptions,
+          selectedIndex: this.minutesColIndex
         },
         {
           name: ':',
@@ -58,7 +64,8 @@ export class TimerPage implements OnInit {
         },
         {
 					name: 'seconds',
-					options: secondsOptions
+					options: secondsOptions,
+          selectedIndex: this.secondsColIndex
 				},
 			],
       buttons: [
@@ -88,24 +95,71 @@ export class TimerPage implements OnInit {
         this.timeSelected = `${minuteVal}min ${secondVal}sec`;
         this.secondsSelected = minuteVal * 60 + secondVal;
         this.timeRemaining = this.secondsSelected;
+        this.secondsColIndex = second.selectedIndex;
+        this.minutesColIndex = minute.selectedIndex;
       }
 		});
 	}
+
+  async scheduleNotification() {
+    let timeString: string;
+    let minutesString: string;
+    let secondsString: string;
+    const minutes = Math.floor(this.secondsSelected / 60);
+    const seconds = this.secondsSelected - minutes * 60;
+
+    if (minutes === 1) {
+      minutesString = `${minutes} minute`;
+    } else if (minutes > 1) {
+      minutesString = `${minutes} minutes`;
+    }
+    if (seconds === 1) {
+      secondsString = `${seconds} second`;
+    } else if (seconds > 1) {
+      secondsString = `${seconds} seconds`;
+    }
+
+    if (minutes === 0) {
+      timeString = secondsString;
+    } else if (seconds === 0) {
+      timeString = minutesString;
+    } else {
+      timeString = `${minutesString} ${secondsString}`;
+    }
+
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Timer',
+          body: `${timeString} completed.`,
+          id: 0,
+          schedule: { at: new Date(Date.now() + this.timeRemaining * 1000) }
+        }
+      ]
+    });
+  }
+
+  async cancelNotification(): Promise<void> {
+    await LocalNotifications.cancel({ notifications: [{ id: 0 }] });
+  }
 
   onClickLHS(): void {
     clearInterval(this.interval);
     this.timerRunning = false;
     this.rhsButtonText = 'Start';
     this.timeRemaining = this.secondsSelected;
+    this.cancelNotification();
   }
 
   onClickRHS(): void {
-    this.timerRunning = !this.timerRunning;
     this.onToggleAwake();
+
+    this.timerRunning = !this.timerRunning;
     if(this.timeEnded) {
       this.timeRemaining = this.secondsSelected;
     }
     if(this.timerRunning) {
+      this.scheduleNotification();
       this.timeEnded = false;
       this.rhsButtonText = 'Pause';
 
@@ -130,12 +184,12 @@ export class TimerPage implements OnInit {
           this.timerRunning = false;
           this.timeEnded = true;
           clearInterval(this.interval);
-          // this line to add notification
         }
       }, 1000);
     } else {
       this.rhsButtonText = 'Resume';
       clearInterval(this.interval);
+      this.cancelNotification();
     }
   }
 
@@ -152,7 +206,7 @@ export class TimerPage implements OnInit {
     }
   }
 
-  async showSetsPicker() {
+  async showSetsPicker(): Promise<void> {
     const sets = [...Array(25).keys()].map(x => ++x); // who does more than 7 sets tbh
     const setsOptions: Array<PickerColumnOption> = [];
     for(const set of sets) {
@@ -165,7 +219,8 @@ export class TimerPage implements OnInit {
 			columns: [
 				{
 					name: 'sets',
-					options: setsOptions
+					options: setsOptions,
+          selectedIndex: this.setsColIndex
 				},
 			],
       buttons: [
@@ -191,6 +246,7 @@ export class TimerPage implements OnInit {
         const col = await picker.getColumn('sets');
         this.setsSelected = col.options[col.selectedIndex].value;
         this.setsCompleted = (this.setsSelected) ? 0 : null;
+        this.setsColIndex = col.selectedIndex;
       }
 		});
 	}
@@ -212,7 +268,7 @@ export class TimerPage implements OnInit {
     }
   }
 
-  async presentSetsToast() {
+  async presentSetsToast(): Promise<void> {
     const toast = await this.toastController.create({
       message: `All sets completed.`,
       cssClass: 'toast-class',
