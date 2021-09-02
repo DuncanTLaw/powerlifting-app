@@ -43,7 +43,7 @@ export class UtilitiesComponent implements OnInit {
     this.totalNum = sq + bp + dl;
   }
 
-  writeToClipboard = async () => {
+  writeToClipboard = async (): Promise<void> => {
     await Clipboard.write({
     // eslint-disable-next-line id-blacklist
       string: this.totalNum.toString()
@@ -51,7 +51,7 @@ export class UtilitiesComponent implements OnInit {
     this.presentSetsToast();
   };
 
-  async presentSetsToast() {
+  async presentSetsToast(): Promise<void> {
     const toast = await this.toastController.create({
       message: `Calculated total copied to clipboard.`,
       cssClass: 'copy-toast-class',

@@ -1,7 +1,18 @@
 <ion-menu side="start" contentId="main">
   <ion-header>
     <ion-toolbar>
-      <ion-title size="large" color="secondary">About</ion-title>
+      <ion-segment
+        [ngModel]="weightUnitService.userUnit | async"
+        (ionChange)="weightUnitService.setUnit($event)"
+        id="unitSegment"
+      >
+        <ion-segment-button value="kg">
+          <ion-label>kilogram</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="lb">
+          <ion-label>pound</ion-label>
+        </ion-segment-button>
+      </ion-segment>
       <ion-buttons slot="end">
         <ion-button [routerLink]="['/help']" (click)="onClickButton()">
           <ion-icon name="help-circle"></ion-icon>
@@ -61,22 +72,6 @@
   </ion-content>
   <ion-footer class="ion-padding ion-text-justify">
     <app-utilities></app-utilities>
-    <br/>
-    <ion-note>
-      <ion-label position="fixed">Units</ion-label>
-    </ion-note>
-    <ion-segment
-      [ngModel]="weightUnitService.userUnit | async"
-      (ionChange)="weightUnitService.setUnit($event)"
-    >
-      <ion-segment-button value="kg">
-        <ion-label>kilogram</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="lb">
-        <ion-label>pound</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-    <br/>
     <ion-note>
       Have an issue, or want to suggest a feature? Send an email
       <a href="mailto:lawdtk@gmail.com">here</a>
