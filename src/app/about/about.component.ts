@@ -24,5 +24,4 @@ export class AboutComponent implements OnInit {
     this.menuController.close();
     this.helpService.currentRoute.next(this.router.url);
   }
-
 }

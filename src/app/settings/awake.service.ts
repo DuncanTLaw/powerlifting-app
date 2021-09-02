@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
-import { KeepAwake } from '@capacitor-community/keep-awake';
 
 @Injectable({
   providedIn: 'root'

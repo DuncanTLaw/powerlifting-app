@@ -74,7 +74,7 @@ export class LoaderService {
     return plates.filter(plate => plate.count > 0);
   }
 
-  weightToBarLoad = (weight: number, plates: any, barWeight: number, compCollar: boolean) => {
+  weightToBarLoad(weight: number, plates: any, barWeight: number, compCollar: boolean): any[] {
     const filteredPairs = this.filterPair(plates);
 
     // The plates that will go on one side of the bar

@@ -64,7 +64,7 @@ export class CoeffService {
     const bw: number = this.weightUnitService.convertToKg(form.value.weight);
     const sex = this.gender;
     const event = (this.benchOnly) ? 'b' : 'sbd';
-    const equipment = 'raw'; // hardcoded for now until later implementation of an 'Equipped' selector
+    const equipment = 'raw'; // hardcoded for now until later implementation of an 'equipped' selector
 
     const params = this.glScale[sex][equipment][event];
     const denom = params[0] - (params[1] * Math.exp(-1.0 * params[2] * bw));

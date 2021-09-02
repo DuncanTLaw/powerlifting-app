@@ -103,5 +103,4 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
     this.showPlates = !this.showPlates;
     this.plateText = (this.showPlates) ? 'Hide plate configuration' : 'Configure available plates';
   }
-
 }

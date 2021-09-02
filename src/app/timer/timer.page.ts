@@ -101,7 +101,7 @@ export class TimerPage implements OnInit {
 		});
 	}
 
-  async scheduleNotification() {
+  async scheduleNotification(): Promise<void> {
     let timeString: string;
     let minutesString: string;
     let secondsString: string;

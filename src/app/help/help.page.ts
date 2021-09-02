@@ -22,7 +22,7 @@ export class HelpPage implements OnInit {
         'The first card takes in inputs for load, reps and RPE to give an estimated one rep max.',
         'The second card suggests a weight based on the previous E1RM from a prescribed rep and RPE.'
       ],
-      icon: 'stats-chart',
+      icon: 'stats-chart'
     },
     {
       title: 'Coefficients',
@@ -30,7 +30,7 @@ export class HelpPage implements OnInit {
       help: [
         'Input your gender and numbers for the scores of popular coefficients, including IPF GL points, IPF points, Dots and Wilks.'
       ],
-      icon: 'calculator',
+      icon: 'calculator'
     },
     {
       title: 'Timer',
@@ -39,7 +39,7 @@ export class HelpPage implements OnInit {
         'The first card is a timer that can take in a time limit and will send you a notification when the time is up.',
         'The second card tallies up your reps: put in how many reps you are prescribed and keep track of how many you\'ve completed.'
       ],
-      icon: 'timer',
+      icon: 'timer'
     },
     {
       title: 'Loader',
@@ -50,7 +50,7 @@ export class HelpPage implements OnInit {
         'toggle the weight of the bar, the collars and the number of availble plates.',
         'The second slide can tell you how much weight there is on a bar in competition.'
       ],
-      icon: 'barbell-sharp',
+      icon: 'barbell-sharp'
     }
   ];
 
