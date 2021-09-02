@@ -29,7 +29,7 @@ export class CoeffService {
 
   private wilksScale: GenderCoeff = WILKSCOEFF;
 
-  private bluesConst: Blues = {
+  private bluesConst: Blues = { // in IPF points
     half: 500,
     full: 560
   };
@@ -53,15 +53,15 @@ export class CoeffService {
   };
 
   calcDOTS(form: NgForm, total: number): number {
-    total = this.weightUnitService.convertToKilo(total);
-    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
+    total = this.weightUnitService.convertToKg(total);
+    const bw: number = this.weightUnitService.convertToKg(form.value.weight);
     const isMale = (this.gender === 'male') ? true : (this.gender === 'female') ? false : null;
     return total*this.dotsFunction(bw, isMale);
   }
 
   calcGL(form: NgForm, total: number): number {
-    total = this.weightUnitService.convertToKilo(total);
-    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
+    total = this.weightUnitService.convertToKg(total);
+    const bw: number = this.weightUnitService.convertToKg(form.value.weight);
     const sex = this.gender;
     const event = (this.benchOnly) ? 'b' : 'sbd';
     const equipment = 'raw'; // hardcoded for now until later implementation of an 'Equipped' selector
@@ -79,8 +79,8 @@ export class CoeffService {
   }
 
   calcIPF(form: NgForm, total: number): number {
-    total = this.weightUnitService.convertToKilo(total);
-    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
+    total = this.weightUnitService.convertToKg(total);
+    const bw: number = this.weightUnitService.convertToKg(form.value.weight);
 
     let c1: number;
     let c2: number;
@@ -121,8 +121,8 @@ export class CoeffService {
   }
 
   calcWilks(form: NgForm, total: number): number {
-    total = this.weightUnitService.convertToKilo(total);
-    const bw: number = this.weightUnitService.convertToKilo(form.value.weight);
+    total = this.weightUnitService.convertToKg(total);
+    const bw: number = this.weightUnitService.convertToKg(form.value.weight);
 
     let c1: number;
     let c2: number;
@@ -166,7 +166,7 @@ export class CoeffService {
   }
 
   calcBluesGoal(form: NgForm): number {
-    const goalBw: number = this.weightUnitService.convertToKilo(form.value.goalBw);
+    const goalBw: number = this.weightUnitService.convertToKg(form.value.goalBw);
 
     let c1: number;
     let c2: number;

@@ -9,8 +9,8 @@ import { LoaderService, Plates } from '../loader.service';
 })
 export class BarLoaderComponent implements OnInit, OnDestroy {
   tWeight: number;
-  compCollars = true;
-  barWeight = 20;
+  barWeight: number;
+  compCollars: boolean;
   collarsWeight = 5;
 
   showAdvanced = false;
@@ -47,9 +47,11 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.weightUnitService.userUnit.subscribe(() =>
-      this.onCalcBar()
-    );
+    this.weightUnitService.userUnit.subscribe(unit => {
+      this.barWeight = (unit === 'kg') ? 20 : 45;
+      this.compCollars = (unit === 'kg') ? true : false;
+      this.onCalcBar();
+    });
   }
 
   ngOnDestroy() {
@@ -63,17 +65,21 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
     if (unitUsed === 'kg') {
       if (
         (this.compCollars && (this.tWeight > (this.barWeight + this.collarsWeight))) ||
-        (!this.compCollars && (this.tWeight > this.barWeight + this.collarsWeight))
+        (!this.compCollars && (this.tWeight > this.barWeight))
       ) {
         this.barLoaded = this.loaderService.weightToBarLoad(
           this.tWeight, this.plateCount[unitUsed], this.barWeight, this.compCollars
         );
+      } else {
+        this.barLoaded = null;
       }
     } else if (unitUsed === 'lb') {
       if (this.tWeight > this.barWeight) {
         this.barLoaded = this.loaderService.weightToBarLoad(
-          this.tWeight, this.plateCount[unitUsed], 45, false
+          this.tWeight, this.plateCount[unitUsed], this.barWeight, false
         );
+      } else {
+        this.barLoaded = null;
       }
     }
     else {

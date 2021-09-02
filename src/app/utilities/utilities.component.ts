@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { ToastController } from '@ionic/angular';
 import { WeightUnitService } from '../settings/weight-unit.service';
@@ -10,7 +10,7 @@ const LB_IN_KG = 2.2046226218488;
   templateUrl: './utilities.component.html',
   styleUrls: ['./utilities.component.scss'],
 })
-export class UtilitiesComponent implements OnInit {
+export class UtilitiesComponent implements OnInit, OnDestroy {
   squatNum: number;
   benchNum: number;
   deadliftNum: number;
@@ -27,13 +27,19 @@ export class UtilitiesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.weightUnitService.userUnit.value === 'lb') {
-      this.conversionUnit = 'lb';
-      this.convertedUnit = 'kg';
-    } else {
-      this.conversionUnit = 'kg';
-      this.convertedUnit = 'lb';
-    }
+    this.weightUnitService.userUnit.subscribe(unit => {
+      if (unit === 'kg') {
+        this.conversionUnit = 'kg';
+        this.convertedUnit = 'lb';
+      } else {
+        this.conversionUnit = 'lb';
+        this.convertedUnit = 'kg';
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.weightUnitService.userUnit.unsubscribe();
   }
 
   calcTotal(): void {

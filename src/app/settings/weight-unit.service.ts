@@ -18,7 +18,7 @@ export class WeightUnitService {
   this.userUnit.next(event.detail.value);
     let storeUnit: string;
     this.userUnit.subscribe(
-      unit => {storeUnit = (unit === 'lb') ? 'lb' : 'kg';}
+      unit => {storeUnit = (unit === 'kg') ? 'kg' : 'lb';}
     );
 
     await Storage.set({
@@ -30,15 +30,15 @@ export class WeightUnitService {
   checkUnit = async (): Promise<void> => {
     const { value } = await Storage.get({ key: 'unit' });
     if (value) {
-      this.userUnit.next((value === 'lb') ? 'lb' : 'kg');
+      this.userUnit.next((value === 'kg') ? 'kg' : 'lb');
     }
   };
 
-  convertToKilo(weight: number): number {
-    return (this.userUnit.value === 'lb') ? weight / LB_IN_KG : weight;
+  convertToKg(weight: number): number {
+    return (this.userUnit.value === 'kg') ? weight : weight / LB_IN_KG ;
   }
 
   convertToLb(weight: number): number {
-    return (this.userUnit.value === 'lb') ? weight * LB_IN_KG : weight;
+    return (this.userUnit.value === 'kg') ? weight : weight * LB_IN_KG;
   }
 }
