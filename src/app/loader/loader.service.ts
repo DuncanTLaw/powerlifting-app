@@ -55,6 +55,12 @@ export class LoaderService {
         return 'dark';
       case 1.25:
         return 'medium';
+      case 1:
+        return 'medium';
+      case 0.5:
+        return 'medium';
+      case 0.25:
+        return 'medium';
       default:
         return 'dark';
     }

@@ -28,7 +28,10 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
       { weight: 10, pairs: 1 },
       { weight: 5, pairs: 1 },
       { weight: 2.5, pairs: 1 },
-      { weight: 1.25, pairs: 1 }
+      { weight: 1.25, pairs: 1 },
+      { weight: 1, pairs: 1 },
+      { weight: 0.5, pairs: 1 },
+      { weight: 0.25, pairs: 1 }
     ],
     lb: [
       { weight: 45, pairs: 8 },
