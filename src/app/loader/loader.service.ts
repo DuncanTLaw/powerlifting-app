@@ -125,22 +125,22 @@ export class LoaderService {
         height = maxHeight * 0.8;
         break;
       case 5:
-        height = maxHeight * 0.7;
-        break;
-      case 2.5:
         height = maxHeight * 0.6;
         break;
-      case 1.25:
+      case 2.5:
         height = maxHeight * 0.5;
         break;
-      case 1:
+      case 1.25:
         height = maxHeight * 0.4;
         break;
-      case 0.5:
+      case 1:
         height = maxHeight * 0.3;
         break;
-      case 0.25:
+      case 0.5:
         height = maxHeight * 0.2;
+        break;
+      case 0.25:
+        height = maxHeight * 0.1;
         break;
       default:
         height = maxHeight;
