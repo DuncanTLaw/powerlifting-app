@@ -22,12 +22,12 @@ interface FunctionHandler {
 export class LoaderService {
   handleUnits: FunctionHandler = {
     kg: {
-      heights: (plate) => this.kgHeights(plate),
-      colours: (plate) => this.getKGBadgeColor(plate)
+      heights: (plate: number): number => this.kgHeights(plate),
+      colours: (plate: number): string => this.getKGBadgeColor(plate)
     },
     lb: {
-      heights: (plate) => this.lbHeights(plate),
-      colours: () => 'medium'
+      heights: (plate: number): number => this.lbHeights(plate),
+      colours: (plate: number): string => 'medium'
     },
   };
 

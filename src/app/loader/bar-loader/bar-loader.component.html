@@ -65,9 +65,10 @@
                   <ion-row class="ion-align-items-center">
                     <ion-col>
                       <ion-badge
-                        [color]="loaderService.getKGBadgeColor(plate.weight)"
+                        [color]="(weightUnitService.userUnit | async) === 'lb' ?
+                        loaderService.handleUnits.lb.colours(plate.weight) : loaderService.handleUnits.kg.colours(plate.weight)"
                       >
-                        {{ plate.weight }}kg
+                        {{ plate.weight }}{{ weightUnitService.userUnit | async }}
                       </ion-badge>
                     </ion-col>
                     <ion-col>
