@@ -110,7 +110,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
         this.bluesSelected = false;
         this.userPoints = this.coeffService.calcIPF(form, total);
         break;
-      case 'Dots':
+      case 'DOTS':
         this.bluesSelected = false;
         this.userPoints = this.coeffService.calcDOTS(form, total);
         break;
