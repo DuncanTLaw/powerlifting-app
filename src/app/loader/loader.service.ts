@@ -117,7 +117,12 @@ export class LoaderService {
 
     let height: number;
     switch (plate) {
-      // 25 and 20 are default maxHeight
+      case 25:
+        height = maxHeight;
+        break;
+      case 20:
+        height = maxHeight;
+        break;
       case 15:
         height = maxHeight * 0.9;
         break;
@@ -143,7 +148,7 @@ export class LoaderService {
         height = maxHeight * 0.1;
         break;
       default:
-        height = maxHeight;
+        height = 3;
     }
     return height;
   };
@@ -153,7 +158,9 @@ export class LoaderService {
 
     let height: number;
     switch (plate) {
-      // 45 is default maxHeight
+      case 45:
+        height = maxHeight;
+        break;
       case 25:
         height = maxHeight * 0.9;
         break;
@@ -179,7 +186,7 @@ export class LoaderService {
         height = maxHeight * 0.2;
         break;
       default:
-        height = maxHeight;
+        height = 3;
     }
     return height;
   };
