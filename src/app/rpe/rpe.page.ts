@@ -40,11 +40,7 @@ export class RpePage implements OnInit {
   }
 
   onCalcERM(form: NgForm): void {
-    if (
-      form.value.haveWeight &&
-      form.value.haveReps &&
-      form.value.haveRPE
-    ) {
+    if (form.value.haveWeight && form.value.haveReps && form.value.haveRPE) {
       if (
         form.value.haveReps >= 1 &&
         form.value.haveReps <= 15 &&
@@ -73,11 +69,7 @@ export class RpePage implements OnInit {
   }
 
   onCalcELOAD(form: NgForm): void {
-    if (
-      this.e1rm &&
-      form.value.wantReps &&
-      form.value.wantRPE
-    ) {
+    if (this.e1rm && form.value.wantReps && form.value.wantRPE) {
       if (
         form.value.wantReps >= 1 &&
         form.value.wantReps <= 15 &&
