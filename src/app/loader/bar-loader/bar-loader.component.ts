@@ -55,6 +55,7 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
       this.compCollars = (unit === 'kg') ? true : false;
       this.onCalcBar();
     });
+    this.loaderService.checkCollars().then(collarCheck => this.compCollars = collarCheck);
   }
 
   ngOnDestroy() {
@@ -97,6 +98,7 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
 
   collarSegmentChanged(event: any): void {
     this.compCollars = (event.target.value === 'false') ? false : true;
+    this.loaderService.setCollars(this.compCollars);
   }
 
   onExpandPlates(): void {

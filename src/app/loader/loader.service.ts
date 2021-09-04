@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WeightUnitService } from '../settings/weight-unit.service';
+import { Storage } from '@capacitor/storage';
 
 export interface Plates {
   weight: number; pairs: number;
@@ -32,6 +33,22 @@ export class LoaderService {
   };
 
   constructor(private weightUnitService: WeightUnitService){}
+
+  setCollars = async (compCollars: boolean): Promise<void> => {
+    const storeCollars = (compCollars === true) ? 'comp' : 'none';
+
+    await Storage.set({
+      key: 'collars',
+      value: storeCollars
+    });
+  };
+
+  checkCollars = async (): Promise<boolean> => {
+    const { value } = await Storage.get({ key: 'collars' });
+    if (value) {
+      return (value === 'comp') ? true : false;
+    }
+  };
 
   getHeight(plate: number): string {
     const heights = (this.weightUnitService.userUnit.value === 'kg') ?
