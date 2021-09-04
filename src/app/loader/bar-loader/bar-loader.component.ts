@@ -10,7 +10,7 @@ import { LoaderService, Plates } from '../loader.service';
 export class BarLoaderComponent implements OnInit, OnDestroy {
   tWeight: number;
   barWeight: number;
-  compCollars: boolean;
+  compCollars = true;
   collarsWeight = 5;
 
   showAdvanced = false;
@@ -52,10 +52,11 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.weightUnitService.userUnit.subscribe(unit => {
       this.barWeight = (unit === 'kg') ? 20 : 45;
-      this.compCollars = (unit === 'kg') ? true : false;
+      this.loaderService.checkCollars().then(collarCheck => {
+        this.compCollars = (unit === 'kg') ? collarCheck : false;
+      });
       this.onCalcBar();
     });
-    this.loaderService.checkCollars().then(collarCheck => this.compCollars = collarCheck);
   }
 
   ngOnDestroy() {
@@ -97,8 +98,13 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
   }
 
   collarSegmentChanged(event: any): void {
-    this.compCollars = (event.target.value === 'false') ? false : true;
-    this.loaderService.setCollars(this.compCollars);
+    this.weightUnitService.userUnit.subscribe(unit => {
+      if (unit === 'kg') {
+        this.compCollars = (event.target.value === 'false') ? false : true;
+        this.loaderService.setCollars(this.compCollars);
+      }
+    });
+
   }
 
   onExpandPlates(): void {
