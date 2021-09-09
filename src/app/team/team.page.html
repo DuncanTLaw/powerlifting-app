@@ -1,0 +1,32 @@
+<ion-content>
+  <ion-card style="height: 100%;">
+    <ion-card-header>
+      <ion-card-title>Your Team or Club</ion-card-title>
+      <ion-card-subtitle>
+        Select your powerlifting team/club for exclusive content.
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-radio-group
+          [(ngModel)]="teamService.userTeam"
+        >
+          <ion-item
+            *ngFor="let team of teams | keyvalue : returnZero"
+          >
+            <ion-label>{{ team.key }}</ion-label>
+            <ion-radio slot="start" [value]="team.key"></ion-radio>
+            <ion-avatar slot="end" *ngIf="team.value">
+              <img [src]="team.value">
+            </ion-avatar>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </ion-card-content>
+    <ion-row class="card-footer">
+      <ion-col>
+        <ion-button *ngIf="teamService.userTeam" expand="block" (click)="onSubmitTeam()">Done</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>
