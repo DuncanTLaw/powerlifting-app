@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 
+interface TEAMSTRINGS {
+  [team: string]: {
+    light: string;
+    dark: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
   userTeam: string;
-  teams = {
+  teams: TEAMSTRINGS = {
     none: {
       light: '',
       dark: ''

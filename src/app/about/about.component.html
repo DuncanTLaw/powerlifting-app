@@ -57,10 +57,10 @@
     <picture>
       <source
         id="screenshot"
-        [srcset]="teamService.teams[teamService.userTeam].dark"
+        [srcset]="teamService.teams[teamService.userTeam]?.dark"
         media="(prefers-color-scheme: dark)"
       >
-      <img [src]="teamService.teams[teamService.userTeam].light">
+      <img [src]="teamService.teams[teamService.userTeam]?.light">
     </picture>
   </ion-content>
   <ion-footer class="ion-padding">
