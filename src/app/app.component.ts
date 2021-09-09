@@ -25,4 +25,11 @@ export class AppComponent implements OnInit{
     ]);
   }
 
+  hideTabs(): boolean {
+    return !(this.router.url === '/team');
+  }
+
+  hideMenu(): boolean {
+    return (this.router.url === '/team' || this.router.url === '/help');
+  }
 }

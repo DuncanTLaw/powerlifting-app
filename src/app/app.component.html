@@ -1,10 +1,10 @@
 <ion-app>
-  <app-about></app-about>
+  <app-about [hidden]="hideMenu()"></app-about>
 
   <ion-router-outlet id="main"></ion-router-outlet>
 
   <ion-tabs>
-    <ion-tab-bar>
+    <ion-tab-bar *ngIf="hideTabs()">
       <ion-tab-button tab="rpe">
         <ion-icon name="stats-chart"></ion-icon>
         <ion-label>RPE</ion-label>
