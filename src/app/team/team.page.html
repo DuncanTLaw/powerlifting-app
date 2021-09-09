@@ -11,7 +11,7 @@
         [(ngModel)]="teamService.userTeam"
       >
         <ion-item
-          *ngFor="let team of teams | keyvalue : returnZero"
+          *ngFor="let team of teamService.teams | keyvalue : returnZero"
         >
           <ion-label>{{ team.key }}</ion-label>
           <ion-radio slot="start" [value]="team.key"></ion-radio>

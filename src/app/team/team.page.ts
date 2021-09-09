@@ -8,13 +8,6 @@ import { TeamService } from './team.service';
   styleUrls: ['./team.page.scss'],
 })
 export class TeamPage implements OnInit {
-  teams = {
-    none: '',
-    // eslint-disable-next-line
-    'Team Pape': '/assets/teamAvatars/TP-logo.png',
-    // eslint-disable-next-line
-    OUPLC: '/assets/teamAvatars/OUPLC-logo.png'
-  };
 
   constructor(public teamService: TeamService, private router: Router) { }
 

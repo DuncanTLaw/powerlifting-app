@@ -6,6 +6,13 @@ import { Storage } from '@capacitor/storage';
 })
 export class TeamService {
   userTeam: string;
+  teams = {
+    none: '',
+    // eslint-disable-next-line
+    'Team Pape': '/assets/teamAvatars/TP.png',
+    // eslint-disable-next-line
+    OUPLC: '/assets/teamAvatars/OUPLC-logo.png'
+  };
 
   constructor() {
     this.checkTeam();
