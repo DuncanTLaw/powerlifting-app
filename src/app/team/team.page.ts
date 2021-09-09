@@ -10,7 +10,8 @@ import { TeamService } from './team.service';
 export class TeamPage implements OnInit {
   teams = {
     none: '',
-    teamPape: '/assets/teamAvatars/TP-logo.png',
+    // eslint-disable-next-line
+    'Team Pape': '/assets/teamAvatars/TP-logo.png',
     // eslint-disable-next-line
     OUPLC: '/assets/teamAvatars/OUPLC-logo.png'
   };
