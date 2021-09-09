@@ -29,6 +29,10 @@ export class RpePage implements OnInit {
     return null;
   }
 
+  calcMaxTP(weight: number, reps: number, rpe: number): number | null {
+    return weight * (1 + ((reps + (10 - rpe)) / 30)) - 4;
+  }
+
   calcLoad(max: number, reps: number, rpe: number): number | null {
     // @ts-ignore
     if (reps in this.scale && rpe in this.scale[reps]) {
