@@ -3,6 +3,12 @@ import { NgForm } from '@angular/forms';
 import { RPEPct, RPEPCTTABLE } from '../numeric-tables/RPE-pct';
 import { WeightUnitService } from '../settings/weight-unit.service';
 
+interface FunctionHandler {
+  [team: string]: {
+    rm(weight: number, reps: number, rpe: number): number | null;
+  };
+}
+
 @Component({
   selector: 'app-rpe',
   templateUrl: './rpe.page.html',
@@ -13,6 +19,15 @@ export class RpePage implements OnInit {
   eLoad: number | string;
 
   scale: RPEPct = RPEPCTTABLE;
+
+  handledByPape: FunctionHandler = {
+    default: {
+      rm: (weight: number, reps: number, rpe: number): number | null => this.calcMax(weight, reps, rpe)
+    },
+    pape: {
+      rm: (weight: number, reps: number, rpe: number): number | null => this.calcMaxTP(weight, reps, rpe)
+    }
+  };
 
   constructor(public weightUnitService: WeightUnitService) { }
 
