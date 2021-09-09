@@ -25,6 +25,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   userBp: number;
   userDl: number;
   userPoints: any;
+  result = 'points';
 
   goalBlue = 'full';
   goalTotal: number;
@@ -98,6 +99,8 @@ export class CoefficientsPage implements OnInit, OnDestroy {
         this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
       } else if (this.segmentSelected === 'onlyBP' && form.value.bp){
         this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
+      } else if (form.value.weight && this.userPoints) {
+
       }
     }
   }
@@ -145,6 +148,14 @@ export class CoefficientsPage implements OnInit, OnDestroy {
         this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
         this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
       }
+    }
+  }
+
+  onSwitch(): void {
+    if (this.segmentSelected === 'total') {
+      this.result = (this.result === 'points') ? 'total' : 'points';
+    } else {
+      this.result = 'points';
     }
   }
 }

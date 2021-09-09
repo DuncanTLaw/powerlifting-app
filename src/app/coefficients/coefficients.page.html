@@ -48,7 +48,7 @@
                   </ion-select-option>
                 </ion-select>
                 <br/>
-                <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentSelected">
+                <ion-segment (ionChange)="segmentChanged($event); onSwitch()" [value]="segmentSelected">
                   <ion-segment-button value="total">
                     <ion-label>Total</ion-label>
                   </ion-segment-button>
@@ -71,7 +71,7 @@
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
-                  <ion-item [hidden]="segmentSelected!=='total'">
+                  <ion-item [hidden]="segmentSelected!=='total' || result==='total'">
                     <ion-label position="fixed">total</ion-label>
                     <ion-input
                       type="number"
@@ -80,6 +80,15 @@
                       (ngModelChange)="calcPoints(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
+                  </ion-item>
+                  <ion-item [hidden]="segmentSelected!=='total' || result==='points'">
+                    <ion-label position="fixed">points</ion-label>
+                    <ion-input
+                      type="number"
+                      [(ngModel)]="userPoints"
+                      name="points"
+                      (ngModelChange)="calcPoints(coeff)"
+                    ></ion-input>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='threeLifts'">
                     <ion-label position="fixed">squat</ion-label>
@@ -126,10 +135,24 @@
                   = {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }} total
                 </ion-row>
                 <br/>
-                <ion-row id="result" *ngIf="!bluesSelected else bluesBlock">
-                  <ion-text class="ion-padding-end" color="success">
-                    {{ (userPoints | number : '1.2-2') || '0.00' }}
-                  </ion-text> {{ pointsSelected }} points
+                <ion-row class="ion-align-items-center" *ngIf="!bluesSelected else bluesBlock">
+                  <ion-col id="result" *ngIf="result==='points'">
+                    <ion-text class="ion-padding-end" color="success">
+                      {{ (userPoints | number : '1.2-2') || '0.00' }}
+                    </ion-text> {{ pointsSelected }} points
+                  </ion-col>
+                  <ion-col id="result" *ngIf="result==='total'">
+                    <ion-text color="success">
+                      {{ (userPoints | number : '1.2-2') || '0.00' }}{{ weightUnitService.userUnit | async }}
+                    </ion-text> total
+                  </ion-col>
+                  <ion-col class="ion-text-end ion-no-padding" size="auto" *ngIf="segmentSelected === 'total'">
+                    <ion-buttons>
+                      <ion-button (click)="onSwitch()">
+                        <ion-icon name="swap-vertical"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-col>
                 </ion-row>
                 <ng-template #bluesBlock>
                   <ion-row id="result">
