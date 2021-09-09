@@ -8,7 +8,8 @@
   <ion-card-content>
     <ion-list>
       <ion-radio-group
-        [(ngModel)]="teamService.userTeam"
+        [(ngModel)]="inputTeam"
+        (ionChange)="authenticateInput()"
       >
         <ion-item
           *ngFor="let team of teamService.teams | keyvalue : returnZero"
@@ -30,9 +31,20 @@
     </ion-list>
   </ion-card-content>
   <ion-row class="card-footer">
-    <ion-col>
+    <ion-col size="12" [hidden]="!teamService.teams[inputTeam].password">
+      <ion-item lines="none">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input
+          type="string"
+          [(ngModel)]="inputPassword"
+          (ngModelChange)="authenticateInput()"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="12">
       <ion-button
-        *ngIf="teamService.userTeam"
+        class="ion-margin"
+        [disabled]="!passwordCorrect"
         expand="block"
         (click)="onSubmitTeam()"
         [routerLink]="[helpService.currentRoute | async]"

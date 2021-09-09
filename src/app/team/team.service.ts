@@ -3,6 +3,7 @@ import { Storage } from '@capacitor/storage';
 
 interface TEAMSTRINGS {
   [team: string]: {
+    password: string;
     light: string;
     dark: string;
   };
@@ -15,16 +16,19 @@ export class TeamService {
   userTeam: string;
   teams: TEAMSTRINGS = {
     none: {
+      password: '',
       light: '',
       dark: ''
     },
     // eslint-disable-next-line
     'Team Pape': {
+      password: 'You goose',
       light: '/assets/teamAvatars/TP.png',
       dark: '/assets/teamAvatars/TP-dark.png'
     },
     // eslint-disable-next-line
     OUPLC: {
+      password: 'Blues 21',
       light: '/assets/teamAvatars/OUPLC-logo.png',
       dark: '/assets/teamAvatars/OUPLC-logo.png'
     },

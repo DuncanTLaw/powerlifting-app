@@ -1,10 +1,10 @@
 <ion-app>
-  <app-about [hidden]="hideMenu()"></app-about>
+  <app-about [hidden]="router.url === '/team' || router.url === '/help'"></app-about>
 
   <ion-router-outlet id="main"></ion-router-outlet>
 
   <ion-tabs>
-    <ion-tab-bar *ngIf="hideTabs()">
+    <ion-tab-bar *ngIf="router.url !== '/team'">
       <ion-tab-button tab="rpe">
         <ion-icon name="stats-chart"></ion-icon>
         <ion-label>RPE</ion-label>
