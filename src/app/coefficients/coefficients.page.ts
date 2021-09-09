@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { WeightUnitService } from '../settings/weight-unit.service';
+import { TeamService } from '../team/team.service';
 
 import { CoeffService } from './coefficients.service';
 
@@ -32,6 +33,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   hBlueDiff: string;
 
   constructor(
+    public teamService: TeamService,
     public weightUnitService: WeightUnitService,
     private coeffService: CoeffService
   ) { }

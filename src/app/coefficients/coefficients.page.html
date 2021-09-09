@@ -40,7 +40,12 @@
                   <ion-select-option value="IPF">IPF</ion-select-option>
                   <ion-select-option value="DOTS">DOTS</ion-select-option>
                   <ion-select-option value="Wilks">Wilks</ion-select-option>
-                  <ion-select-option value="Blues">Oxford Blues</ion-select-option>
+                  <ion-select-option
+                    value="Blues"
+                    *ngIf="teamService.userTeam==='OUPLC'"
+                  >
+                    Oxford Blues
+                  </ion-select-option>
                 </ion-select>
                 <br/>
                 <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentSelected">
