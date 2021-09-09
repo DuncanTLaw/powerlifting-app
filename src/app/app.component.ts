@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { Meta } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit{
 
-  constructor(private metaService: Meta) {}
+  constructor(private metaService: Meta, public router: Router) {}
 
   ngOnInit() {
     this.metaService.addTags([

@@ -27,6 +27,6 @@ export class TeamPage implements OnInit {
 
   onSubmitTeam(): void {
     this.teamService.setTeam();
-    this.router.navigateByUrl('');
+    this.router.navigateByUrl('/rpe');
   }
 }
