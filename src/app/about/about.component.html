@@ -54,7 +54,14 @@
         </ion-item>
       </ion-list>
     </details>
-    <img [src]="teamService.teams[teamService.userTeam]">
+    <picture>
+      <source
+        id="screenshot"
+        [srcset]="teamService.teams[teamService.userTeam].dark"
+        media="(prefers-color-scheme: dark)"
+      >
+      <img [src]="teamService.teams[teamService.userTeam].light">
+    </picture>
   </ion-content>
   <ion-footer class="ion-padding">
     <app-utilities></app-utilities>

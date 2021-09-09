@@ -7,11 +7,20 @@ import { Storage } from '@capacitor/storage';
 export class TeamService {
   userTeam: string;
   teams = {
-    none: '',
+    none: {
+      light: '',
+      dark: ''
+    },
     // eslint-disable-next-line
-    'Team Pape': '/assets/teamAvatars/TP.png',
+    'Team Pape': {
+      light: '/assets/teamAvatars/TP.png',
+      dark: '/assets/teamAvatars/TP-dark.png'
+    },
     // eslint-disable-next-line
-    OUPLC: '/assets/teamAvatars/OUPLC-logo.png'
+    OUPLC: {
+      light: '/assets/teamAvatars/OUPLC-logo.png',
+      dark: '/assets/teamAvatars/OUPLC-logo.png'
+    },
   };
 
   constructor() {

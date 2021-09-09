@@ -15,8 +15,15 @@
         >
           <ion-label>{{ team.key }}</ion-label>
           <ion-radio slot="start" [value]="team.key"></ion-radio>
-          <ion-avatar slot="end" *ngIf="team.value">
-            <img [src]="team.value">
+          <ion-avatar slot="end" *ngIf="team.value.light || team.value.dark">
+            <picture>
+              <source
+                id="screenshot"
+                [srcset]="team.value.dark"
+                media="(prefers-color-scheme: dark)"
+              >
+              <img [src]="team.value.light">
+            </picture>
           </ion-avatar>
         </ion-item>
       </ion-radio-group>
