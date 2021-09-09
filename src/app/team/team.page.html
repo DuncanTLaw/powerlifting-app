@@ -24,7 +24,14 @@
   </ion-card-content>
   <ion-row class="card-footer">
     <ion-col>
-      <ion-button *ngIf="teamService.userTeam" expand="block" (click)="onSubmitTeam()">Done</ion-button>
+      <ion-button
+        *ngIf="teamService.userTeam"
+        expand="block"
+        (click)="onSubmitTeam()"
+        [routerLink]="[helpService.currentRoute | async]"
+      >
+        Done
+      </ion-button>
     </ion-col>
   </ion-row>
 </ion-card>

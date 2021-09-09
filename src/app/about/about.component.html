@@ -13,6 +13,9 @@
           <ion-label>pound</ion-label>
         </ion-segment-button>
       </ion-segment>
+      <ion-button size="small" color="dark" slot="end" [routerLink]="['/team']" (click)="onClickButton()">
+        Team
+      </ion-button>
       <ion-buttons slot="end">
         <ion-button [routerLink]="['/help']" (click)="onClickButton()">
           <ion-icon name="help-circle"></ion-icon>

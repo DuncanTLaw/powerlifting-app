@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { HelpService } from '../help/help.service';
 import { TeamService } from './team.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { TeamService } from './team.service';
 })
 export class TeamPage implements OnInit {
 
-  constructor(public teamService: TeamService, private router: Router) { }
+  constructor(public teamService: TeamService, public helpService: HelpService) { }
 
   ngOnInit() {
   }
@@ -20,6 +20,5 @@ export class TeamPage implements OnInit {
 
   onSubmitTeam(): void {
     this.teamService.setTeam();
-    this.router.navigateByUrl('');
   }
 }
