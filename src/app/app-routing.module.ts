@@ -35,7 +35,7 @@ const routes: Routes = [
   {
     path: 'team',
     loadChildren: () => import('./team/team.module').then( m => m.TeamPageModule)
-  },
+  }
 ];
 
 @NgModule({

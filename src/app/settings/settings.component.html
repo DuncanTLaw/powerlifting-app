@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large" color="dark">Settings</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-button
+    class="ion-margin-bottom"
+    color="dark"
+    expand="block"
+    [routerLink]="['/team']"
+    (click)="onClickButton()"
+  >
+    Team
+  </ion-button>
+  <ion-label position="fixed"><ion-note>Unit</ion-note></ion-label>
+  <ion-segment
+    [ngModel]="weightUnitService.userUnit | async"
+    (ionChange)="weightUnitService.setUnit($event)"
+  >
+    <ion-segment-button value="kg">
+      <ion-label>kilogram</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="lb">
+      <ion-label>pound</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <br/>
+  <ion-label position="fixed"><ion-note>Mode</ion-note></ion-label>
+  <ion-segment
+    [(ngModel)]="modeService.mode"
+    (ionChange)="modeService.setMode()"
+  >
+    <ion-segment-button value="light">
+      <ion-label>Light</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dark">
+      <ion-label>Dark</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="auto">
+      <ion-label>Auto</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-content>
+
+<ion-footer class="ion-padding">
+  <details>
+    <summary><ion-note>About the developer</ion-note></summary>
+    <p class="ion-text-justify">
+      Duncan Law is currently a third-year undergraduate studying Engineering Science
+      in the University of Oxford. He competes in
+      <a href="https://www.britishpowerlifting.org/">British Powerlifting</a>
+      (under the <a href="https://www.powerlifting.sport/">IPF</a>)
+      as a Junior lifter in the 83kg weight class.
+    </p>
+      <ion-list lines="none">
+          <ion-item *ngFor="let link of links | keyvalue: returnZero">
+            <ion-button fill="none" size="clear" [href]="link.value.link">
+              <ion-icon class="ion-margin-end" [name]="link.value.icon"></ion-icon>
+              {{ link.value.name }}
+            </ion-button>
+          </ion-item>
+      </ion-list>
+  </details>
+  <br/>
+  <ion-note>
+    Have an issue, or want to suggest a feature? Send us an email
+    <a href="mailto:lawdtk@gmail.com">here</a>
+  </ion-note>
+</ion-footer>
