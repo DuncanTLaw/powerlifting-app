@@ -81,7 +81,7 @@
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
-                  <ion-item [hidden]="result==='points' || pointsSelected==='Blues'">
+                  <ion-item *ngIf="pointsSelected!=='Blues'" [hidden]="result==='points'">
                     <ion-label position="fixed">points</ion-label>
                     <ion-input
                       type="number"
