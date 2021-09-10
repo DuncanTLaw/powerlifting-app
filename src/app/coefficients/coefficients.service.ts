@@ -248,14 +248,14 @@ export class CoeffService {
     if (!this.benchOnly) { // Hard coded for now since Blues Committee does not give Blues for bench-only lifters (?)
       const ipfPoints: number = this.calcIPF(form, total);
       if (ipfPoints < this.bluesConst.half) {
-        return 'None';
+        return null;
       } else if (ipfPoints >= this.bluesConst.half && ipfPoints < this.bluesConst.full) {
-        return'Half Blue';
+        return 'Half Blue';
       } else {
         return 'Full Blue';
       }
     } else{
-      return 'None';
+      return null;
     }
   }
 

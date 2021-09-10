@@ -19,7 +19,7 @@
                 <ion-segment
                   [(ngModel)]="userGender"
                   [ngModelOptions]="{standalone: true}"
-                  (ionChange)="onChangeGender(coeff); calcPoints(coeff); calcGoal(coeff)"
+                  (ionChange)="onChangeGender(coeff); calcResult(coeff)"
                 >
                   <ion-segment-button value="male">
                     <ion-label>Male</ion-label>
@@ -33,7 +33,7 @@
                 <ion-select
                   [(ngModel)]="pointsSelected"
                   [ngModelOptions]="{standalone: true}"
-                  (ngModelChange)="calcPoints(coeff)"
+                  (ngModelChange)="calcResult(coeff)"
                   interface="popover"
                 >
                   <ion-select-option value="IPF GL">IPF GL</ion-select-option>
@@ -67,7 +67,7 @@
                       type="number"
                       [ngModel]="userBw"
                       name="weight"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -77,17 +77,17 @@
                       type="number"
                       [(ngModel)]="userTotal"
                       name="total"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
-                  <ion-item [hidden]="segmentSelected!=='total' || result==='points'">
+                  <ion-item [hidden]="result==='points' || pointsSelected==='Blues'">
                     <ion-label position="fixed">points</ion-label>
                     <ion-input
                       type="number"
                       [(ngModel)]="userPoints"
                       name="points"
-                      (ngModelChange)="calcTot(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='threeLifts'">
@@ -96,7 +96,7 @@
                       type="number"
                       [ngModel]="userSq"
                       name="sq"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -106,7 +106,7 @@
                       type="number"
                       [ngModel]="userBp"
                       name="bp"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -116,7 +116,7 @@
                       type="number"
                       name="dl"
                       [ngModel]="userDl"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -126,7 +126,7 @@
                       type="number"
                       [ngModel]="userBp"
                       name="bp"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -135,7 +135,7 @@
                   = {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }} total
                 </ion-row>
                 <br/>
-                <ion-row class="ion-align-items-center" *ngIf="!bluesSelected else bluesBlock">
+                <ion-row class="ion-align-items-center" *ngIf="pointsSelected!=='Blues' else bluesBlock">
                   <ion-col id="result" *ngIf="result==='points'">
                     <ion-text class="ion-padding-end" color="success">
                       {{ (userPoints | number : '1.2-2') || '0.00' }}
@@ -146,7 +146,10 @@
                       {{ (userTotal | number : '1.2-2') || '0.00' }}{{ weightUnitService.userUnit | async }}
                     </ion-text> total
                   </ion-col>
-                  <ion-col class="ion-text-end ion-no-padding" size="auto" *ngIf="segmentSelected === 'total'">
+                  <ion-col
+                    class="ion-text-end ion-no-padding"
+                    size="auto"
+                    [hidden]="segmentSelected!=='total'">
                     <ion-buttons>
                       <ion-button (click)="onSwitch()">
                         <ion-icon name="swap-vertical"></ion-icon>
@@ -157,7 +160,7 @@
                 <ng-template #bluesBlock>
                   <ion-row id="result">
                     <ion-text class="ion-padding-end" id="blues">
-                      {{ userPoints }}
+                      {{ userPoints || 'None' }}
                     </ion-text> achieved
                   </ion-row>
                 </ng-template>
