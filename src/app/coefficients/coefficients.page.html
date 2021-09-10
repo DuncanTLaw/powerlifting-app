@@ -7,7 +7,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-        <ion-col size-xs="12" [attr.size-md]="pointsSelected!=='Blues'?12:6">
+        <ion-col size-xs="12" [attr.size-md]="pointsSelected!=='Blues' ? 12 : 6">
           <ion-card>
             <form #coeff="ngForm">
               <ion-card-header>
@@ -48,7 +48,7 @@
                   </ion-select-option>
                 </ion-select>
                 <br/>
-                <ion-segment (ionChange)="segmentChanged($event); onSwitch()" [value]="segmentSelected">
+                <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentSelected">
                   <ion-segment-button value="total">
                     <ion-label>Total</ion-label>
                   </ion-segment-button>

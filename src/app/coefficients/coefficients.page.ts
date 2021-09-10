@@ -25,6 +25,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   userDl: number;
   userPoints: number | string;
   result = 'points';
+  tempResult = 'points';
 
   goalBlue = 'full';
   goalTotal: number;
@@ -72,6 +73,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     } else {
       this.coeffService.benchOnly = false;
     }
+    this.result = (this.segmentSelected!=='total') ? 'points' : this.tempResult;
   }
 
   checkSegment(form: NgForm): void {
@@ -169,6 +171,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     } else {
       this.result = 'points';
     }
+    this.tempResult = this.result;
   }
 
   private calcPoints(form: NgForm): void {
