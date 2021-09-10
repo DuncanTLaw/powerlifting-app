@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loader',
@@ -6,8 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loader.page.scss'],
 })
 export class LoaderPage implements OnInit {
+  screenWidth: number;
+  slides: number;
 
-  constructor() {}
+  constructor() {
+    this.getScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?: any) {
+    this.screenWidth = window.innerWidth;
+    this.slides = (this.screenWidth < 992) ? 1 : 2;
+  }
 
   ngOnInit() {
   }
