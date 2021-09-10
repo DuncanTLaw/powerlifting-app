@@ -48,7 +48,7 @@
                   </ion-select-option>
                 </ion-select>
                 <br/>
-                <ion-segment (ionChange)="segmentChanged($event); onSwitch()" [value]="segmentSelected">
+                <ion-segment (ionChange)="segmentChanged($event); onSwitch(coeff)" [value]="segmentSelected">
                   <ion-segment-button value="total">
                     <ion-label>Total</ion-label>
                   </ion-segment-button>
@@ -148,7 +148,7 @@
                   </ion-col>
                   <ion-col class="ion-text-end ion-no-padding" size="auto" *ngIf="segmentSelected === 'total'">
                     <ion-buttons>
-                      <ion-button (click)="onSwitch()">
+                      <ion-button (click)="onSwitch(coeff)">
                         <ion-icon name="swap-vertical"></ion-icon>
                       </ion-button>
                     </ion-buttons>

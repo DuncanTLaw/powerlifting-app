@@ -100,7 +100,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       } else if (this.segmentSelected === 'onlyBP' && form.value.bp){
         this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
       } else if (form.value.weight && this.userPoints) {
-
+        this.onSwitchTot(form, this.pointsSelected, this.userPoints);
       }
     }
   }
@@ -130,6 +130,27 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     }
   }
 
+  onSwitchTot(form: NgForm, pointSelected: string, points: number): void {
+    switch (pointSelected) {
+      case 'IPF GL':
+        this.bluesSelected = false;
+        this.userTotal = this.coeffService.calcGLTot(form, points);
+        break;
+      case 'IPF':
+        this.bluesSelected = false;
+        this.userTotal = this.coeffService.calcIPFTot(form, points);
+        break;
+      case 'DOTS':
+        this.bluesSelected = false;
+        this.userTotal = this.coeffService.calcDOTSTot(form, points);
+        break;
+      case 'Wilks':
+        this.bluesSelected = false;
+        this.userTotal = this.coeffService.calcWilksTot(form, points);
+        break;
+    }
+  }
+
   calcGoal(form: NgForm): void {
     if (this.userGender && form.value.goalBw && form.value.goalBlue) {
       this.goalTotal = this.coeffService.calcBluesGoal(form);
@@ -151,11 +172,12 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     }
   }
 
-  onSwitch(): void {
+  onSwitch(form: NgForm): void {
     if (this.segmentSelected === 'total') {
       this.result = (this.result === 'points') ? 'total' : 'points';
     } else {
       this.result = 'points';
     }
+    this.calcPoints(form);
   }
 }
