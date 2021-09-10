@@ -29,8 +29,8 @@ export class TeamService {
     // eslint-disable-next-line
     OUPLC: {
       password: 'Blues 21',
-      light: '/assets/teamAvatars/OUPLC-logo.png',
-      dark: '/assets/teamAvatars/OUPLC-logo.png'
+      light: '/assets/teamAvatars/OUPLC.png',
+      dark: '/assets/teamAvatars/OUPLC-dark.png'
     },
   };
 
