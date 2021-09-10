@@ -5,22 +5,12 @@
 
   <ion-tabs>
     <ion-tab-bar *ngIf="router.url !== '/team'">
-      <ion-tab-button tab="rpe">
-        <ion-icon name="stats-chart"></ion-icon>
-        <ion-label>RPE</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="coeff">
-        <ion-icon name="calculator"></ion-icon>
-        <ion-label>Coefficients</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="timer">
-        <ion-icon name="timer-sharp"></ion-icon>
-        <ion-label>Timer</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="loader">
-        <ion-icon name="barbell-sharp"></ion-icon>
-        <ion-label>Loader</ion-label>
-      </ion-tab-button>
+      <ng-container *ngFor="let page of pages | keyvalue: returnZero">
+        <ion-tab-button [tab]="page.key" [style.--color-selected]="page.value.colour">
+          <ion-icon [name]="page.value.icon"></ion-icon>
+          <ion-label>{{ page.value.label }}</ion-label>
+        </ion-tab-button>
+      </ng-container>
     </ion-tab-bar>
   </ion-tabs>
 </ion-app>
