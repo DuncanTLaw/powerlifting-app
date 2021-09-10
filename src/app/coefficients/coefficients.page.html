@@ -48,7 +48,7 @@
                   </ion-select-option>
                 </ion-select>
                 <br/>
-                <ion-segment (ionChange)="segmentChanged($event); onSwitch(coeff)" [value]="segmentSelected">
+                <ion-segment (ionChange)="segmentChanged($event); onSwitch()" [value]="segmentSelected">
                   <ion-segment-button value="total">
                     <ion-label>Total</ion-label>
                   </ion-segment-button>
@@ -87,7 +87,7 @@
                       type="number"
                       [(ngModel)]="userPoints"
                       name="points"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcTot(coeff)"
                     ></ion-input>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='threeLifts'">
@@ -143,12 +143,12 @@
                   </ion-col>
                   <ion-col id="result" *ngIf="result==='total'">
                     <ion-text color="success">
-                      {{ (userPoints | number : '1.2-2') || '0.00' }}{{ weightUnitService.userUnit | async }}
+                      {{ (userTotal | number : '1.2-2') || '0.00' }}{{ weightUnitService.userUnit | async }}
                     </ion-text> total
                   </ion-col>
                   <ion-col class="ion-text-end ion-no-padding" size="auto" *ngIf="segmentSelected === 'total'">
                     <ion-buttons>
-                      <ion-button (click)="onSwitch(coeff)">
+                      <ion-button (click)="onSwitch()">
                         <ion-icon name="swap-vertical"></ion-icon>
                       </ion-button>
                     </ion-buttons>

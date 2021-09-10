@@ -105,6 +105,16 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     }
   }
 
+  calcTot(form: NgForm): void {
+    this.checkSegment(form);
+    this.bluesSelected = (this.pointsSelected !== 'Blues') ? false : true;
+    this.userPoints = (this.pointsSelected !== 'Blues') ? null : 'None';
+
+    if (this.userGender && form.value.weight && form.value.points) {
+      this.onSwitchTot(form, this.pointsSelected, form.value.points);
+    }
+  }
+
   onSwitchPoints(form: NgForm, pointSelected: string, total: number): void {
     switch (pointSelected) {
       case 'IPF GL':
@@ -172,12 +182,11 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     }
   }
 
-  onSwitch(form: NgForm): void {
+  onSwitch(): void {
     if (this.segmentSelected === 'total') {
       this.result = (this.result === 'points') ? 'total' : 'points';
     } else {
       this.result = 'points';
     }
-    this.calcPoints(form);
   }
 }
