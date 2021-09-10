@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PL Toolbox</string>
+    <string name="title_activity_main">PL Toolbox</string>
+    <string name="package_name">web.app.dlawpowerlifting</string>
+    <string name="custom_url_scheme">web.app.dlawpowerlifting</string>
+</resources>

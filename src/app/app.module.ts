@@ -9,9 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AboutComponent } from './about/about.component';
+import { FormsModule } from '@angular/forms';
+import { UtilitiesComponent } from './utilities/utilities.component';
 
 @NgModule({
-  declarations: [AppComponent, AboutComponent],
+  declarations: [AppComponent, AboutComponent, UtilitiesComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { AboutComponent } from './about/about.component';
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    FormsModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

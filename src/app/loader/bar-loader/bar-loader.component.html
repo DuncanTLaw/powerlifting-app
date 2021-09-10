@@ -14,7 +14,7 @@
                 [(ngModel)]="tWeight"
                 (ngModelChange)="onCalcBar()"
               ></ion-input>
-              <ion-note slot="end">kg</ion-note>
+              <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
             </ion-item>
           </ion-list>
           <ion-button
@@ -35,13 +35,14 @@
                   [(ngModel)]="barWeight"
                   (ngModelChange)="onCalcBar()"
                 ></ion-input>
-                <ion-note slot="end">kg</ion-note>
+                <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
               </ion-item>
             </ion-list>
             <div class="ion-text-center">Collar weight</div>
             <ion-segment
               (ionChange)="collarSegmentChanged($event); onCalcBar();"
               [value]="compCollars"
+              [disabled]="(weightUnitService.userUnit | async) === 'lb'"
             >
               <ion-segment-button [value]="false">
                 <ion-label>0kg</ion-label>
@@ -60,19 +61,20 @@
             </ion-button>
             <div [hidden]="!showPlates">
               <ion-list>
-                <ion-item *ngFor="let plate of plateCount; trackBy:loaderService.trackItems; let i = index;">
+                <ion-item *ngFor="let plate of plateCount[weightUnitService.userUnit | async]; trackBy:loaderService.trackItems">
                   <ion-row class="ion-align-items-center">
                     <ion-col>
                       <ion-badge
-                        [color]="loaderService.getBadgeColor(plate.weight)"
+                        [color]="(weightUnitService.userUnit | async) === 'kg' ?
+                          loaderService.handleUnits.kg.colours(plate.weight) : loaderService.handleUnits.lb.colours(plate.weight)"
                       >
-                        {{ plate.weight }}kg
+                        {{ plate.weight }}{{ weightUnitService.userUnit | async }}
                       </ion-badge>
                     </ion-col>
                     <ion-col>
                       <ion-input
                         type="number"
-                        [(ngModel)]="plateCount[i].pairs"
+                        [(ngModel)]="plate.pairs"
                         (ngModelChange)="onCalcBar()"
                       ></ion-input>
                     </ion-col>
@@ -89,16 +91,17 @@
     </ion-col>
   </ion-row>
   <ion-row class="ion-align-items-center ion-justify-content-center" *ngIf="tWeight&&barLoaded">
-    <ion-col class="ion-no-padding" style="margin: 0 3px;" size="auto">
+    <ion-col class="ion-no-padding" style="margin: 0 3px 8px 3px;" size="auto">
       <ion-badge
-          [color]="loaderService.getBadgeColor(barWeight)"
+          [color]="loaderService.getKGBadgeColor(barWeight)"
         >
           BAR
         </ion-badge>
     </ion-col>
-    <ion-col class="ion-no-padding ion-margin-bottom" style="margin: 0 3px;" size="auto" *ngFor="let plate of barLoaded">
+    <ion-col class="ion-no-padding" style="margin: 0 3px 8px 3px;" size="auto" *ngFor="let plate of barLoaded">
       <ion-badge
-          [color]="loaderService.getBadgeColor(plate)"
+          [color]="(weightUnitService.userUnit | async) === 'kg' ?
+            loaderService.handleUnits.kg.colours(plate) : loaderService.handleUnits.lb.colours(plate)"
           [style.padding-top]="loaderService.getHeight(plate)"
           [style.padding-bottom]="loaderService.getHeight(plate)"
           style="padding-left: 3px; padding-right: 3px;"
@@ -106,15 +109,19 @@
           {{ plate }}
         </ion-badge>
     </ion-col>
-    <ion-col class="ion-no-padding" style="margin: 0 3px;" size="auto" *ngIf="compCollars">
+    <ion-col
+      class="ion-no-padding"
+      style="margin: 0 3px 8px 3px;"
+      size="auto"
+      *ngIf="compCollars && (weightUnitService.userUnit | async) !== 'lb'">
       <ion-badge
-        [color]="loaderService.getBadgeColor(2.5)"
+        [color]="loaderService.getKGBadgeColor(2.5)"
         style="padding-top: 5px; padding-bottom: 5px;"
       >
         C
       </ion-badge>
     </ion-col>
   </ion-row>
-  <ion-row class="notice ion-justify-content-center" *ngIf="!tWeight">Input weight to load bar.</ion-row>
+  <ion-note class="ion-justify-content-center" *ngIf="!tWeight">Input weight to load bar.</ion-note>
 </ion-grid>
 

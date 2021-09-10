@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title size="large" color="dark">Help</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/rpe']">Close</ion-button>
+      <ion-button [routerLink]="[helpService.currentRoute | async]">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

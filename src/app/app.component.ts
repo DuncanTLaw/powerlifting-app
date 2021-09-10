@@ -1,12 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
-  constructor() {}
+  constructor(private metaService: Meta) {}
+
+  ngOnInit() {
+    this.metaService.addTags([
+      {
+        name: 'keywords', content:
+        // eslint-disable-next-line max-len
+        'powerlifting, powerlifting toolbox, PL toolbox, RPE, rate of perceived exertion, IPF points, GL points, Wilks, Dots points, bar loader, IPF, USAPL, GBPF, gym'
+      },
+      {
+        name: 'description', content:
+        'Powerlifting toolbox which includes RPE claculator, points calculations, timer, sets counter and what plates to load.'
+      }
+    ]);
+  }
 
 }

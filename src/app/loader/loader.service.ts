@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { WeightUnitService } from '../settings/weight-unit.service';
+import { Storage } from '@capacitor/storage';
 
 export interface Plates {
   weight: number; pairs: number;
@@ -8,73 +10,53 @@ export interface Plate {
   weight: number; count: number;
 };
 
+interface FunctionHandler {
+  [unit: string]: {
+    heights(plate: number): number;
+    colours(plate: number): string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class LoaderService {
-  kgHeights(plate: number): number {
-    const maxHeight = 80;
+  handleUnits: FunctionHandler = {
+    kg: {
+      heights: (plate: number): number => this.kgHeights(plate),
+      colours: (plate: number): string => this.getKGBadgeColor(plate)
+    },
+    lb: {
+      heights: (plate: number): number => this.lbHeights(plate),
+      colours: (plate: number): string => 'medium'
+    },
+  };
 
-    let height: number;
-    switch (plate) {
-      // 25 and 20 are default maxHeight
-      case 15:
-        height = maxHeight * 0.9;
-        break;
-      case 10:
-        height = maxHeight * 0.8;
-        break;
-      case 5:
-        height = maxHeight * 0.7;
-        break;
-      case 2.5:
-        height = maxHeight * 0.6;
-        break;
-      case 1.25:
-        height = maxHeight * 0.5;
-        break;
-      case 1:
-        height = maxHeight * 0.4;
-        break;
-      case 0.5:
-        height = maxHeight * 0.3;
-        break;
-      case 0.25:
-        height = maxHeight * 0.2;
-        break;
-      default:
-        height = maxHeight;
+  constructor(private weightUnitService: WeightUnitService){}
+
+  setCollars = async (compCollars: boolean): Promise<void> => {
+    const storeCollars = (compCollars === true) ? 'comp' : 'none';
+
+    await Storage.set({
+      key: 'collars',
+      value: storeCollars
+    });
+  };
+
+  checkCollars = async (): Promise<boolean> => {
+    const { value } = await Storage.get({ key: 'collars' });
+    if (value) {
+      return (value === 'comp') ? true : false;
     }
-    return height;
   };
 
   getHeight(plate: number): string {
-    const heights = this.kgHeights;
-    return `${heights(plate)}px`;
+    const heights = (this.weightUnitService.userUnit.value === 'kg') ?
+    this.handleUnits.kg.heights(plate) : this.handleUnits.lb.heights(plate);
+    return `${heights}px`;
   };
 
-  kgColours(plate: number): string {
-    switch (plate) {
-      case 25:
-        return 'red';
-      case 20:
-        return 'blue';
-      case 15:
-        return 'yellow';
-      case 10:
-        return 'green';
-      case 5:
-        return 'white';
-      case 2.5:
-        return 'black';
-      case 1.25:
-        return 'gray';
-      default:
-        return 'black';
-    }
-  }
-
-  getBadgeColor(plate: number): string {
+  getKGBadgeColor(plate: number): string {
     switch (plate) {
       case 25:
         return 'danger';
@@ -90,6 +72,12 @@ export class LoaderService {
         return 'dark';
       case 1.25:
         return 'medium';
+      case 1:
+        return 'medium';
+      case 0.5:
+        return 'medium';
+      case 0.25:
+        return 'medium';
       default:
         return 'dark';
     }
@@ -103,11 +91,7 @@ export class LoaderService {
     return plates.filter(plate => plate.count > 0);
   }
 
-  filterPair(plates: Array<Plates>): Array<Plates> {
-    return plates.filter(plate => plate.pairs > 0);
-  }
-
-  weightToBarLoad = (weight: number, plates: any, barWeight: number, compCollar: boolean) => {
+  weightToBarLoad(weight: number, plates: any, barWeight: number, compCollar: boolean): any[] {
     const filteredPairs = this.filterPair(plates);
 
     // The plates that will go on one side of the bar
@@ -143,5 +127,88 @@ export class LoaderService {
   // from https://ionicframework.com/docs/angular/performance
   trackItems(index: number, itemObject: any) {
     return itemObject.id;
+  }
+
+  private kgHeights(plate: number): number {
+    const maxHeight = 80;
+
+    let height: number;
+    switch (plate) {
+      case 25:
+        height = maxHeight;
+        break;
+      case 20:
+        height = maxHeight;
+        break;
+      case 15:
+        height = maxHeight * 0.9;
+        break;
+      case 10:
+        height = maxHeight * 0.8;
+        break;
+      case 5:
+        height = maxHeight * 0.6;
+        break;
+      case 2.5:
+        height = maxHeight * 0.5;
+        break;
+      case 1.25:
+        height = maxHeight * 0.4;
+        break;
+      case 1:
+        height = maxHeight * 0.3;
+        break;
+      case 0.5:
+        height = maxHeight * 0.2;
+        break;
+      case 0.25:
+        height = maxHeight * 0.1;
+        break;
+      default:
+        height = 3;
+    }
+    return height;
+  };
+
+  private lbHeights(plate: number): number {
+    const maxHeight = 80;
+
+    let height: number;
+    switch (plate) {
+      case 45:
+        height = maxHeight;
+        break;
+      case 25:
+        height = maxHeight * 0.9;
+        break;
+      case 10:
+        height = maxHeight * 0.8;
+        break;
+      case 5:
+        height = maxHeight * 0.7;
+        break;
+      case 2.5:
+        height = maxHeight * 0.6;
+        break;
+      case 1.25:
+        height = maxHeight * 0.5;
+        break;
+      case 1:
+        height = maxHeight * 0.4;
+        break;
+      case 0.5:
+        height = maxHeight * 0.3;
+        break;
+      case 0.25:
+        height = maxHeight * 0.2;
+        break;
+      default:
+        height = 3;
+    }
+    return height;
+  };
+
+  private filterPair(plates: Array<Plates>): Array<Plates> {
+    return plates.filter(plate => plate.pairs > 0);
   }
 }

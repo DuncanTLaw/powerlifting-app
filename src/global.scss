@@ -25,11 +25,14 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+/* These styles TEMPORARILY commented as iOS notch covers itself
 :root {
   padding-top: env(safe-area-inset-top); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
-  --ion-safe-area-top: 15px !important;
-  // --ion-safe-area-bottom: 22px !important;
+  padding-bottom: env(safe-area-inset-bottom); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
+  --ion-safe-area-top: 50px !important;
+  --ion-safe-area-bottom: 22px !important;
 }
+ */
 
 ion-toolbar {
   padding-bottom: 5px;
@@ -39,10 +42,14 @@ ion-slides {
   height: 100%;
 }
 
-ion-toast.custom-class {
+.toast-class {
   font-size: large;
-  position: fixed;
-  top: -50px;
+  transform: translateY(-50px); // TEMPORARY custom toast position above tabbar - await https://github.com/ionic-team/ionic-framework/issues/17499
+  text-align: center;
+}
+
+.copy-toast-class {
+  text-align: center;
 }
 
 // from https://codepen.io/liamdebeasi/pen/YzwNzao
@@ -51,6 +58,10 @@ hr {
   margin-bottom: 0;
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+summary {
+  outline: none;
 }
 
 /* below is an inelegant way to apply styles on breakpoint but is suggested by
@@ -65,7 +76,7 @@ https://forum.ionicframework.com/t/make-ionic-cards-side-by-side-the-same-height
   }
 
   #setsCard {
-    height: 208.8px;
-    padding-top: 26.4px;
+    height: 252.8px;
+    padding-top: 48.4px;
   }
 }

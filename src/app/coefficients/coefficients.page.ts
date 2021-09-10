@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MenuController } from '@ionic/angular';
+import { WeightUnitService } from '../settings/weight-unit.service';
 
 import { CoeffService } from './coefficients.service';
 
@@ -9,11 +9,15 @@ import { CoeffService } from './coefficients.service';
   templateUrl: './coefficients.page.html',
   styleUrls: ['./coefficients.page.scss'],
 })
-export class CoefficientsPage implements OnInit {
+export class CoefficientsPage implements OnInit, OnDestroy {
+  // get TD form from template
+  // https://stackoverflow.com/questions/37093432/angular-2-template-driven-form-access-ngform-in-component
+  @ViewChild('coeff', { static: true }) coeffForm: NgForm;
+
   pointsSelected = 'IPF GL';
   segmentSelected = 'total';
   bluesSelected = false;
-  userMale: boolean;
+  userGender: string;
   userBw: number;
   userTotal: number;
   userSq: number;
@@ -21,27 +25,48 @@ export class CoefficientsPage implements OnInit {
   userDl: number;
   userPoints: any;
 
+  goalBlue = 'full';
+  goalTotal: number;
+  calcDiff = false;
+  blueDiff: string;
+  hBlueDiff: string;
+
   constructor(
-    private menu: MenuController,
+    public weightUnitService: WeightUnitService,
     private coeffService: CoeffService
   ) { }
 
   ngOnInit() {
+    this.coeffService.checkGender().then(
+      () => {
+        if (this.coeffService.gender) {
+        this.userGender = this.coeffService.gender;
+        }
+      }
+    );
+    this.weightUnitService.userUnit.subscribe(() => {
+      this.calcPoints(this.coeffForm);
+      this.calcGoal(this.coeffForm);
+      this.calcDelta(this.coeffForm);
+    });
   }
 
-  openMenu(): void {
-    this.menu.open('about');
+  ngOnDestroy() {
+    this.weightUnitService.userUnit.unsubscribe();
   }
 
   onChangeGender(form: NgForm): void {
-    this.coeffService.male = this.userMale;
-    this.onCalcPoints(form);
+    this.coeffService.gender = this.userGender;
+    this.calcPoints(form);
+    this.coeffService.setGender(this.userGender);
   }
 
   segmentChanged(event: any): void {
     this.segmentSelected = event.target.value;
     if(this.segmentSelected === 'onlyBP') {
       this.coeffService.benchOnly = true;
+    } else {
+      this.coeffService.benchOnly = false;
     }
   }
 
@@ -61,22 +86,16 @@ export class CoefficientsPage implements OnInit {
     }
   }
 
-  onCalcPoints(form: NgForm): void {
+  calcPoints(form: NgForm): void {
     this.checkSegment(form);
+    this.bluesSelected = (this.pointsSelected !== 'Blues') ? false : true;
+    this.userPoints = (this.pointsSelected !== 'Blues') ? null : 'None';
 
-    if (typeof this.userMale === 'boolean') {
+    if (this.userGender) {
       if (form.value.weight && this.userTotal) {
         this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
-      } else if (this.coeffService.benchOnly && form.value.bp){
+      } else if (this.segmentSelected === 'onlyBP' && form.value.bp){
         this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
-      } else {
-        if (this.pointsSelected !== 'Blues') {
-          this.bluesSelected = false;
-          this.userPoints = null;
-        } else {
-          this.bluesSelected = true;
-          this.userPoints = 'None';
-        }
       }
     }
   }
@@ -91,7 +110,7 @@ export class CoefficientsPage implements OnInit {
         this.bluesSelected = false;
         this.userPoints = this.coeffService.calcIPF(form, total);
         break;
-      case 'Dots':
+      case 'DOTS':
         this.bluesSelected = false;
         this.userPoints = this.coeffService.calcDOTS(form, total);
         break;
@@ -103,6 +122,27 @@ export class CoefficientsPage implements OnInit {
         this.bluesSelected = true;
         this.userPoints = this.coeffService.calcBlues(form, total);
         break;
+    }
+  }
+
+  calcGoal(form: NgForm): void {
+    if (this.userGender && form.value.goalBw && form.value.goalBlue) {
+      this.goalTotal = this.coeffService.calcBluesGoal(form);
+    }
+  }
+
+  onClickCalc = (): boolean => this.calcDiff = !this.calcDiff;;
+
+  calcDelta(form: NgForm): void {
+    const unitUsed = this.weightUnitService.userUnit.value;
+    if (this.goalTotal && form.value.tTotal) {
+      if (this.goalTotal < form.value.tTotal) {
+        this.blueDiff = 'achieved';
+        this.hBlueDiff = 'achieved';
+      } else {
+        this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
+        this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
+      }
     }
   }
 }
