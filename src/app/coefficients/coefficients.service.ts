@@ -21,6 +21,12 @@ export class CoeffService {
   gender: string;
   benchOnly = false;
 
+  bluesClass = 'IPF points';
+  bluesConst: Blues = {
+    half: 500,
+    full: 560
+  };
+
   private dotsScale: GenderCoeff = DOTSCOEFF;
 
   private glScale: GLModel = GLCOEFF;
@@ -28,11 +34,6 @@ export class CoeffService {
   private ipfScale: GenderCoeff = IPFCOEFF;
 
   private wilksScale: GenderCoeff = WILKSCOEFF;
-
-  private bluesConst: Blues = { // in IPF points
-    half: 500,
-    full: 560
-  };
 
   constructor(private weightUnitService: WeightUnitService) {}
 

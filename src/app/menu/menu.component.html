@@ -23,6 +23,10 @@
     </picture>
   </ion-content>
   <ion-footer class="ion-padding">
+    <div style="margin-bottom: 8px;">
+      <ion-note *ngIf="teamService.userTeam==='Team Pape'">You goose</ion-note>
+      <ion-note *ngIf="teamService.userTeam==='OUPLC'">#BleedDarkBlue</ion-note>
+    </div>
     <app-utilities></app-utilities>
   </ion-footer>
 </ion-menu>

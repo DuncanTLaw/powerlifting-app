@@ -12,7 +12,20 @@
             <form #coeff="ngForm">
               <ion-card-header>
                 <ion-card-title *ngIf="pointsSelected!=='Blues'">{{ pointsSelected }}</ion-card-title>
-                <ion-card-title *ngIf="pointsSelected==='Blues'">Oxford {{ pointsSelected }}</ion-card-title>
+                <ion-card-title *ngIf="pointsSelected==='Blues'">
+                  <ion-row class="ion-align-items-center">
+                    <ion-col class="ion-no-padding">
+                      Oxford {{ pointsSelected }}
+                    </ion-col>
+                    <ion-col class="ion-no-padding" size="auto">
+                      <ion-buttons>
+                        <ion-button (click)="presentPopover($event)">
+                          <ion-icon name="help-circle"></ion-icon>
+                        </ion-button>
+                      </ion-buttons>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-label position="fixed">Gender</ion-label>

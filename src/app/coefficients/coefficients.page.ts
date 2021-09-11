@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { PopoverController } from '@ionic/angular';
 import { WeightUnitService } from '../settings/weight-unit.service';
 import { TeamService } from '../team/team.service';
 
 import { CoeffService } from './coefficients.service';
+import { PopoverComponent } from './popover/popover.component';
 
 @Component({
   selector: 'app-coefficients',
@@ -36,7 +38,8 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   constructor(
     public teamService: TeamService,
     public weightUnitService: WeightUnitService,
-    private coeffService: CoeffService
+    private coeffService: CoeffService,
+    private popoverController: PopoverController
   ) { }
 
   ngOnInit() {
@@ -172,6 +175,18 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       this.result = 'points';
     }
     this.tempResult = this.result;
+  }
+
+  async presentPopover(ev: any): Promise<void> {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
   }
 
   private calcPoints(form: NgForm): void {
