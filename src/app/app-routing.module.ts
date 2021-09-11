@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TeamGuard } from './team/team.guard';
 
 const routes: Routes = [
   {
@@ -10,23 +9,19 @@ const routes: Routes = [
   },
   {
     path: 'rpe',
-    loadChildren: () => import('./rpe/rpe.module').then( m => m.RpePageModule),
-    canLoad: [TeamGuard]
+    loadChildren: () => import('./rpe/rpe.module').then( m => m.RpePageModule)
   },
   {
     path: 'coeff',
-    loadChildren: () => import('./coefficients/coefficients.module').then( m => m.CoefficientsPageModule),
-    canLoad: [TeamGuard]
+    loadChildren: () => import('./coefficients/coefficients.module').then( m => m.CoefficientsPageModule)
   },
   {
     path: 'timer',
-    loadChildren: () => import('./timer/timer.module').then( m => m.TimerPageModule),
-    canLoad: [TeamGuard]
+    loadChildren: () => import('./timer/timer.module').then( m => m.TimerPageModule)
   },
   {
     path: 'loader',
-    loadChildren: () => import('./loader/loader.module').then( m => m.LoaderPageModule),
-    canLoad: [TeamGuard]
+    loadChildren: () => import('./loader/loader.module').then( m => m.LoaderPageModule)
   },
   {
     path: 'help',

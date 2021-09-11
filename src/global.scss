@@ -25,15 +25,6 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-/* These styles TEMPORARILY commented as iOS notch covers itself
-:root {
-  padding-top: env(safe-area-inset-top); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
-  padding-bottom: env(safe-area-inset-bottom); // from https://webkit.org/blog/7929/designing-websites-for-iphone-x/
-  --ion-safe-area-top: 50px !important;
-  --ion-safe-area-bottom: 22px !important;
-}
- */
-
 :root {
   .ouplc-theme { // Blues colour specification from https://www.ox.ac.uk/sites/files/oxford/media_wysiwyg/Oxford%20Blue%20LR.pdf
     p {

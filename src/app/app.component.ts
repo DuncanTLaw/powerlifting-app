@@ -1,6 +1,5 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { ThemesService } from './settings/themes.service';
 import { TeamService } from './team/team.service';
 
@@ -43,7 +42,6 @@ export class AppComponent implements OnInit{
 
   constructor(
     private metaService: Meta,
-    public router: Router,
     private themeService: ThemesService,
     private teamService: TeamService
   ) { }

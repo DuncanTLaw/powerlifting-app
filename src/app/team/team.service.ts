@@ -13,7 +13,7 @@ interface TEAMSTRINGS {
   providedIn: 'root'
 })
 export class TeamService {
-  userTeam: string;
+  userTeam = 'none';
   teams: TEAMSTRINGS = {
     none: {
       password: '',

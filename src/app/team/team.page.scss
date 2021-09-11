@@ -1,5 +1,10 @@
+ion-toolbar {
+  max-height: 0px;
+  border: none !important;
+}
+
 ion-card {
-  height: 100%;
+  height: calc(100% - 50px);
 }
 
 .card-footer {

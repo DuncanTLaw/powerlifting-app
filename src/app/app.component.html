@@ -1,10 +1,10 @@
 <ion-app>
-  <app-about [hidden]="router.url === '/team' || router.url === '/help'"></app-about>
+  <app-about></app-about>
 
   <ion-router-outlet id="main"></ion-router-outlet>
 
   <ion-tabs>
-    <ion-tab-bar *ngIf="router.url !== '/team'">
+    <ion-tab-bar>
       <ng-container *ngFor="let page of pages | keyvalue: returnZero">
         <ion-tab-button [tab]="page.key" [style.--color-selected]="page.value.colour">
           <ion-icon [name]="page.value.icon"></ion-icon>
