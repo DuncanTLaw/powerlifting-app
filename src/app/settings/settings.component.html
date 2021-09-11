@@ -7,45 +7,47 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-button
-    class="ion-margin-bottom"
-    id="teamButton"
-    color="dark"
-    expand="block"
-    [routerLink]="['/team']"
-    (click)="onClickButton()"
-  >
-    Select Team
-  </ion-button>
-  <ion-label position="fixed"><ion-note>Unit</ion-note></ion-label>
-  <ion-segment
-    [ngModel]="weightUnitService.userUnit | async"
-    (ionChange)="weightUnitService.setUnit($event)"
-  >
-    <ion-segment-button value="kg">
-      <ion-label>kilogram</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="lb">
-      <ion-label>pound</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <br/>
-  <ion-label position="fixed"><ion-note>Mode</ion-note></ion-label>
-  <ion-segment
-    [(ngModel)]="modeService.mode"
-    (ionChange)="modeService.setMode()"
-  >
-    <ion-segment-button value="light">
-      <ion-label>Light</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="dark">
-      <ion-label>Dark</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="auto">
-      <ion-label>Auto</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+<ion-content>
+  <ion-card class="ion-padding">
+    <ion-button
+      class="ion-margin-bottom"
+      id="teamButton"
+      color="dark"
+      expand="block"
+      [routerLink]="['/team']"
+      (click)="onClickButton()"
+    >
+      Select Team
+    </ion-button>
+    <ion-label position="fixed">Unit</ion-label>
+    <ion-segment
+      [ngModel]="weightUnitService.userUnit | async"
+      (ionChange)="weightUnitService.setUnit($event)"
+    >
+      <ion-segment-button value="kg">
+        <ion-label>kilogram</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="lb">
+        <ion-label>pound</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <br/>
+    <ion-label position="fixed">Mode</ion-label>
+    <ion-segment
+      [(ngModel)]="modeService.mode"
+      (ionChange)="modeService.setMode()"
+    >
+      <ion-segment-button value="light">
+        <ion-label>Light</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="dark">
+        <ion-label>Dark</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="auto">
+        <ion-label>Auto</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-card>
 </ion-content>
 
 <ion-footer class="ion-padding">

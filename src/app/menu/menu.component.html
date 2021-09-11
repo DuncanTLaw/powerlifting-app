@@ -15,10 +15,11 @@
   <ion-content>
     <picture>
       <source
+        [id]="teamService.userTeam"
         [srcset]="teamService.teams[teamService.userTeam]?.dark"
         media="(prefers-color-scheme: dark)"
       >
-      <img [src]="teamService.teams[teamService.userTeam]?.light">
+      <img [id]="teamService.userTeam" [src]="teamService.teams[teamService.userTeam]?.light">
     </picture>
   </ion-content>
   <ion-footer class="ion-padding">

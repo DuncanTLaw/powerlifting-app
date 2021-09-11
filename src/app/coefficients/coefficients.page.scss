@@ -1,14 +1,3 @@
 #result {
   font-size: large;
 }
-
-// Blues colour specification from https://www.ox.ac.uk/sites/files/oxford/media_wysiwyg/Oxford%20Blue%20LR.pdf
-#blues {
-  color: rgb(0, 33, 71); // Oxford blue
-}
-
-@media (prefers-color-scheme: dark) {
-   #blues {
-    color: rgb(72, 145, 220); // Pantone 279
-   }
-}

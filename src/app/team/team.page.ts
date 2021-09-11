@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HelpService } from '../help/help.service';
+import { ThemesService } from '../settings/themes.service';
 import { TeamService } from './team.service';
 
 @Component({
@@ -12,7 +13,11 @@ export class TeamPage implements OnInit {
   inputPassword: string;
   passwordCorrect = false;
 
-  constructor(public teamService: TeamService, public helpService: HelpService) { }
+  constructor(
+    public teamService: TeamService,
+    public helpService: HelpService,
+    private themeService: ThemesService
+  ) { }
 
   ngOnInit() {
     this.inputTeam = (this.teamService.userTeam) ? this.teamService.userTeam : null;
@@ -38,5 +43,10 @@ export class TeamPage implements OnInit {
   onSubmitTeam(): void {
     this.teamService.userTeam = this.inputTeam;
     this.teamService.setTeam();
+    if (this.teamService.userTeam === 'OUPLC') {
+      this.themeService.enableTheme('ouplc-theme');
+    } else {
+      this.themeService.disableTheme('ouplc-theme');
+    }
   }
 }

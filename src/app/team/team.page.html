@@ -16,7 +16,7 @@
         >
           <ion-label>{{ team.key }}</ion-label>
           <ion-radio slot="start" [value]="team.key"></ion-radio>
-          <ion-avatar slot="end" *ngIf="team.value.light || team.value.dark">
+          <ion-avatar slot="end" *ngIf="team.value.light || team.value.dark" [id]="team.key">
             <picture>
               <source
                 [srcset]="team.value.dark"

@@ -34,9 +34,53 @@
 }
  */
 
+:root {
+  .ouplc-theme { // Blues colour specification from https://www.ox.ac.uk/sites/files/oxford/media_wysiwyg/Oxford%20Blue%20LR.pdf
+    p {
+      color: white;
+    }
+
+    ion-content, ion-card, ion-item, ion-toolbar, ion-tab-bar, ion-menu, ion-modal {
+      --ion-text-color: white;
+      --background: rgb(0, 33, 71); // Oxford blue
+    }
+
+    ion-row {
+      color: white;
+    }
+
+    ion-card {
+      border: 2px solid white;
+    }
+
+    ion-toolbar {
+      border-bottom: 2px solid white;
+      --ion-color-dark: white;
+    }
+
+    ion-tab-bar {
+      border-top: 2px solid white;
+    }
+
+    ion-modal {
+      --ion-color-dark: white;
+      --ion-color-dark-contrast: black;
+
+      ion-title {
+        color: white;
+      }
+
+      ::marker {
+        color: white;
+      }
+    }
+  }
+}
+
 ion-toolbar {
   padding-bottom: 5px;
 }
+
 /* Without setting height the slides will take up the height of the slide's content */
 ion-slides {
   height: 100%;

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { ThemesService } from './settings/themes.service';
+import { TeamService } from './team/team.service';
 
 interface PAGES {
   [pageName: string]: {
@@ -39,9 +41,14 @@ export class AppComponent implements OnInit{
     },
   };
 
-  constructor(private metaService: Meta, public router: Router) {}
+  constructor(
+    private metaService: Meta,
+    public router: Router,
+    private themeService: ThemesService,
+    private teamService: TeamService
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.metaService.addTags([
       {
         name: 'keywords', content:
@@ -53,6 +60,12 @@ export class AppComponent implements OnInit{
         'Powerlifting toolbox which includes RPE claculator, points calculations, timer, sets counter and what plates to load.'
       }
     ]);
+    await this.teamService.checkTeam();
+    if (this.teamService.userTeam === 'OUPLC') {
+      this.themeService.enableTheme('ouplc-theme');
+    } else {
+      this.themeService.disableTheme('ouplc-theme');
+    }
   }
 
   returnZero(): number {
