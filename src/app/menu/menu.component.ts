@@ -13,6 +13,7 @@ import { SettingsComponent } from '../settings/settings.component';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
+
   constructor(
     public modalController: ModalController,
     public teamService: TeamService,
