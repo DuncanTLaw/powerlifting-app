@@ -1,4 +1,4 @@
-<ion-card style="height: 100%;">
+<ion-card>
   <ion-card-header>
     <ion-card-title>Your Team or Club</ion-card-title>
     <ion-card-subtitle>
@@ -19,7 +19,6 @@
           <ion-avatar slot="end" *ngIf="team.value.light || team.value.dark">
             <picture>
               <source
-                id="screenshot"
                 [srcset]="team.value.dark"
                 media="(prefers-color-scheme: dark)"
               >

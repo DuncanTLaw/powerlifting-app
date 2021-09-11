@@ -17,7 +17,7 @@
           <ion-card-content>
             <ion-row class="ion-justify-content-center">
               <ion-text
-                style="font-size: 36pt;"
+                id="timerText"
                 [ngClass]="{blink: !timerRunning}"
               >
                 {{ timeRemaining }}<span *ngIf="timeRemaining">s</span>
@@ -25,7 +25,7 @@
             </ion-row>
             <ion-row
               class="ion-justify-content-evenly"
-              style="margin-bottom: 5px;"
+              id="timerButtonRow"
             >
               <ion-button
                 color="light"
@@ -86,11 +86,11 @@
                 <ion-icon name="remove"></ion-icon>
               </ion-fab-button>
               <ion-text
-              style="font-size: xx-large;"
-              *ngIf="setsSelected"
-            >
-              {{ setsCompleted }} / {{ setsSelected }}
-            </ion-text>
+                id="setsText"
+                *ngIf="setsSelected"
+              >
+                {{ setsCompleted }} / {{ setsSelected }}
+              </ion-text>
               <ion-fab-button
                 (click)="onAddSet()"
                 size="small"

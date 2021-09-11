@@ -2,7 +2,7 @@
   <ion-header>
     <ion-toolbar>
       <ion-button size="small" (click)="presentModal()">
-        <ion-icon style="margin-right: 8px;" name="cog-outline"></ion-icon>
+        <ion-icon id="settings" name="cog-outline"></ion-icon>
         Settings
       </ion-button>
       <ion-buttons slot="end">
@@ -12,10 +12,9 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding">
+  <ion-content>
     <picture>
       <source
-        id="screenshot"
         [srcset]="teamService.teams[teamService.userTeam]?.dark"
         media="(prefers-color-scheme: dark)"
       >
