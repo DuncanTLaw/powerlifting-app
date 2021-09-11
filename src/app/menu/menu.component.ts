@@ -9,10 +9,10 @@ import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-about',
-  templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.scss']
 })
-export class AboutComponent implements OnInit {
+export class MenuComponent implements OnInit {
   constructor(
     public modalController: ModalController,
     public teamService: TeamService,

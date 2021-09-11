@@ -50,6 +50,7 @@ export class SettingsComponent implements OnInit {
 
   dismissModal(): void {
     this.modalController.dismiss();
+    this.menuController.close();
   }
 
   onClickButton(): void {
