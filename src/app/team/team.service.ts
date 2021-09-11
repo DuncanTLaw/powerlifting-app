@@ -22,7 +22,7 @@ export class TeamService {
     },
     // eslint-disable-next-line
     'Team Pape': {
-      password: 'You goose',
+      password: '',
       light: '/assets/teamAvatars/TP.png',
       dark: '/assets/teamAvatars/TP-dark.png'
     },

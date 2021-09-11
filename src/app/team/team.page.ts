@@ -21,7 +21,7 @@ export class TeamPage implements OnInit {
 
   ngOnInit() {
     this.inputTeam = (this.teamService.userTeam) ? this.teamService.userTeam : null;
-    if (this.teamService.userTeam === 'none') {
+    if (this.teamService.userTeam === 'none' || this.teamService.userTeam === 'Team Pape') {
       this.passwordCorrect = true;
     }
   }
@@ -31,7 +31,7 @@ export class TeamPage implements OnInit {
   }
 
   authenticateInput(): void {
-    if (this.inputTeam === 'none') {
+    if (this.inputTeam === 'none' || this.inputTeam === 'Team Pape') {
       this.passwordCorrect = true;
     } else if (this.inputPassword === this.teamService.teams[this.inputTeam].password) {
       this.passwordCorrect = true;
