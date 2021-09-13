@@ -78,6 +78,10 @@ ion-slides {
   height: 100%;
 }
 
+ion-label, ion-note {
+  font-weight: 450;
+}
+
 .toast-class {
   font-size: large;
   transform: translateY(-50px); // TEMPORARY custom toast position above tabbar - await https://github.com/ionic-team/ionic-framework/issues/17499
