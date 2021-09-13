@@ -21,6 +21,7 @@
       <div class="ion-slide-content">
         <img class="ion-margin-bottom" src="../../assets/check-animated.gif" id="check"/>
         <h2>You're all up to speed.</h2>
+        <p *ngIf="!helpService.haveWelcomed">You can revisit this help page from the side menu later.</p>
         <ion-button
           [routerLink]="[helpService.currentRoute | async]"
           fill="clear"

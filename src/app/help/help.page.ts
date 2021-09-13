@@ -51,7 +51,26 @@ export class HelpPage implements OnInit {
         'The second slide can tell you how much weight there is on a bar in competition.'
       ],
       icon: 'barbell-sharp'
-    }
+    },
+    {
+      title: 'Menu',
+      overview: 'Swipe right for the side menu.',
+      help: [
+        'The side menu is accessible by swiping right from near the left edge of the screen on any page.',
+        // eslint-disable-next-line max-len
+        'The menu contains a button to the settings page at the top. You can also calculate a total from the sum of your lifts.There is also a kg-to-lb converter.'
+      ],
+      icon: 'menu'
+    },
+    {
+      title: 'Settings',
+      overview: 'Set your app preferences and select your powerlifting team.',
+      help: [
+        'Set your powerlifting team for exclusive content.',
+        'Toggle betwen kilogram and pound as your preferred weight unit.'
+      ],
+      icon: 'cog-outline'
+    },
   ];
 
   constructor(public helpService: HelpService) { }

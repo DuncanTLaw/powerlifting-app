@@ -84,7 +84,7 @@ ion-label, ion-note {
 
 .toast-class {
   font-size: large;
-  transform: translateY(-50px); // TEMPORARY custom toast position above tabbar - await https://github.com/ionic-team/ionic-framework/issues/17499
+  transform: translateY(-50px); /* TEMPORARY custom toast position above tabbar - await https://github.com/ionic-team/ionic-framework/issues/17499 */
   text-align: center;
 }
 
@@ -92,7 +92,7 @@ ion-label, ion-note {
   text-align: center;
 }
 
-// from https://codepen.io/liamdebeasi/pen/YzwNzao
+/* from https://codepen.io/liamdebeasi/pen/YzwNzao */
 hr {
   margin-top: 1rem;
   margin-bottom: 0;
@@ -106,7 +106,6 @@ summary {
 
 /* below is an inelegant way to apply styles on breakpoint but is suggested by
 https://forum.ionicframework.com/t/make-ionic-cards-side-by-side-the-same-height/213887/7 */
-
 @media (min-width: 768px) { //md breakpoint
   #requiredCard {
     height: 268px;
