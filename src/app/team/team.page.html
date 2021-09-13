@@ -23,13 +23,14 @@
             <ion-label>{{ team.key }}</ion-label>
             <ion-radio slot="start" [value]="team.key"></ion-radio>
             <ion-avatar slot="end" *ngIf="team.value.light || team.value.dark" [id]="team.key">
-              <picture>
+              <picture *ngIf="teamService.userTeam!=='OUPLC'">
                 <source
                   [srcset]="team.value.dark"
                   media="(prefers-color-scheme: dark)"
                 >
                 <img [src]="team.value.light">
               </picture>
+              <img *ngIf="teamService.userTeam==='OUPLC'" [src]="team.value.dark">
             </ion-avatar>
           </ion-item>
         </ion-radio-group>

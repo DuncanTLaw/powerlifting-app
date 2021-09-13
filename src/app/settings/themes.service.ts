@@ -15,7 +15,7 @@ export class ThemesService {
     this.renderer.addClass(this.document.body, theme);
   }
 
-  disableTheme(theme: string) {
+  disableTheme(theme: string): void {
     this.renderer.removeClass(this.document.body, theme);
   }
 }

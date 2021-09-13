@@ -6,8 +6,11 @@ import { Storage } from '@capacitor/storage';
 })
 export class ModeService {
   mode = 'auto';
+  prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-  constructor() { }
+  constructor() {
+    this.prefersDark.addEventListener('change', (e) => console.log(e));
+  }
 
   setMode = async (): Promise<void> => {
     const storeMode = this.mode;
@@ -16,7 +19,7 @@ export class ModeService {
       key: 'keep',
       value: storeMode
     });
-    document.body.setAttribute('color-theme', 'light');
+    document.body.classList.toggle('dark', true);
   };
 
   checkAwake = async (): Promise<void> => {
