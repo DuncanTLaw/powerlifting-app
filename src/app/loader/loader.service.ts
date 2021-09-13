@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 import { Storage } from '@capacitor/storage';
 
 export interface Plates {

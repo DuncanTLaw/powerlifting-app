@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController, PickerController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { KeepAwake } from '@capacitor-community/keep-awake';
-import { AwakeService } from '../settings/awake.service';
+import { AwakeService } from '../settings/settings-storage/awake.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({

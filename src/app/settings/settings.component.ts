@@ -2,8 +2,8 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
 import { HelpService } from '../help/help.service';
-import { ModeService } from './mode.service';
-import { WeightUnitService } from './weight-unit.service';
+import { ModeService } from './settings-storage/mode.service';
+import { WeightUnitService } from './settings-storage/weight-unit.service';
 
 interface LINKS {
   [website: string]: {

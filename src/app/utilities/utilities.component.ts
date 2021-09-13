@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { ToastController } from '@ionic/angular';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 const LB_IN_KG = 2.2046226218488;
 

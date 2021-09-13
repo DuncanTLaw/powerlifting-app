@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HelpService } from './help/help.service';
-import { ThemesService } from './settings/themes.service';
+import { ThemesService } from './settings/settings-storage/themes.service';
 import { TeamService } from './team/team.service';
 
 interface PAGES {

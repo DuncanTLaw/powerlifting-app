@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RPEPct, RPEPCTTABLE } from '../numeric-tables/RPE-pct';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 import { TeamService } from '../team/team.service';
 
 interface FunctionHandler {

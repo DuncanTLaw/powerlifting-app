@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 import { NgForm } from '@angular/forms';
 import { GenderCoeff, GLModel } from '../numeric-tables/coefficient.model';

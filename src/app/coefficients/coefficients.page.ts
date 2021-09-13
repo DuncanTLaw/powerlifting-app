@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 import { TeamService } from '../team/team.service';
 
 import { CoeffService } from './coefficients.service';

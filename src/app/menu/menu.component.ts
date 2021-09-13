@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { WeightUnitService } from '../settings/weight-unit.service';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { HelpService } from '../help/help.service';
