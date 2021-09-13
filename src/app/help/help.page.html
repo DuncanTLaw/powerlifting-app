@@ -17,5 +17,17 @@
         <p *ngFor="let help of page.help">{{ help }}</p>
       </div>
     </ion-slide>
+    <ion-slide>
+      <div class="ion-slide-content">
+        <img src="../../assets/check-animated.gif" id="check"/>
+        <h2>You're all up to speed.</h2>
+        <ion-button
+          [routerLink]="[helpService.currentRoute | async]"
+          fill="clear"
+        >
+          Start lifting <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-slide>
   </ion-slides>
 </ion-content>
