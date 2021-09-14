@@ -8,13 +8,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { MenuComponent } from './menu/menu.component';
 import { FormsModule } from '@angular/forms';
 import { UtilitiesComponent } from './utilities/utilities.component';
 import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, UtilitiesComponent, SettingsComponent],
+  declarations: [AppComponent, UtilitiesComponent, SettingsComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

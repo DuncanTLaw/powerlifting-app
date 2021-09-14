@@ -11,8 +11,8 @@ export class HelpService {
 
   constructor() { }
 
-  setWelcomed = async (): Promise<void> => {
-    const storeWelcomed = 'welcomed';
+  setWelcomed = async (welcome: boolean): Promise<void> => {
+    const storeWelcomed = (welcome) ? 'welcomed' : 'notWelcomed';
 
     await Storage.set({
       key: 'welcomed',
@@ -22,6 +22,6 @@ export class HelpService {
 
   checkWelcomed = async (): Promise<void> => {
     const { value } = await Storage.get({ key: 'welcomed' });
-    this.haveWelcomed = (value) ? true : false;
+    this.haveWelcomed = (value === 'welcomed') ? true : false;
   };
 }

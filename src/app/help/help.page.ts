@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonSlides, MenuController } from '@ionic/angular';
 import { HelpService } from './help.service';
 
@@ -16,6 +17,7 @@ interface Pages {
 })
 export class HelpPage implements OnInit {
   @ViewChild('slides', { static: true }) slides: IonSlides;
+  viewEnter = false;
 
   showSkip = true;
   pages: Array<Pages> = [
@@ -79,10 +81,20 @@ export class HelpPage implements OnInit {
 
   constructor(
     private menuController: MenuController,
-    public helpService: HelpService
+    public helpService: HelpService,
+    private router: Router
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.helpService.checkWelcomed().then(() => {
+      if (this.helpService.haveWelcomed) {
+        this.router.navigateByUrl('/app/tabs/rpe', { replaceUrl: true });
+      }
+    });
+  }
+
+  ionViewWillEnter() {
+    this.viewEnter = true;
   }
 
   ionViewDidEnter() {
@@ -92,6 +104,12 @@ export class HelpPage implements OnInit {
   ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
     this.menuController.enable(true);
+  }
+
+  startApp(): void {
+    this.router.navigateByUrl('/app/tabs/rpe', { replaceUrl: true }).then(
+      () => this.helpService.setWelcomed(true)
+    );
   }
 
   onSlideChangeStart(event: any): void {
