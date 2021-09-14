@@ -85,7 +85,7 @@ export class HelpPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.menuController.enable(false);
   }
 

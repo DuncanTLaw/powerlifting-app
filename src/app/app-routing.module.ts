@@ -4,24 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'rpe',
+    redirectTo: 'app/tabs',
     pathMatch: 'full'
   },
   {
-    path: 'rpe',
-    loadChildren: () => import('./rpe/rpe.module').then( m => m.RpePageModule)
-  },
-  {
-    path: 'coeff',
-    loadChildren: () => import('./coefficients/coefficients.module').then( m => m.CoefficientsPageModule)
-  },
-  {
-    path: 'timer',
-    loadChildren: () => import('./timer/timer.module').then( m => m.TimerPageModule)
-  },
-  {
-    path: 'loader',
-    loadChildren: () => import('./loader/loader.module').then( m => m.LoaderPageModule)
+    path: 'app',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
   {
     path: 'help',
@@ -30,7 +18,7 @@ const routes: Routes = [
   {
     path: 'team',
     loadChildren: () => import('./team/team.module').then( m => m.TeamPageModule)
-  }
+  },
 ];
 
 @NgModule({
