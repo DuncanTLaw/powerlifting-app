@@ -2,13 +2,13 @@
   <ion-toolbar>
     <ion-title size="large" color="dark">Help</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="[helpService.currentRoute | async]">Close</ion-button>
+      <ion-button [routerLink]="[helpService.currentRoute | async]" [hidden]="!showSkip">Skip</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-slides pager="true">
+  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager="true">
     <ion-slide class="ion-padding" *ngFor="let page of pages">
       <div class="ion-slide-content">
         <ion-icon class="display-icons" [name]="page.icon"></ion-icon>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 import { HelpService } from './help.service';
 
 interface Pages {
@@ -14,6 +15,9 @@ interface Pages {
   styleUrls: ['./help.page.scss'],
 })
 export class HelpPage implements OnInit {
+  @ViewChild('slides', { static: true }) slides: IonSlides;
+
+  showSkip = true;
   pages: Array<Pages> = [
     {
       title: 'RPE',
@@ -78,4 +82,9 @@ export class HelpPage implements OnInit {
   ngOnInit() {
   }
 
+    onSlideChangeStart(event: any): void {
+    event.target.isEnd().then((isEnd: boolean) => {
+      this.showSkip = !isEnd;
+    });
+  }
 }

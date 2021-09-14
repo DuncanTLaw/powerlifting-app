@@ -60,7 +60,7 @@
               {{ plateText }}
             </ion-button>
             <div [hidden]="!showPlates">
-              <ion-list>
+              <ion-list lines="full">
                 <ion-item *ngFor="let plate of plateCount[weightUnitService.userUnit | async]; trackBy:loaderService.trackItems">
                     <ion-col size="4">
                       <ion-badge
