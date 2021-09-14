@@ -82,6 +82,10 @@ ion-label, ion-note {
   font-weight: 450;
 }
 
+ion-card {
+  margin-bottom: 0;
+}
+
 .toast-class {
   font-size: large;
   transform: translateY(-50px); /* TEMPORARY custom toast position above tabbar - await https://github.com/ionic-team/ionic-framework/issues/17499 */
@@ -115,7 +119,8 @@ https://forum.ionicframework.com/t/make-ionic-cards-side-by-side-the-same-height
   }
 
   #setsCard {
-    height: 252.8px;
-    padding-top: 48.4px;
+    height: 255.8px;
+    padding-top: 49.9px;
+    margin-top: 25.5px;
   }
 }
