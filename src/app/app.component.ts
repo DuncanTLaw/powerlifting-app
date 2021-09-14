@@ -35,7 +35,8 @@ export class AppComponent implements OnInit{
   openTutorial(): void {
     this.helpService.currentRoute.next(this.router.url);
     this.helpService.setWelcomed(false);
-    this.menuController.close().then(() => this.router.navigateByUrl('/help'));
+    this.menuController.close();
+    this.router.navigateByUrl('/help');
   }
 
   async presentModal(): Promise<void> {

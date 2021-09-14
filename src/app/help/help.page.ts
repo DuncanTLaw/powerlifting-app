@@ -97,6 +97,7 @@ export class HelpPage implements OnInit {
     this.viewEnter = true;
   }
 
+  /* disabling ion menu seems to cause glitch when reenabled
   ionViewDidEnter() {
     this.menuController.enable(false);
   }
@@ -105,6 +106,7 @@ export class HelpPage implements OnInit {
     // enable the root left menu when leaving the tutorial page
     this.menuController.enable(true);
   }
+  */
 
   startApp(): void {
     this.router.navigateByUrl('/app/tabs/rpe', { replaceUrl: true }).then(
