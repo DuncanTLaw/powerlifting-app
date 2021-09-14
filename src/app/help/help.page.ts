@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, MenuController } from '@ionic/angular';
 import { HelpService } from './help.service';
 
 interface Pages {
@@ -77,12 +77,24 @@ export class HelpPage implements OnInit {
     },
   ];
 
-  constructor(public helpService: HelpService) { }
+  constructor(
+    private menuController: MenuController,
+    public helpService: HelpService
+  ) { }
 
   ngOnInit() {
   }
 
-    onSlideChangeStart(event: any): void {
+  ionViewWillEnter() {
+    this.menuController.enable(false);
+  }
+
+  ionViewDidLeave() {
+    // enable the root left menu when leaving the tutorial page
+    this.menuController.enable(true);
+  }
+
+  onSlideChangeStart(event: any): void {
     event.target.isEnd().then((isEnd: boolean) => {
       this.showSkip = !isEnd;
     });
