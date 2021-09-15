@@ -64,7 +64,7 @@ export class HelpPage implements OnInit {
       help: [
         'The side menu is accessible by swiping right from near the left edge of the screen on any page.',
         // eslint-disable-next-line max-len
-        'The menu contains a button to the settings page at the top. You can also calculate a total from the sum of your lifts.There is also a kg-to-lb converter.'
+        'The menu contains a button to the settings page at the top. You can also calculate a total from the sum of your lifts. There is also a kg-to-lb converter.'
       ],
       icon: 'menu'
     },
