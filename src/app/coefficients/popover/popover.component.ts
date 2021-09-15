@@ -3,8 +3,16 @@ import { CoeffService } from '../coefficients.service';
 
 @Component({
   selector: 'app-popover',
-  templateUrl: './popover.component.html',
-  styleUrls: ['./popover.component.scss'],
+  template: `
+    <p>
+      The OUPLC Blues classifications are:
+    </p>
+    <ul>
+      <li>Full Blue: {{ fullBlue }} {{ pointSystem }}</li>
+      <li>Half Blue: {{ halfBlue }} {{ pointSystem }}</li>
+    </ul>
+  `,
+  styles: ['p { margin-left: 8px; }'],
 })
 export class PopoverComponent implements OnInit {
   fullBlue: number;

@@ -184,9 +184,6 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       translucent: true
     });
     await popover.present();
-
-    const { role } = await popover.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
   }
 
   private calcPoints(form: NgForm): void {
