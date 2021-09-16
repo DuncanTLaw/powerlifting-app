@@ -4,7 +4,7 @@ interface PAGES {
   [pageName: string]: {
     label: string;
     icon: string;
-    colour: string;
+    color: string;
   };
 }
 
@@ -18,22 +18,22 @@ export class TabsPage implements OnInit {
     rpe: {
       label: 'RPE',
       icon: 'stats-chart',
-      colour: 'var(--ion-color-tertiary)'
+      color: 'var(--ion-color-tertiary)'
     },
     coeff: {
       label: 'Coefficients',
       icon: 'calculator',
-      colour: 'var(--ion-color-warning)'
+      color: 'var(--ion-color-warning)'
     },
     timer: {
       label: 'Timer',
       icon: 'timer-sharp',
-      colour: 'var(--ion-color-danger)'
+      color: 'var(--ion-color-danger)'
     },
     loader: {
       label: 'Loader',
       icon: 'barbell-sharp',
-      colour: 'var(--ion-color-success)'
+      color: 'var(--ion-color-success)'
     },
   };
 

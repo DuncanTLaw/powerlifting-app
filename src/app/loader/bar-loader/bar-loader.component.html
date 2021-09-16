@@ -65,7 +65,7 @@
                     <ion-col size="4">
                       <ion-badge
                         [color]="(weightUnitService.userUnit | async) === 'kg' ?
-                          loaderService.handleUnits.kg.colours(plate.weight) : loaderService.handleUnits.lb.colours(plate.weight)"
+                          loaderService.handleUnits.kg.colors(plate.weight) : loaderService.handleUnits.lb.colors(plate.weight)"
                       >
                         {{ plate.weight }}{{ weightUnitService.userUnit | async }}
                       </ion-badge>
@@ -99,7 +99,7 @@
     <ion-col class="ion-no-padding barbell" size="auto" *ngFor="let plate of barLoaded">
       <ion-badge
           [color]="(weightUnitService.userUnit | async) === 'kg' ?
-            loaderService.handleUnits.kg.colours(plate) : loaderService.handleUnits.lb.colours(plate)"
+            loaderService.handleUnits.kg.colors(plate) : loaderService.handleUnits.lb.colors(plate)"
           [style.padding-top]="loaderService.getHeight(plate)"
           [style.padding-bottom]="loaderService.getHeight(plate)"
           id="plate"
