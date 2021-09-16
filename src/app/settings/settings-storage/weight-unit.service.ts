@@ -8,7 +8,7 @@ const LB_IN_KG = 2.2046226218488;
   providedIn: 'root'
 })
 export class WeightUnitService {
-  userUnit = new BehaviorSubject<string>('kg');
+  userUnit: BehaviorSubject<string> = new BehaviorSubject<string>('kg');
 
   constructor() {
     this.checkUnit();

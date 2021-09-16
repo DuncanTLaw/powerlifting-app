@@ -6,7 +6,7 @@ import { Storage } from '@capacitor/storage';
   providedIn: 'root'
 })
 export class HelpService {
-  currentRoute = new BehaviorSubject<string>('');
+  currentRoute: BehaviorSubject<string> = new BehaviorSubject<string>('');
   haveWelcomed: boolean;
 
   constructor() { }
