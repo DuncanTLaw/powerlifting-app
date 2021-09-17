@@ -8,36 +8,38 @@
 </ion-header>
 
 <ion-content>
-  <ion-card class="ion-padding">
-    <ion-label position="fixed">Unit</ion-label>
-    <ion-segment
-      [ngModel]="weightUnitService.userUnit | async"
-      (ionChange)="weightUnitService.setUnit($event)"
-    >
-      <ion-segment-button value="kg">
-        <ion-label>kilogram</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="lb">
-        <ion-label>pound</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-    <!-- !! fix !! requires further checks - see https://forum.ionicframework.com/t/ionic-dark-mode-force-light-dark-and-system-theme/215091 -->
-    <br/>
-    <ion-label position="fixed">Mode</ion-label>
-    <ion-segment
-      [(ngModel)]="modeService.mode"
-      (ionChange)="modeService.setMode()"
-    >
-      <ion-segment-button value="light">
-        <ion-label>Light</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="dark">
-        <ion-label>Dark</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="auto">
-        <ion-label>Auto</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+  <ion-card>
+    <ion-card-content>
+      <ion-label position="fixed">Unit</ion-label>
+      <ion-segment
+        [ngModel]="weightUnitService.userUnit | async"
+        (ionChange)="weightUnitService.setUnit($event)"
+      >
+        <ion-segment-button value="kg">
+          <ion-label>kilogram</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="lb">
+          <ion-label>pound</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <!-- !! fix !! requires further checks - see https://forum.ionicframework.com/t/ionic-dark-mode-force-light-dark-and-system-theme/215091 -->
+      <br/>
+      <ion-label position="fixed">Mode</ion-label>
+      <ion-segment
+        [(ngModel)]="modeService.mode"
+        (ionChange)="modeService.setMode()"
+      >
+        <ion-segment-button value="light">
+          <ion-label>Light</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="dark">
+          <ion-label>Dark</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="auto">
+          <ion-label>Auto</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-card-content>
   </ion-card>
 </ion-content>
 

@@ -66,16 +66,7 @@ export class HelpPage implements OnInit {
         'The menu contains a button to the settings page at the top. You can also calculate a total from the sum of your lifts. There is also a kg-to-lb converter.'
       ],
       icon: 'menu'
-    },
-    {
-      title: 'Settings',
-      overview: 'Set your app preferences and select your powerlifting team.',
-      help: [
-        'Set your powerlifting team for exclusive content.',
-        'Toggle betwen kilogram and pound as your preferred weight unit.'
-      ],
-      icon: 'cog-outline'
-    },
+    }
   ];
 
   constructor(

@@ -14,7 +14,11 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
   squatNum: number;
   benchNum: number;
   deadliftNum: number;
-  totalNum = 0;
+  totalNum: number;
+
+  numInput: number;
+  pctInput: number;
+  pctRes: number;
 
   conversionNum: number;
   conversionUnit: string;
@@ -49,17 +53,21 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
     this.totalNum = sq + bp + dl;
   }
 
-  writeToClipboard = async (): Promise<void> => {
+  calcPct(): void {
+    this.pctRes = this.numInput * (this.pctInput / 100);
+  }
+
+  writeToClipboard = async (result: number): Promise<void> => {
     await Clipboard.write({
     // eslint-disable-next-line id-blacklist
-      string: this.totalNum.toString()
+      string: result.toString()
     });
-    this.presentSetsToast();
+    this.presentToast();
   };
 
-  async presentSetsToast(): Promise<void> {
+  async presentToast(): Promise<void> {
     const toast = await this.toastController.create({
-      message: `Calculated total copied to clipboard.`,
+      message: `Calculated number copied to clipboard.`,
       cssClass: 'copy-toast-class',
       duration: 2000,
       color: 'dark'
