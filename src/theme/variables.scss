@@ -3,6 +3,10 @@
 
 /** Ionic CSS Variables **/
 :root {
+  /** Oxford blue colour specification from https://www.ox.ac.uk/sites/files/oxford/media_wysiwyg/Oxford%20Blue%20LR.pdf **/
+  --oxford-blue: rgb(0, 33, 71);
+  --oxford-blue-contrast: rgb(72, 145, 220);
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;

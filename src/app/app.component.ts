@@ -11,7 +11,6 @@ import { SettingsComponent } from './settings/settings.component';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit{
-  prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
   constructor(
     private router: Router,
