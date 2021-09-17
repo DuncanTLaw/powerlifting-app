@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonSlides, MenuController } from '@ionic/angular';
+import { IonSlides } from '@ionic/angular';
 import { HelpService } from './help.service';
 
 interface Pages {
@@ -80,15 +80,14 @@ export class HelpPage implements OnInit {
   ];
 
   constructor(
-    private menuController: MenuController,
+    private router: Router,
     public helpService: HelpService,
-    private router: Router
   ) { }
 
   async ngOnInit() {
     await this.helpService.checkWelcomed().then(() => {
       if (this.helpService.haveWelcomed) {
-        this.router.navigateByUrl('/app/tabs/rpe', { replaceUrl: true });
+        this.routeToStored();
       }
     });
   }
@@ -97,19 +96,8 @@ export class HelpPage implements OnInit {
     this.viewEnter = true;
   }
 
-  /* disabling ion menu seems to cause glitch when reenabled
-  ionViewDidEnter() {
-    this.menuController.enable(false);
-  }
-
-  ionViewDidLeave() {
-    // enable the root left menu when leaving the tutorial page
-    this.menuController.enable(true);
-  }
-  */
-
   startApp(): void {
-    this.router.navigateByUrl('/app/tabs/rpe', { replaceUrl: true }).then(
+    this.routeToStored().then(
       () => this.helpService.setWelcomed(true)
     );
   }
@@ -117,6 +105,12 @@ export class HelpPage implements OnInit {
   onSlideChangeStart(event: any): void {
     event.target.isEnd().then((isEnd: boolean) => {
       this.showSkip = !isEnd;
+    });
+  }
+
+  async routeToStored(): Promise<void> {
+    this.helpService.currentRoute.subscribe((storedRoute) => {
+      this.router.navigateByUrl(storedRoute, { replaceUrl: true });
     });
   }
 }
