@@ -273,7 +273,13 @@ export class TimerPage implements OnInit {
       message: `All sets completed.`,
       cssClass: 'toast-class',
       duration: 3000,
-      color: 'dark'
+      color: 'dark',
+      buttons: [
+        {
+          text: 'Done',
+          role: 'cancel'
+        }
+      ]
     });
     await toast.present();
   }
