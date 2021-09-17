@@ -20,15 +20,12 @@ export class TeamService {
       light: '',
       dark: ''
     },
-
-    /* !! temp !! commented as not implemented yet
-    eslint-disable-next-line
+    // eslint-disable-next-line
     'Team Pape': {
       password: '',
       light: '/assets/teamAvatars/TP.png',
       dark: '/assets/teamAvatars/TP-dark.png'
     },
-    */
 
     // eslint-disable-next-line
     OUPLC: {
