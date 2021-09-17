@@ -38,11 +38,11 @@ export class SettingsComponent implements OnInit {
   };
 
   constructor(
+    private router: Router,
     private modalController: ModalController,
     public weightUnitService: WeightUnitService,
     public modeService: ModeService,
     private menuController: MenuController,
-    private router: Router,
     private helpService: HelpService
   ) { }
 

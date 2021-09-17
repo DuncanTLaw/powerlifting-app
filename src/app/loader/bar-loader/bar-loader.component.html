@@ -88,7 +88,7 @@
       </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row class="ion-align-items-center ion-justify-content-center" *ngIf="tWeight&&barLoaded">
+  <ion-row class="ion-align-items-center ion-justify-content-center ion-margin-top" *ngIf="tWeight&&barLoaded">
     <ion-col class="ion-no-padding barbell" size="auto">
       <ion-badge
           [color]="loaderService.getKGBadgeColor(barWeight)"
@@ -119,6 +119,8 @@
       </ion-badge>
     </ion-col>
   </ion-row>
-  <ion-note class="ion-justify-content-center" *ngIf="!tWeight">Input weight to load bar.</ion-note>
+  <ion-row class="ion-margin-top ion-justify-content-center">
+    <ion-note *ngIf="!tWeight">Input weight to load bar.</ion-note>
+  </ion-row>
 </ion-grid>
 

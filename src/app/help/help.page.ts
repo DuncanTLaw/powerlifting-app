@@ -18,7 +18,6 @@ interface Pages {
 export class HelpPage implements OnInit {
   @ViewChild('slides', { static: true }) slides: IonSlides;
   viewEnter = false;
-
   showSkip = true;
   pages: Array<Pages> = [
     {

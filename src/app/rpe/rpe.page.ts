@@ -14,9 +14,7 @@ export class RpePage implements OnInit {
 
   scale: RPEPct = RPEPCTTABLE;
 
-  constructor(
-    public weightUnitService: WeightUnitService
-  ) { }
+  constructor(public weightUnitService: WeightUnitService) { }
 
   ngOnInit() {
   }
