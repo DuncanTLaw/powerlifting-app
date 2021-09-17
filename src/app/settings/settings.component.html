@@ -9,16 +9,6 @@
 
 <ion-content>
   <ion-card class="ion-padding">
-    <ion-button
-      class="ion-margin-bottom"
-      id="teamButton"
-      color="dark"
-      expand="block"
-      [routerLink]="['/team']"
-      (click)="onClickButton()"
-    >
-      Select Team
-    </ion-button>
     <ion-label position="fixed">Unit</ion-label>
     <ion-segment
       [ngModel]="weightUnitService.userUnit | async"
@@ -31,7 +21,7 @@
         <ion-label>pound</ion-label>
       </ion-segment-button>
     </ion-segment>
-    <!-- !! temp !! commented as not implemented yet -->
+    <!-- !! fix !! requires further checks - see https://forum.ionicframework.com/t/ionic-dark-mode-force-light-dark-and-system-theme/215091 -->
     <br/>
     <ion-label position="fixed">Mode</ion-label>
     <ion-segment

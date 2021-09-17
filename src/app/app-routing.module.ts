@@ -16,11 +16,7 @@ const routes: Routes = [
     path: 'help',
     loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule),
     canLoad: [HelpGuard]
-  },
-  {
-    path: 'team',
-    loadChildren: () => import('./team/team.module').then( m => m.TeamPageModule)
-  },
+  }
 ];
 
 @NgModule({

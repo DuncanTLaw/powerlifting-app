@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
 import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
-import { TeamService } from '../team/team.service';
 
 import { CoeffService } from './coefficients.service';
 import { PopoverComponent } from './popover/popover.component';
@@ -36,7 +35,6 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   hBlueDiff: string;
 
   constructor(
-    public teamService: TeamService,
     public weightUnitService: WeightUnitService,
     private coeffService: CoeffService,
     private popoverController: PopoverController

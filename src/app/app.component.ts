@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
 import { HelpService } from './help/help.service';
-import { ThemesService } from './settings/settings-storage/themes.service';
-import { TeamService } from './team/team.service';
+import { ModeService } from './settings/settings-storage/mode.service';
 import { SettingsComponent } from './settings/settings.component';
 
 @Component({
@@ -12,24 +11,18 @@ import { SettingsComponent } from './settings/settings.component';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit{
+  prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
   constructor(
-    private themeService: ThemesService,
-    public teamService: TeamService,
-    private helpService: HelpService,
     private router: Router,
+    private helpService: HelpService,
+    public modeService: ModeService,
     public modalController: ModalController,
     private menuController: MenuController,
   ) { }
 
-  async ngOnInit() {
-    await this.teamService.checkTeam().then(() => {
-      if (this.teamService.userTeam === 'OUPLC') {
-        this.themeService.enableTheme('ouplc-theme');
-      } else {
-        this.themeService.disableTheme('ouplc-theme');
-      }
-    });
+  ngOnInit() {
+    this.modeService.checkMode();
   }
 
   openTutorial(): void {

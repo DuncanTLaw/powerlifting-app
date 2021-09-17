@@ -1,4 +1,4 @@
-<ion-app>
+<ion-app [class.dark-theme]="modeService.dark">
   <ion-menu side="start" contentId="main">
     <ion-header>
       <ion-toolbar>
@@ -13,21 +13,7 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
-      <picture>
-        <source
-          [id]="teamService.userTeam"
-          [srcset]="teamService.teams[teamService.userTeam]?.dark"
-          media="(prefers-color-scheme: dark)"
-        >
-        <img [id]="teamService.userTeam" [src]="teamService.teams[teamService.userTeam]?.light">
-      </picture>
-    </ion-content>
     <ion-footer class="ion-padding">
-      <div style="margin-bottom: 8px;">
-        <ion-note *ngIf="teamService.userTeam==='Team Pape'">You goose</ion-note>
-        <ion-note *ngIf="teamService.userTeam==='OUPLC'">#BleedDarkBlue</ion-note>
-      </div>
       <app-utilities></app-utilities>
     </ion-footer>
   </ion-menu>
