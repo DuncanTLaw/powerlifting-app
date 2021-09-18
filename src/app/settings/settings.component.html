@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title size="large" color="dark">Settings</ion-title>
+    <ion-title size="large" color="medium">Settings</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">Done</ion-button>
     </ion-buttons>
@@ -10,18 +10,57 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <ion-label position="fixed">Unit</ion-label>
-      <ion-segment
-        [ngModel]="weightUnitService.userUnit | async"
-        (ionChange)="weightUnitService.setUnit($event)"
-      >
-        <ion-segment-button value="kg">
-          <ion-label>kilogram</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="lb">
-          <ion-label>pound</ion-label>
-        </ion-segment-button>
-      </ion-segment>
+      <ion-list lines="none">
+        <ion-item>
+          <ion-label position="fixed">Unit</ion-label>
+          <ion-segment
+            [ngModel]="weightUnitService.userUnit | async"
+            (ionChange)="weightUnitService.setUnit($event)"
+          >
+            <ion-segment-button value="kg">
+              <ion-label>kilogram</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="lb">
+              <ion-label>pound</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Gender</ion-label>
+            <ion-segment
+              [(ngModel)]="userGender"
+              (ionChange)="onChangeGender()"
+            >
+              <ion-segment-button value="male">
+                <ion-label>Male</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="female">
+                <ion-label>Female</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Federation</ion-label>
+          <ion-select
+            [(ngModel)]="userFed"
+            (ngModelChange)="onChangeFed()"
+            interface="popover"
+            *ngFor="let fed of fedList"
+          >
+            <ion-select-option [value]="fed">{{ fed }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position="fixed">Weight Class</ion-label>
+          <ion-select
+            [(ngModel)]="userFed"
+            (ngModelChange)="onChangeWC()"
+            interface="popover"
+          >
+            <ion-select-option value="IPF GL">IPF GL</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 </ion-content>

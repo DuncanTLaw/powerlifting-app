@@ -15,6 +15,8 @@ export class NotesService {
         key: 'notes',
         value: storeNotes
       });
+    } else {
+      this.removeNotes();
     }
   };
 
@@ -23,6 +25,10 @@ export class NotesService {
     if (value) {
       return value;
     }
+  };
+
+  removeNotes = async (): Promise<void>  => {
+    await Storage.remove({ key: 'notes' });
   };
 
   setColor = async (color: string): Promise<void> => {

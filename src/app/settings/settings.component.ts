@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
 import { HelpService } from '../help/help.service';
 import { WeightUnitService } from './settings-storage/weight-unit.service';
+import { FEDERATION } from '../meets/federation';
+import { CoeffService } from '../coefficients/coefficients.service';
 
 interface LINKS {
   [website: string]: {
@@ -18,6 +20,10 @@ interface LINKS {
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
+  userUnit: string;
+  userGender: string;
+  userFed: string;
+  userWC: number | string;
   links: LINKS = {
     openPl: {
       name: 'Open Powerlifting',
@@ -35,16 +41,38 @@ export class SettingsComponent implements OnInit {
       link: 'https://www.linkedin.com/in/duncan-law-1ba6501b2'
     }
   };
+  fedList: string[];
+  feds = FEDERATION;
 
   constructor(
     private router: Router,
     private modalController: ModalController,
     public weightUnitService: WeightUnitService,
     private menuController: MenuController,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private coeffService: CoeffService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.weightUnitService.userUnit.subscribe(unit => this.userUnit = unit);
+    this.coeffService.checkGender().then(
+      () => {
+        if (this.coeffService.gender) {
+          this.userGender = this.coeffService.gender;
+        }
+      }
+    );
+    this.getFeds();
+  }
+
+  getFeds(): void {
+    // for (const fed in this.feds) {
+    //   if (fed) {
+    //     this.fedList.push(fed);
+    //   }
+    // }
+    // console.log(this.fedList);
+  }
 
   dismissModal(): void {
     this.modalController.dismiss();
@@ -55,6 +83,22 @@ export class SettingsComponent implements OnInit {
     this.menuController.close();
     this.helpService.currentRoute.next(this.router.url);
     this.dismissModal();
+  }
+
+  onChangeUnit(): void {
+    this.weightUnitService.setUnit(this.userUnit);
+  }
+
+  onChangeGender(): void {
+    this.coeffService.setGender(this.userGender);
+  }
+
+  onChangeFed(): void {
+
+  }
+
+  onChangeWC(): void {
+
   }
 
   returnZero(): number {

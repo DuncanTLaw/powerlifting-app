@@ -44,13 +44,16 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     this.coeffService.checkGender().then(
       () => {
         if (this.coeffService.gender) {
-        this.userGender = this.coeffService.gender;
+          this.userGender = this.coeffService.gender;
         }
       }
     );
     this.weightUnitService.userUnit.subscribe(() => {
-      this.calcPoints(this.coeffForm);
-      this.calcTot(this.coeffForm);
+      if (this.segmentSelected === 'points') {
+        this.calcPoints(this.coeffForm);
+      } else {
+        this.calcTot(this.coeffForm);
+      }
       this.calcGoal(this.coeffForm);
       this.calcDelta(this.coeffForm);
     });
