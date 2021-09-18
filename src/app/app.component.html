@@ -1,4 +1,4 @@
-<ion-app [class.dark-theme]="modeService.dark">
+<ion-app>
   <ion-menu side="start" contentId="main">
     <ion-header>
       <ion-toolbar>
@@ -13,6 +13,9 @@
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
+    <ion-content class="ion-padding-bottom">
+      <app-notes></app-notes>
+    </ion-content>
     <ion-footer class="ion-padding">
       <app-utilities></app-utilities>
     </ion-footer>

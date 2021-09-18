@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
 import { HelpService } from './help/help.service';
-import { ModeService } from './settings/settings-storage/mode.service';
 import { SettingsComponent } from './settings/settings.component';
 
 @Component({
@@ -15,13 +14,11 @@ export class AppComponent implements OnInit{
   constructor(
     private router: Router,
     private helpService: HelpService,
-    public modeService: ModeService,
     public modalController: ModalController,
     private menuController: MenuController,
   ) { }
 
   ngOnInit() {
-    this.modeService.checkMode();
   }
 
   openTutorial(): void {

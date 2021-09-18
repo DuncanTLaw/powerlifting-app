@@ -11,9 +11,10 @@ import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { UtilitiesComponent } from './utilities/utilities.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
-  declarations: [AppComponent, UtilitiesComponent, SettingsComponent],
+  declarations: [AppComponent, UtilitiesComponent, SettingsComponent, NotesComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

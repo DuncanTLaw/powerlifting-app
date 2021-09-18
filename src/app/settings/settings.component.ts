@@ -1,8 +1,7 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
 import { HelpService } from '../help/help.service';
-import { ModeService } from './settings-storage/mode.service';
 import { WeightUnitService } from './settings-storage/weight-unit.service';
 
 interface LINKS {
@@ -41,7 +40,6 @@ export class SettingsComponent implements OnInit {
     private router: Router,
     private modalController: ModalController,
     public weightUnitService: WeightUnitService,
-    public modeService: ModeService,
     private menuController: MenuController,
     private helpService: HelpService
   ) { }

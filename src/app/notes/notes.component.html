@@ -1,0 +1,46 @@
+<ion-card class="ion-no-padding">
+  <ion-card-content>
+    <ion-row class="ion-align-items-center" (click)="onClickAddNotes()" *ngIf="!addNotes && !notesSaved">
+      <ion-col size="auto">
+        <ion-button id="blues" fill="clear">
+          <ion-icon name="add-circle"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-note>Add notes</ion-note>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="addNotes">
+      <ion-textarea placeholder="notes..." [(ngModel)]="notesInput"></ion-textarea>
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <ion-row id="color">
+            Colour
+          </ion-row>
+          <ion-row>
+            <ion-note id="colorID">{{ colorInput }}</ion-note>
+          </ion-row>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-fab-button id="colorIndication" (click)="onClickAddColor()" [color]="colorInput"></ion-fab-button>
+        </ion-col>
+      </ion-row>
+      <ion-row [hidden]="!addColor">
+        <ion-col *ngFor="let color of colors" size="auto">
+          <ion-fab-button id="colorPicker" [color]="color" (click)="pickColor(color)"></ion-fab-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="onClear()" size="small" color="light" expand="block">Cancel</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="onSave()" size="small" expand="block">Done</ion-button>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+    <ion-text *ngIf="notesSaved && !addNotes" (click)="onClickAddNotes()" [color]="colorSaved">
+      <h1>{{ notesSaved }}</h1>
+    </ion-text>
+  </ion-card-content>
+</ion-card>
