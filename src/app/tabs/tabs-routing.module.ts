@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('../loader/loader.module').then( m => m.LoaderPageModule)
       },
       {
+        path: 'meets',
+        loadChildren: () => import('../meets/meets.module').then( m => m.MeetsPageModule)
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/rpe',
         pathMatch: 'full'

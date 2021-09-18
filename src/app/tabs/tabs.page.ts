@@ -25,6 +25,11 @@ export class TabsPage implements OnInit {
       icon: 'calculator',
       color: 'var(--ion-color-warning)'
     },
+    meets: {
+      label: 'Meets',
+      icon: 'calendar',
+      color: 'var(--ion-color-dark)'
+    },
     timer: {
       label: 'Timer',
       icon: 'timer-sharp',
