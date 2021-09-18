@@ -3,43 +3,46 @@
     <ion-card-title>Total</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <ion-list>
-        <ion-item>
-          <ion-label position="fixed">squat</ion-label>
-          <ion-input
-            type="number"
-            [(ngModel)]="squatNum"
-            (ngModelChange)="calcTotal()"
-          ></ion-input>
-          <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
-        </ion-item>
-        <ion-item>
-        <ion-label position="fixed">bench</ion-label>
+    <ion-row class="ion-align-items-center">
+      <ion-col class="ion-no-padding" size="3">
+        <ion-input
+          type="number"
+          [(ngModel)]="squatNum"
+          (ngModelChange)="calcTotal()"
+          placeholder="SQ"
+        ></ion-input>
+      </ion-col>
+      <ion-col class="ion-no-padding" size="1.5">
+        +
+      </ion-col>
+      <ion-col class="ion-no-padding" size="3">
         <ion-input
           type="number"
           [(ngModel)]="benchNum"
           (ngModelChange)="calcTotal()"
+          placeholder="BP"
         ></ion-input>
-        <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label position="fixed">deadlift</ion-label>
+      </ion-col>
+      <ion-col class="ion-no-padding" size="1.5">
+        +
+      </ion-col>
+      <ion-col class="ion-no-padding" size="3">
         <ion-input
           type="number"
           [(ngModel)]="deadliftNum"
           (ngModelChange)="calcTotal()"
+          placeholder="DL"
         ></ion-input>
-        <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
-      </ion-item>
-    </ion-list>
-    <ion-row class="ion-align-items-center ion-margin-top">
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
       <ion-col size="auto">
         <ion-button size="small" (click)="writeToClipboard(totalNum)" [disabled]="!totalNum">
           Copy
         </ion-button>
       </ion-col>
       <ion-col class="ion-text-end">
-        = {{ totalNum || 0 }}{{ weightUnitService.userUnit | async }} total
+        = {{ totalNum || 0 }}
       </ion-col>
     </ion-row>
   </ion-card-content>
@@ -50,27 +53,31 @@
     <ion-card-title>Percentage</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <ion-list lines="none">
-      <ion-item>
+    <ion-row class="ion-align-items-center">
+      <ion-col>
         <ion-input
           type="number"
           [(ngModel)]="numInput"
           (ngModelChange)="calcPct()"
-          placeholder="input number"
+          placeholder="num"
         ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-note class="ion-margin-end">x</ion-note>
+      </ion-col>
+      <ion-col size="auto">
+        x
+      </ion-col>
+      <ion-col>
         <ion-input
           type="number"
           [(ngModel)]="pctInput"
           (ngModelChange)="calcPct()"
-          placeholder="input percentage"
+          placeholder="pct"
         ></ion-input>
-        <ion-note slot="end">%</ion-note>
-      </ion-item>
-    </ion-list>
-    <ion-row class="ion-align-items-center ion-margin-top">
+      </ion-col>
+      <ion-col size="auto">
+        %
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center">
       <ion-col size="auto">
         <ion-button size="small" (click)="writeToClipboard(pctRes)" [disabled]="!pctRes">
           Copy
@@ -88,26 +95,28 @@
     <ion-card-title>Converter</ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <ion-list lines="none">
-      <ion-item>
+    <ion-row class="ion-align-items-center">
+      <ion-col>
         <ion-input
           type="number"
           [(ngModel)]="conversionNum"
           (ngModelChange)="convertNumber()"
           placeholder="input weight in"
         ></ion-input>
-        <ion-note slot="end">{{ conversionUnit }}</ion-note>
-      </ion-item>
-    </ion-list>
+      </ion-col>
+      <ion-col size="auto">
+        {{ conversionUnit }}
+      </ion-col>
+    </ion-row>
     <ion-row class="ion-align-items-center">
-      <ion-col id="swapButtonCol" size="auto">
+      <ion-col class="ion-no-padding" id="swapButtonCol" size="auto">
         <ion-buttons>
           <ion-button (click)="onSwitchConversion()">
             <ion-icon name="swap-vertical"></ion-icon>
           </ion-button>
         </ion-buttons>
       </ion-col>
-      <ion-col class="ion-text-end">
+      <ion-col class="ion-no-padding ion-text-end">
         <div [hidden]="convertedNum">
           convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
         </div>
