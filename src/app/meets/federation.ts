@@ -1,8 +1,8 @@
 interface Federations {
   [federation: string]: {
     name: string;
-    male: (number|string)[];
-    female: (number|string)[];
+    male: string[];
+    female: string[];
   };
 }
 
@@ -10,8 +10,8 @@ interface Federations {
 export const FEDERATION: Federations = {
   IPF: {
     name: 'International Powerlifting Federation',
-    male: [53, 59, 66, 74, 83, 93, 105, 120, '120+'],
-    female: [43, 47, 52, 57, 63, 69, 76, 84, '84+']
+    male: ['53', '59', '66', '74', '83', '93', '105', '120', '120+'],
+    female: ['43', '47', '52', '57', '63', '69', '76', '84', '84+']
   },
   // GPA: {
   //   name: 'Global Powerlifting Alliance',
@@ -50,8 +50,8 @@ export const FEDERATION: Federations = {
   // },
   WP: {
     name: 'World Powerlifting',
-    male: [62, 69, 77, 85, 94, 105, 120, '120+'],
-    female: [48, 53, 58, 64, 72, 84, 100, '100+']
+    male: ['62', '69', '77', '85', '94', '105', '120', '120+'],
+    female: ['48', '53', '58', '64', '72', '84', '100', '100+']
   },
   // WPA: {
   //   name: 'World Powerlifting Alliance',
@@ -70,8 +70,8 @@ export const FEDERATION: Federations = {
   // },
   WPPO: {
     name: 'World Para Powerlifting',
-    male: [49, 54, 59, 65, 72, 80, 88, 97, 107, '107+'],
-    female: [41, 45, 50, 55, 61, 67, 73, 79, 86, '86+']
+    male: ['49', '54', '59', '65', '72', '80', '88', '97', '107', '107+'],
+    female: ['41', '45', '50', '55', '61', '67', '73', '79', '86', '86+']
   },
   // WUAP: {
   //   name: 'World United Amateur Powerlifting',

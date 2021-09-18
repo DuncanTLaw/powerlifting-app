@@ -42,18 +42,19 @@
         <ion-item>
           <ion-label position="fixed">Federation</ion-label>
           <ion-select
+            slot="end"
             [(ngModel)]="userFed"
             (ngModelChange)="onChangeFed()"
             interface="popover"
-            *ngFor="let fed of fedList"
           >
-            <ion-select-option [value]="fed">{{ fed }}</ion-select-option>
+            <ion-select-option *ngFor="let fed of fedList" [value]="fed">{{ fed }}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
           <ion-label position="fixed">Weight Class</ion-label>
           <ion-select
-            [(ngModel)]="userFed"
+            slot="end"
+            [(ngModel)]="userWC"
             (ngModelChange)="onChangeWC()"
             interface="popover"
           >

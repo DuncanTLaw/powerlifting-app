@@ -41,8 +41,9 @@ export class SettingsComponent implements OnInit {
       link: 'https://www.linkedin.com/in/duncan-law-1ba6501b2'
     }
   };
-  fedList: string[];
+  fedList: string[] = [];
   feds = FEDERATION;
+  wcList: number[] = [];
 
   constructor(
     private router: Router,
@@ -63,15 +64,23 @@ export class SettingsComponent implements OnInit {
       }
     );
     this.getFeds();
+    this.getWC();
   }
 
   getFeds(): void {
-    // for (const fed in this.feds) {
-    //   if (fed) {
-    //     this.fedList.push(fed);
-    //   }
-    // }
-    // console.log(this.fedList);
+    for (const fed in this.feds) {
+      if (fed) {
+        this.fedList.push(fed);
+      }
+    }
+  }
+
+  getWC(): void {
+    if (this.fedList && this.userFed) {
+      for (const weightClass of this.feds[this.userFed][this.userGender]) {
+        console.log(weightClass);
+      }
+    }
   }
 
   dismissModal(): void {
