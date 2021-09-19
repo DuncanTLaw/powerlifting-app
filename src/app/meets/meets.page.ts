@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CoeffService } from '../coefficients/coefficients.service';
 import { FederationService } from '../settings/settings-storage/federation.service';
+import { DateService } from './date.service';
 import { FEDERATION } from './federation';
+import { MeetsService, StoredMeetObj } from './meets.service';
 
 @Component({
   selector: 'app-meets',
@@ -10,7 +12,6 @@ import { FEDERATION } from './federation';
   styleUrls: ['./meets.page.scss'],
 })
 export class MeetsPage implements OnInit {
-  hasMeets: boolean;
   addMeet = false;
   newMeet = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -28,9 +29,13 @@ export class MeetsPage implements OnInit {
   wcList: string[] = [];
   userGender: string;
 
+  meets: StoredMeetObj[];
+
   constructor(
     private federationService: FederationService,
-    private coeffService: CoeffService
+    private coeffService: CoeffService,
+    private meetsService: MeetsService,
+    public dateService: DateService
   ) { }
 
   ngOnInit() {
@@ -41,12 +46,13 @@ export class MeetsPage implements OnInit {
         }
       }
     );
-    this.getDateString();
+    this.today = this.dateService.getDateString();
     this.federationService.checkFed().then(fedStored => {
-      this.newMeet.patchValue( {fed: fedStored} );
+      this.newMeet.patchValue({ fed: fedStored });
       this.getFeds();
     });
     this.federationService.checkClass().then(wcStored => this.newMeet.patchValue({ wc: wcStored }));
+    this.meetsService.checkMeet().then(storedMeets => {this.meets = storedMeets; console.log(this.meets);});
   }
 
   getFeds(): void {
@@ -86,11 +92,8 @@ export class MeetsPage implements OnInit {
 
   onSubmit(): void {
     this.addMeet = false;
-    console.log(this.newMeet);
-  }
-
-  getDateString(): void {
-    const date = new Date();
-    this.today = date.toISOString().split('T')[0];
+    this.newMeet.patchValue({ date: this.newMeet.value.date.split('T')[0] }); // remove timestamp
+    this.meetsService.setMeet(this.newMeet);
+    this.meetsService.checkMeet().then(storedMeets => this.meets = storedMeets);
   }
 }

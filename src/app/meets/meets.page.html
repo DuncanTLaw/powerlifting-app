@@ -5,13 +5,43 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="hasMeets">
+  <ion-card *ngIf="meets">
     <ion-card-header>
-      <ion-card-title id="blues">Your meets</ion-card-title>
+      <ion-card-title>Your meets</ion-card-title>
       <ion-card-subtitle>
         Next meet:
       </ion-card-subtitle>
     </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let meet of meets">
+        <ion-item>
+          <ion-label>
+            <b>{{ meet.name }}</b>
+            <ng-container *ngIf="meet.location">
+              <br/>
+              @ {{ meet.location }}
+            </ng-container>
+            <br/>
+            <ion-note id="meetDate">{{ dateService.transformDateStr(meet.date) }}</ion-note>
+            <br/>
+            <ion-note *ngIf="meet.weighIn">weigh in at {{ dateService.getReadableTime(meet.weighIn) }}</ion-note>
+            <ion-row class="ion-align-items-center">
+              <ion-col *ngIf="meet.fed || meet.wc">
+                <ion-badge color="tertiary">
+                  {{ meet.fed || '' }} {{ (meet.fed && meet.wc) ? '|' : '' }} {{ meet.wc }}kg
+                </ion-badge>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-badge color="dark">{{ !meet.bp ? 'three lift' : 'bench only' }}</ion-badge>
+              </ion-col>
+            </ion-row>
+            <div id="meetNotes" *ngIf="meet.notes">
+              {{ meet.notes }}
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
   </ion-card>
 
   <ion-row class="ion-align-items-center ion-margin-top" (click)="onClickAddMeet()">
@@ -76,7 +106,8 @@
           <ion-item>
             <ion-label position="fixed">weigh in</ion-label>
             <ion-datetime
-              displayFormat="h:mm A" minuteValues="0,15,30,45"
+              displayFormat="h:mm a"
+              minuteValues="0, 15, 30, 45"
               formControlName="weighIn"
             >
             </ion-datetime>
@@ -92,10 +123,10 @@
         </ion-list>
         <ion-row>
           <ion-col>
-            <ion-button type="button" (click)="onClickAddMeet()" color="light" expand="block">Cancel</ion-button>
+            <ion-button (click)="onClickAddMeet()" color="light" expand="block">Cancel</ion-button>
           </ion-col>
           <ion-col>
-            <ion-button type="submit" (click)="onSubmit()" expand="block" [disabled]="!newMeet.valid">Done</ion-button>
+            <ion-button (click)="onSubmit()" expand="block" [disabled]="!newMeet.valid">Done</ion-button>
           </ion-col>
         </ion-row>
       </ion-card-content>
