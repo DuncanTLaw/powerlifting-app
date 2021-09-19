@@ -58,6 +58,11 @@
     <ion-col>
       <ion-note>Add a meet</ion-note>
     </ion-col>
+    <ion-col size="auto">
+      <ion-button size="small" expand="block" class="ion-margin-end" (click)="onEdit()">
+        Edit
+      </ion-button>
+    </ion-col>
   </ion-row>
 
   <ion-card id="addMeetCard" *ngIf="addMeet">

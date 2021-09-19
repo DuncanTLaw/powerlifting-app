@@ -98,6 +98,10 @@ export class MeetsPage implements OnInit {
     this.updateView();
   }
 
+  onEdit(): void {
+    console.log('edit');
+  }
+
   private updateView(): void {
     this.meetsService.checkMeet().then(storedMeets => {
       this.meets = storedMeets;
