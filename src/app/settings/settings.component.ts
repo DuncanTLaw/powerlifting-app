@@ -5,6 +5,7 @@ import { HelpService } from '../help/help.service';
 import { WeightUnitService } from './settings-storage/weight-unit.service';
 import { FEDERATION } from '../meets/federation';
 import { CoeffService } from '../coefficients/coefficients.service';
+import { FederationService } from './settings-storage/federation.service';
 
 interface LINKS {
   [website: string]: {
@@ -23,7 +24,7 @@ export class SettingsComponent implements OnInit {
   userUnit: string;
   userGender: string;
   userFed: string;
-  userWC: number | string;
+  userWC: string;
   links: LINKS = {
     openPl: {
       name: 'Open Powerlifting',
@@ -43,7 +44,7 @@ export class SettingsComponent implements OnInit {
   };
   fedList: string[] = [];
   feds = FEDERATION;
-  wcList: number[] = [];
+  wcList: string[] = [];
 
   constructor(
     private router: Router,
@@ -51,7 +52,8 @@ export class SettingsComponent implements OnInit {
     public weightUnitService: WeightUnitService,
     private menuController: MenuController,
     private helpService: HelpService,
-    private coeffService: CoeffService
+    private coeffService: CoeffService,
+    private federationService: FederationService
   ) { }
 
   ngOnInit() {
@@ -63,8 +65,11 @@ export class SettingsComponent implements OnInit {
         }
       }
     );
-    this.getFeds();
-    this.getWC();
+    this.federationService.checkFed().then(fed => {
+      this.userFed = fed;
+      this.getFeds();
+    });
+    this.federationService.checkClass().then(wc => this.userWC = wc);
   }
 
   getFeds(): void {
@@ -73,13 +78,14 @@ export class SettingsComponent implements OnInit {
         this.fedList.push(fed);
       }
     }
+    if (this.userFed) {
+      this.getWC();
+    }
   }
 
   getWC(): void {
-    if (this.fedList && this.userFed) {
-      for (const weightClass of this.feds[this.userFed][this.userGender]) {
-        console.log(weightClass);
-      }
+    for (const weightClass of this.feds[this.userFed][this.userGender]) {
+      this.wcList.push(weightClass);
     }
   }
 
@@ -100,14 +106,20 @@ export class SettingsComponent implements OnInit {
 
   onChangeGender(): void {
     this.coeffService.setGender(this.userGender);
+    this.wcList = [];
+    this.getWC();
   }
 
   onChangeFed(): void {
-
+    this.federationService.setFed(this.userFed);
+    this.getWC();
+    for (const weightClass of this.feds[this.userFed][this.userGender]) {
+      console.log(weightClass);
+    }
   }
 
   onChangeWC(): void {
-
+    this.federationService.setClass(this.userWC);
   }
 
   returnZero(): number {

@@ -51,14 +51,14 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label position="fixed">Weight Class</ion-label>
+          <ion-label position="fixed">Weight Cls</ion-label>
           <ion-select
             slot="end"
             [(ngModel)]="userWC"
             (ngModelChange)="onChangeWC()"
             interface="popover"
           >
-            <ion-select-option value="IPF GL">IPF GL</ion-select-option>
+            <ion-select-option *ngFor="let wc of wcList" [value]="wc">{{ wc }}kg</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>
