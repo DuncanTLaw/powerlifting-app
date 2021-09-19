@@ -30,6 +30,7 @@ export class MeetsPage implements OnInit {
   userGender: string;
 
   meets: StoredMeetObj[];
+  earliestMeet: {name: string; daysOut: string} = {name: '', daysOut: ''};
 
   constructor(
     private federationService: FederationService,
@@ -52,7 +53,7 @@ export class MeetsPage implements OnInit {
       this.getFeds();
     });
     this.federationService.checkClass().then(wcStored => this.newMeet.patchValue({ wc: wcStored }));
-    this.meetsService.checkMeet().then(storedMeets => {this.meets = storedMeets; console.log(this.meets);});
+    this.updateView();
   }
 
   getFeds(): void {
@@ -94,6 +95,16 @@ export class MeetsPage implements OnInit {
     this.addMeet = false;
     this.newMeet.patchValue({ date: this.newMeet.value.date.split('T')[0] }); // remove timestamp
     this.meetsService.setMeet(this.newMeet);
-    this.meetsService.checkMeet().then(storedMeets => this.meets = storedMeets);
+    this.updateView();
+  }
+
+  private updateView(): void {
+    this.meetsService.checkMeet().then(storedMeets => {
+      this.meets = storedMeets;
+      if (this.meets.length > 0) {
+        this.earliestMeet.name = this.meets[0].name;
+        this.earliestMeet.daysOut = this.dateService.getDaysOut(this.meets[0].date);
+      }
+    });
   }
 }

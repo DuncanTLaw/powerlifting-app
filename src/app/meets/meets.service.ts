@@ -42,7 +42,7 @@ export class MeetsService {
         }
       }
     }
-    return meets;
+    return this.sortMeet(meets);
   };
 
   listMeet = async (): Promise<string[]> => {
@@ -61,4 +61,8 @@ export class MeetsService {
   removeMeet = async (meetID: string): Promise<void> => {
     await Storage.remove({ key: meetID });
   };
+
+  sortMeet(meetList: StoredMeetObj[]): StoredMeetObj[] {
+    return meetList.sort((a, b) => +new Date(a.date) - +new Date(b.date));
+  }
 }

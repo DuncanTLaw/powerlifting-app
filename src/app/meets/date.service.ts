@@ -55,4 +55,26 @@ export class DateService {
     const dateTime = new Date(time);
     return dateTime.toLocaleString('en-GB', { hour: 'numeric', minute: 'numeric', hour12: true });
   }
+
+  getDaysOut(dateStr: string): string {
+    const date = new Date(dateStr);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    // One day in milliseconds
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    // Calculating the time difference between two dates
+    const diffInTime = date.getTime() - today.getTime();
+
+    let diffInDays = Math.round(diffInTime / oneDay);
+
+    const weeks = parseInt((diffInDays / 7).toString(), 10);
+    diffInDays = diffInDays - weeks * 7;
+
+    return (
+      weeks > 0 ? (weeks + ' week' + (weeks > 1 ? 's, ' : ', ')) : '')
+      + (diffInDays > 0 ? (diffInDays + ' day' + (diffInDays > 1 ? 's ' : ', ')) : ''
+    );
+  }
 }
