@@ -40,11 +40,24 @@
           </ion-item>
           <ion-item>
             <ion-label position="fixed">federation</ion-label>
-              <ion-input type="string" formControlName="fed"></ion-input>
+            <ion-select
+              slot="end"
+              formControlName="fed"
+              interface="popover"
+              (ionChange)="onChangeFed()"
+            >
+              <ion-select-option *ngFor="let fed of fedList" [value]="fed">{{ fed }}</ion-select-option>
+            </ion-select>
           </ion-item>
           <ion-item>
             <ion-label position="fixed">weight class</ion-label>
-            <ion-input type="number" formControlName="wc"></ion-input>
+            <ion-select
+              slot="end"
+              formControlName="wc"
+              interface="popover"
+            >
+              <ion-select-option *ngFor="let wc of wcList" [value]="wc">{{ wc }}kg</ion-select-option>
+            </ion-select>
           </ion-item>
           <ion-item>
             <ion-label>bench only</ion-label>
@@ -61,16 +74,20 @@
             </ion-datetime>
           </ion-item>
           <ion-item>
+            <ion-label position="fixed">weigh in</ion-label>
+            <ion-datetime
+              displayFormat="h:mm A" minuteValues="0,15,30,45"
+              formControlName="weighIn"
+            >
+            </ion-datetime>
+          </ion-item>
+          <ion-item>
             <ion-label position="fixed">location</ion-label>
             <ion-input type="string" formControlName="location"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="fixed">goal</ion-label>
-            <ion-input type="string" formControlName="goal"></ion-input>
-          </ion-item>
-          <ion-item>
             <ion-label position="fixed">notes</ion-label>
-            <ion-textarea formControlName="notes"></ion-textarea>
+            <ion-textarea formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
           </ion-item>
         </ion-list>
         <ion-row>

@@ -112,10 +112,8 @@ export class SettingsComponent implements OnInit {
 
   onChangeFed(): void {
     this.federationService.setFed(this.userFed);
+    this.wcList = [];
     this.getWC();
-    for (const weightClass of this.feds[this.userFed][this.userGender]) {
-      console.log(weightClass);
-    }
   }
 
   onChangeWC(): void {
