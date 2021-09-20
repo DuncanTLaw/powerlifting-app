@@ -21,6 +21,7 @@ export class MeetsService {
   constructor() { }
 
   setMeet = async (form: FormGroup): Promise<void> => {
+    form.patchValue({ date: form.value.date.split('T')[0] }); // remove timestamp
     const meetID = 'meet' + form.value.date;
     const formStringified = JSON.stringify(form.value);
 
@@ -30,10 +31,10 @@ export class MeetsService {
     });
   };
 
-  checkMeet = async (): Promise<StoredMeetObj[]> => {
+  checkMeets = async (): Promise<StoredMeetObj[]> => {
     let meetList: string[];
     const meets: StoredMeetObj[] = [];
-    await this.listMeet().then(list => meetList = list);
+    await this.listMeets().then(list => meetList = list);
     if (meetList) {
       for (const meet of meetList) {
         const { value } = await Storage.get({ key: meet });
@@ -42,10 +43,10 @@ export class MeetsService {
         }
       }
     }
-    return this.sortMeet(meets);
+    return this.sortMeets(meets);
   };
 
-  listMeet = async (): Promise<string[]> => {
+  listMeets = async (): Promise<string[]> => {
     const meetList: string[] = [];
     const { keys } = await Storage.keys();
     if (keys) {
@@ -63,7 +64,15 @@ export class MeetsService {
     await Storage.remove({ key: meetID });
   };
 
-  sortMeet(meetList: StoredMeetObj[]): StoredMeetObj[] {
+  getMeet = async (meetDate: string): Promise<StoredMeetObj> => {
+    const meetID = 'meet' + meetDate;
+    const { value } = await Storage.get({ key: meetID });
+    if (value) {
+      return JSON.parse(value);
+    }
+  };
+
+  private sortMeets(meetList: StoredMeetObj[]): StoredMeetObj[] {
     return meetList.sort((a, b) => +new Date(a.date) - +new Date(b.date));
   }
 }

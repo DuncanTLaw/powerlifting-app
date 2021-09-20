@@ -79,7 +79,7 @@ export class DateService {
     if (diffInDays === 1 && weeks === 0) {
       return 'today';
     } else {
-      return (weeksAndDaysOut) ? weeksAndDaysOut : 'past';
+      return (weeksAndDaysOut) ? (weeksAndDaysOut + 'out') : 'past';
     }
   }
 }

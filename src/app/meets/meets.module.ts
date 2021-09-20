@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MeetsPageRoutingModule } from './meets-routing.module';
 
 import { MeetsPage } from './meets.page';
+import { MeetEditComponent } from './meet-edit/meet-edit.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { MeetsPage } from './meets.page';
     IonicModule,
     MeetsPageRoutingModule
   ],
-  declarations: [MeetsPage]
+  declarations: [MeetsPage, MeetEditComponent]
 })
 export class MeetsPageModule {}

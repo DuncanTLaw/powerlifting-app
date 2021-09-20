@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="!editMeet && meets?.length > 0">
+  <ion-card *ngIf="!editMeets && meets?.length > 0">
     <ion-card-header>
       <ion-card-title>Next: {{ earliestMeet.name }}</ion-card-title>
       <ion-card-subtitle>
@@ -44,7 +44,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="editMeet && meets?.length > 0">
+  <ion-card *ngIf="editMeets && meets?.length > 0">
     <ion-card-header>
       <ion-card-title>
         <ion-row class="ion-align-items-center">
@@ -53,16 +53,17 @@
           </ion-col>
           <ion-col class="ion-no-padding" size="auto">
             <ion-button size="small" (click)="onCloseEdit()">
-              Done
+              Save
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-card-title>
-      <ion-card-subtitle>Meets in the past will be automatically deleted to save space on the app.</ion-card-subtitle>
+      <ion-card-subtitle>Click on individual meet to edit details.</ion-card-subtitle>
+      <ion-note>Meets in the past will be automatically deleted to save space on the app.</ion-note>
     </ion-card-header>
     <ion-card-content>
       <ion-list *ngFor="let meet of meets">
-        <ion-item>
+        <ion-item (click)="onEditMeet(meet.date)">
           <ion-label>
             <ion-row class="ion-align-items-center">
               <ion-col size="10" id="meetCol">

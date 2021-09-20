@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
 import { HelpService } from '../help/help.service';
 import { WeightUnitService } from './settings-storage/weight-unit.service';
-import { FEDERATION } from '../meets/federation';
+import { FEDERATION } from '../meets/services/federation';
 import { CoeffService } from '../coefficients/coefficients.service';
 import { FederationService } from './settings-storage/federation.service';
 

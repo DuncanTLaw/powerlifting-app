@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { CoeffService } from '../coefficients/coefficients.service';
 import { FederationService } from '../settings/settings-storage/federation.service';
-import { DateService } from './date.service';
-import { FEDERATION } from './federation';
-import { MeetsService, StoredMeetObj } from './meets.service';
+import { DateService } from './services/date.service';
+import { FEDERATION } from './services/federation';
+import { MeetsService, StoredMeetObj } from './services/meets.service';
+import { ModalController } from '@ionic/angular';
+import { MeetEditComponent } from './meet-edit/meet-edit.component';
+import { MeetFormGroupTemplate } from './services/meet-form.model';
 
 @Component({
   selector: 'app-meets',
@@ -13,17 +16,8 @@ import { MeetsService, StoredMeetObj } from './meets.service';
 })
 export class MeetsPage implements OnInit {
   addMeet = false;
-  editMeet = false;
-  newMeet = new FormGroup({
-    name: new FormControl('', Validators.required),
-    fed: new FormControl(''),
-    wc: new FormControl(''),
-    bp: new FormControl(false),
-    date: new FormControl('', Validators.required),
-    weighIn: new FormControl(''),
-    location: new FormControl(''),
-    notes: new FormControl('')
-  });
+  editMeets = false;
+  newMeet = new FormGroup(MeetFormGroupTemplate.template);
   today: string;
   fedList: string[] = [];
   feds = FEDERATION;
@@ -37,7 +31,8 @@ export class MeetsPage implements OnInit {
     private federationService: FederationService,
     private coeffService: CoeffService,
     private meetsService: MeetsService,
-    public dateService: DateService
+    public dateService: DateService,
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -88,24 +83,38 @@ export class MeetsPage implements OnInit {
 
   onSubmit(): void {
     this.addMeet = false;
-    this.newMeet.patchValue({ date: this.newMeet.value.date.split('T')[0] }); // remove timestamp
     this.meetsService.setMeet(this.newMeet);
     this.updateView();
     this.newMeet.reset();
     this.patchFed();
   }
 
-  onEdit = (): boolean => this.editMeet = !this.editMeet;
+  onEdit = (): boolean => this.editMeets = !this.editMeets;
 
-  onCloseEdit = (): boolean => this.editMeet = false;
+  onCloseEdit = (): boolean => this.editMeets = false;
 
   deleteMeet(meetDate: string): void {
     this.meetsService.removeMeet(meetDate);
     this.updateView();
   }
 
+  onEditMeet(meetDate: string): void {
+    this.presentModal(meetDate);
+  }
+
+  private async presentModal(meetDate: string): Promise<void> {
+    const modal = await this.modalController.create({
+      component: MeetEditComponent,
+      componentProps: { date: meetDate }
+    });
+    modal.onWillDismiss().then(() => {
+      this.updateView();
+    });
+    return await modal.present();
+  }
+
   private updateView(): void {
-    this.meetsService.checkMeet().then(storedMeets => {
+    this.meetsService.checkMeets().then(storedMeets => {
       this.meets = storedMeets;
       if (this.meets.length > 0) {
         for (const meet of this.meets) {
