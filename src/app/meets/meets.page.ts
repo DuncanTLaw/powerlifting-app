@@ -100,8 +100,7 @@ export class MeetsPage implements OnInit {
   onCloseEdit = (): boolean => this.editMeet = false;
 
   deleteMeet(meetDate: string): void {
-    const meetID = 'meet' + meetDate;
-    this.meetsService.removeMeet(meetID);
+    this.meetsService.removeMeet(meetDate);
     this.updateView();
   }
 
@@ -109,6 +108,15 @@ export class MeetsPage implements OnInit {
     this.meetsService.checkMeet().then(storedMeets => {
       this.meets = storedMeets;
       if (this.meets.length > 0) {
+        for (const meet of this.meets) {
+          const meetDate = new Date(meet.date);
+          meetDate.setHours(0, 0, 0, 0);
+          const todayDate = new Date();
+          todayDate.setHours(0, 0, 0, 0);
+          if (meetDate < todayDate) {
+            this.meetsService.removeMeet(meet.date);
+          }
+        }
         this.earliestMeet.name = this.meets[0].name;
         this.earliestMeet.daysOut = this.dateService.getDaysOut(this.meets[0].date);
       }

@@ -59,7 +59,7 @@ export class DateService {
   getDaysOut(dateStr: string): string {
     const date = new Date(dateStr);
     const today = new Date();
-    today.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
 
     // One day in milliseconds
     const oneDay = 1000 * 60 * 60 * 24;
@@ -72,9 +72,14 @@ export class DateService {
     const weeks = parseInt((diffInDays / 7).toString(), 10);
     diffInDays = diffInDays - weeks * 7;
 
-    return (
-      weeks > 0 ? (weeks + ' week' + (weeks > 1 ? 's, ' : ', ')) : '')
-      + (diffInDays > 0 ? (diffInDays + ' day' + (diffInDays > 1 ? 's ' : ', ')) : ''
-    );
+    const weeksAndDaysOut =
+      ((weeks > 0) ? (weeks + ' week' + ((weeks > 1) ? 's, ' : ', ')) : '')
+      + ((diffInDays > 0) ? (diffInDays + ' day' + ((diffInDays > 1) ? 's ' : ', ')) : '');
+
+    if (diffInDays === 1 && weeks === 0) {
+      return 'today';
+    } else {
+      return (weeksAndDaysOut) ? weeksAndDaysOut : 'past';
+    }
   }
 }

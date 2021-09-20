@@ -58,7 +58,8 @@ export class MeetsService {
     return meetList;
   };
 
-  removeMeet = async (meetID: string): Promise<void> => {
+  removeMeet = async (meetDate: string): Promise<void> => {
+    const meetID = 'meet' + meetDate;
     await Storage.remove({ key: meetID });
   };
 
