@@ -13,6 +13,7 @@ import { MeetsService, StoredMeetObj } from './meets.service';
 })
 export class MeetsPage implements OnInit {
   addMeet = false;
+  editMeet = false;
   newMeet = new FormGroup({
     name: new FormControl('', Validators.required),
     fed: new FormControl(''),
@@ -87,9 +88,7 @@ export class MeetsPage implements OnInit {
     this.getWC();
   }
 
-  onClickAddMeet(): void {
-    this.addMeet = !this.addMeet;
-  }
+  onClickAddMeet = (): boolean => this.addMeet = !this.addMeet;
 
   onSubmit(): void {
     this.addMeet = false;
@@ -98,8 +97,14 @@ export class MeetsPage implements OnInit {
     this.updateView();
   }
 
-  onEdit(): void {
-    console.log('edit');
+  onEdit = (): boolean => this.editMeet = !this.editMeet;
+
+  onCloseEdit = (): boolean => this.editMeet = false;
+
+  deleteMeet(meetDate: string): void {
+    const meetID = 'meet' + meetDate;
+    this.meetsService.removeMeet(meetID);
+    this.updateView();
   }
 
   private updateView(): void {

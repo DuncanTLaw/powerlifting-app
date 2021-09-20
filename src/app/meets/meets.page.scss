@@ -15,6 +15,12 @@ b {
   white-space: pre-line;
 }
 
+#meetCol {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
 ion-badge {
   margin-top: 12px;
 }
