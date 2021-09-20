@@ -49,12 +49,8 @@ export class MeetsPage implements OnInit {
       }
     );
     this.today = this.dateService.getDateString();
-    this.federationService.checkFed().then(fedStored => {
-      this.newMeet.patchValue({ fed: fedStored });
-      this.getFeds();
-    });
-    this.federationService.checkClass().then(wcStored => this.newMeet.patchValue({ wc: wcStored }));
     this.updateView();
+    this.patchFed();
   }
 
   getFeds(): void {
@@ -95,6 +91,8 @@ export class MeetsPage implements OnInit {
     this.newMeet.patchValue({ date: this.newMeet.value.date.split('T')[0] }); // remove timestamp
     this.meetsService.setMeet(this.newMeet);
     this.updateView();
+    this.newMeet.reset();
+    this.patchFed();
   }
 
   onEdit = (): boolean => this.editMeet = !this.editMeet;
@@ -115,5 +113,13 @@ export class MeetsPage implements OnInit {
         this.earliestMeet.daysOut = this.dateService.getDaysOut(this.meets[0].date);
       }
     });
+  }
+
+  private patchFed(): void {
+    this.federationService.checkFed().then(fedStored => {
+      this.newMeet.patchValue({ fed: fedStored });
+      this.getFeds();
+    });
+    this.federationService.checkClass().then(wcStored => this.newMeet.patchValue({ wc: wcStored }));
   }
 }
