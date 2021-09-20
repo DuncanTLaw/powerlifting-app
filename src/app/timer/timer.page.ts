@@ -102,30 +102,11 @@ export class TimerPage implements OnInit {
 	}
 
   async scheduleNotification(): Promise<void> {
-    let timeString: string;
-    let minutesString: string;
-    let secondsString: string;
     const minutes = Math.floor(this.secondsSelected / 60);
     const seconds = this.secondsSelected - minutes * 60;
 
-    if (minutes === 1) {
-      minutesString = `${minutes} minute`;
-    } else if (minutes > 1) {
-      minutesString = `${minutes} minutes`;
-    }
-    if (seconds === 1) {
-      secondsString = `${seconds} second`;
-    } else if (seconds > 1) {
-      secondsString = `${seconds} seconds`;
-    }
-
-    if (minutes === 0) {
-      timeString = secondsString;
-    } else if (seconds === 0) {
-      timeString = minutesString;
-    } else {
-      timeString = `${minutesString} ${secondsString}`;
-    }
+    const timeString = ((minutes > 0) ? (minutes + ' minute' + ((minutes > 1) ? 's ' : ' ')) : '')
+      + ((seconds > 0) ? (seconds + ' second' + ((seconds > 1) ? 's' : '')) : '');
 
     await LocalNotifications.schedule({
       notifications: [

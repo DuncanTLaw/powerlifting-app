@@ -74,7 +74,7 @@ export class DateService {
 
     const weeksAndDaysOut =
       ((weeks > 0) ? (weeks + ' week' + ((weeks > 1) ? 's, ' : ', ')) : '')
-      + ((diffInDays > 0) ? (diffInDays + ' day' + ((diffInDays > 1) ? 's ' : ', ')) : '');
+      + ((diffInDays > 0) ? (diffInDays + ' day' + ((diffInDays > 1) ? 's' : '')) : '');
 
     if (diffInDays === 1 && weeks === 0) {
       return 'today';
