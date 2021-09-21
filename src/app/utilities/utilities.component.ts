@@ -88,9 +88,9 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
 
   convertNumber(): void {
     if (this.conversionUnit === 'lb') {
-      this.convertedNum = this.conversionNum / LB_IN_KG;
+      this.convertedNum = +(this.conversionNum / LB_IN_KG).toFixed(2);
     } else {
-      this.convertedNum = this.conversionNum * LB_IN_KG;
+      this.convertedNum = +(this.conversionNum * LB_IN_KG).toFixed(2);
     }
   }
 }
