@@ -193,5 +193,10 @@
     --ion-toolbar-background: var(--ion-color-step-150);
     --ion-toolbar-border-color: var(--ion-color-step-250);
     --ion-card-background: var(--ion-color-step-150);
+    --ion-item-background: var(--ion-color-step-100);
+
+    ion-card {
+      --ion-item-background: var(--ion-color-step-150);
+    }
   }
 }
