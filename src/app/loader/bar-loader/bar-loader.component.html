@@ -40,9 +40,9 @@
             </ion-list>
             <ion-label position="fixed">Collar weight</ion-label>
             <ion-segment
-              (ionChange)="collarSegmentChanged($event); onCalcBar();"
               [value]="compCollars"
               [disabled]="(weightUnitService.userUnit | async) === 'lb'"
+              (ionChange)="collarSegmentChanged($event); onCalcBar()"
             >
               <ion-segment-button [value]="false">
                 <ion-label>0kg</ion-label>

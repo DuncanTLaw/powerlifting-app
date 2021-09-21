@@ -50,7 +50,7 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
     const sq = (!this.squatNum) ? 0 : this.squatNum;
     const bp = (!this.benchNum) ? 0 : this.benchNum;
     const dl = (!this.deadliftNum) ? 0 : this.deadliftNum;
-    this.totalNum = sq + bp + dl;
+    this.totalNum = +(sq + bp + dl).toFixed(2);
   }
 
   calcPct(): void {
