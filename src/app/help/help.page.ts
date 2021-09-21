@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { HelpService } from './help.service';
@@ -15,7 +15,7 @@ interface Pages {
   templateUrl: './help.page.html',
   styleUrls: ['./help.page.scss'],
 })
-export class HelpPage implements OnInit, OnDestroy {
+export class HelpPage implements OnInit {
   @ViewChild('slides', { static: true }) slides: IonSlides;
   viewEnter = false;
   showSkip = true;
@@ -80,10 +80,6 @@ export class HelpPage implements OnInit, OnDestroy {
         this.routeToStored();
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.helpService.currentRoute.unsubscribe();
   }
 
   ionViewWillEnter() {
