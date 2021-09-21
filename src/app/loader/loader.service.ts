@@ -47,6 +47,8 @@ export class LoaderService {
     const { value } = await Storage.get({ key: 'collars' });
     if (value) {
       return (value === 'comp') ? true : false;
+    } else {
+      return true;
     }
   };
 

@@ -38,7 +38,7 @@
                 <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
               </ion-item>
             </ion-list>
-            <div class="ion-text-center">Collar weight</div>
+            <ion-label position="fixed">Collar weight</ion-label>
             <ion-segment
               (ionChange)="collarSegmentChanged($event); onCalcBar();"
               [value]="compCollars"

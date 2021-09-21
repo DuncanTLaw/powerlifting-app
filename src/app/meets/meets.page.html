@@ -5,175 +5,184 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngIf="!editMeets && meets?.length > 0">
-    <ion-card-header>
-      <ion-card-title>Next: {{ earliestMeet.name }}</ion-card-title>
-      <ion-card-subtitle>
-        <h4>{{ earliestMeet.daysOut }}</h4>
-      </ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list *ngFor="let meet of meets">
-        <ion-item>
-          <ion-label>
-            <b>{{ meet.name }}</b>
-            <ng-container *ngIf="meet.location">
-              <br/>
-              @ {{ meet.location }}
-            </ng-container>
-            <br/>
-            <ion-note id="meetDate">{{ dateService.transformDateStr(meet.date) }}</ion-note>
-            <br/>
-            <ion-note *ngIf="meet.weighIn">weigh in at {{ dateService.getReadableTime(meet.weighIn) }}</ion-note>
-            <ion-row class="ion-align-items-center">
-              <ion-col *ngIf="meet.fed || meet.wc">
-                <ion-badge color="tertiary">
-                  {{ meet.fed || '' }} {{ (meet.fed && meet.wc) ? '|' : '' }} {{ meet.wc }}kg
-                </ion-badge>
-              </ion-col>
-              <ion-col size="auto">
-                <ion-badge color="danger">{{ !meet.bp ? 'three lift' : 'bench only' }}</ion-badge>
-              </ion-col>
-            </ion-row>
-            <div id="meetNotes" *ngIf="meet.notes">
-              {{ meet.notes }}
-            </div>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6">
+        <ion-card *ngIf="!editMeets && meets?.length > 0">
+          <ion-card-header>
+            <ion-card-title>Next: {{ earliestMeet.name }}</ion-card-title>
+            <ion-card-subtitle>
+              <h4>{{ earliestMeet.daysOut }}</h4>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list *ngFor="let meet of meets">
+              <ion-item>
+                <ion-label>
+                  <b>{{ meet.name }}</b>
+                  <ng-container *ngIf="meet.location">
+                    <br/>
+                    @ {{ meet.location }}
+                  </ng-container>
+                  <br/>
+                  <ion-note id="meetDate">{{ dateService.transformDateStr(meet.date) }}</ion-note>
+                  <br/>
+                  <ion-note *ngIf="meet.weighIn">weigh in at {{ dateService.getReadableTime(meet.weighIn) }}</ion-note>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col *ngIf="meet.fed || meet.wc">
+                      <ion-badge color="tertiary">
+                        {{ meet.fed || '' }} {{ (meet.fed && meet.wc) ? '|' : '' }} {{ meet.wc }}kg
+                      </ion-badge>
+                    </ion-col>
+                    <ion-col size="auto">
+                      <ion-badge color="danger">{{ !meet.bp ? 'three lift' : 'bench only' }}</ion-badge>
+                    </ion-col>
+                  </ion-row>
+                  <div id="meetNotes" *ngIf="meet.notes">
+                    {{ meet.notes }}
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
 
-  <ion-card *ngIf="editMeets && meets?.length > 0">
-    <ion-card-header>
-      <ion-card-title>
-        <ion-row class="ion-align-items-center">
-          <ion-col class="ion-no-padding">
-            Edit meet
+        <ion-card *ngIf="editMeets && meets?.length > 0">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-row class="ion-align-items-center">
+                <ion-col class="ion-no-padding">
+                  Edit meet
+                </ion-col>
+                <ion-col class="ion-no-padding" size="auto">
+                  <ion-button size="small" (click)="onCloseEdit()">
+                    Done
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-card-title>
+            <ion-card-subtitle>Click on individual meet to edit details.</ion-card-subtitle>
+            <ion-note>Meets in the past will be automatically deleted to save space on the app.</ion-note>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list *ngFor="let meet of meets">
+              <ion-item (click)="onEditMeet(meet.date)">
+                <ion-label>
+                  <ion-row class="ion-align-items-center">
+                    <ion-col size="10" id="meetCol">
+                        <b>{{ meet.name }}</b>
+                        <br/>
+                        <ion-note>{{ meet.date }}</ion-note>
+                    </ion-col>
+                    <ion-col size="2" class="ion-no-padding">
+                      <ion-button fill="clear" color="danger" (click)="deleteMeet(meet.date)">
+                        <ion-icon name="trash"></ion-icon>
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size-md="6">
+        <ion-row class="ion-align-items-center ion-margin-top">
+          <ion-col size="auto" (click)="onClickAddMeet()">
+            <ion-buttons>
+              <ion-button [hidden]="addMeet">
+                <ion-icon size="large" name="add-circle"></ion-icon>
+              </ion-button>
+              <ion-button [hidden]="!addMeet">
+                <ion-icon size="large" name="close-circle"></ion-icon>
+              </ion-button>
+            </ion-buttons>
           </ion-col>
-          <ion-col class="ion-no-padding" size="auto">
-            <ion-button size="small" (click)="onCloseEdit()">
-              Done
+          <ion-col (click)="onClickAddMeet()">
+            <ion-note>Add a meet</ion-note>
+          </ion-col>
+          <ion-col size="auto" *ngIf="meets?.length > 0">
+            <ion-button size="small" expand="block" class="ion-margin-end" (click)="onEdit()">
+              Edit
             </ion-button>
           </ion-col>
         </ion-row>
-      </ion-card-title>
-      <ion-card-subtitle>Click on individual meet to edit details.</ion-card-subtitle>
-      <ion-note>Meets in the past will be automatically deleted to save space on the app.</ion-note>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list *ngFor="let meet of meets">
-        <ion-item (click)="onEditMeet(meet.date)">
-          <ion-label>
-            <ion-row class="ion-align-items-center">
-              <ion-col size="10" id="meetCol">
-                  <b>{{ meet.name }}</b>
-                  <br/>
-                  <ion-note>{{ meet.date }}</ion-note>
-              </ion-col>
-              <ion-col size="2" class="ion-no-padding">
-                <ion-button fill="clear" color="danger" (click)="deleteMeet(meet.date)">
-                  <ion-icon name="trash"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-row class="ion-align-items-center ion-margin-top">
-    <ion-col size="auto" (click)="onClickAddMeet()">
-      <ion-buttons>
-        <ion-button [hidden]="addMeet">
-          <ion-icon size="large" name="add-circle"></ion-icon>
-        </ion-button>
-        <ion-button [hidden]="!addMeet">
-          <ion-icon size="large" name="close-circle"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-col>
-    <ion-col (click)="onClickAddMeet()">
-      <ion-note>Add a meet</ion-note>
-    </ion-col>
-    <ion-col size="auto" *ngIf="meets?.length > 0">
-      <ion-button size="small" expand="block" class="ion-margin-end" (click)="onEdit()">
-        Edit
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
-  <ion-card id="addMeetCard" *ngIf="addMeet">
-    <form [formGroup]="newMeet">
-      <ion-card-content>
-        <ion-list lines="none">
-          <ion-item>
-            <ion-label position="fixed">meet *</ion-label>
-              <ion-input type="string" formControlName="name" placeholder="name"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="fixed">federation</ion-label>
-            <ion-select
-              slot="end"
-              formControlName="fed"
-              interface="popover"
-              (ionChange)="onChangeFed()"
-            >
-              <ion-select-option *ngFor="let fed of fedList" [value]="fed">{{ fed }}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="fixed">weight class</ion-label>
-            <ion-select
-              slot="end"
-              formControlName="wc"
-              interface="popover"
-            >
-              <ion-select-option *ngFor="let wc of wcList" [value]="wc">{{ wc }}kg</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label>bench only</ion-label>
-            <ion-checkbox slot="end" formControlName="bp" color="dark"></ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-label position="fixed">date *</ion-label>
-            <ion-datetime
-              displayFormat="MMM DD, YYYY (DDD)"
-              [min]="today"
-              max="2099"
-              formControlName="date"
-            >
-            </ion-datetime>
-          </ion-item>
-          <ion-item>
-            <ion-label position="fixed">weigh in</ion-label>
-            <ion-datetime
-              displayFormat="h:mm a"
-              minuteValues="0, 15, 30, 45"
-              formControlName="weighIn"
-            >
-            </ion-datetime>
-          </ion-item>
-          <ion-item>
-            <ion-label position="fixed">location</ion-label>
-            <ion-input type="string" formControlName="location"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="fixed">notes</ion-label>
-            <ion-textarea formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
-          </ion-item>
-        </ion-list>
         <ion-row>
-          <ion-col>
-            <ion-button (click)="onClickAddMeet()" color="light" expand="block">Cancel</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button (click)="onSubmit()" expand="block" [disabled]="!newMeet.valid">Save</ion-button>
-          </ion-col>
+          <ion-card id="addMeetCard" *ngIf="addMeet" style="width: 100%;">
+            <form [formGroup]="newMeet">
+              <ion-card-content>
+                <ion-list lines="none">
+                  <ion-item>
+                    <ion-label position="fixed">meet *</ion-label>
+                      <ion-input type="string" formControlName="name" placeholder="name"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="fixed">federation</ion-label>
+                    <ion-select
+                      slot="end"
+                      formControlName="fed"
+                      interface="popover"
+                      (ionChange)="onChangeFed()"
+                    >
+                      <ion-select-option *ngFor="let fed of fedList" [value]="fed">{{ fed }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="fixed">weight class</ion-label>
+                    <ion-select
+                      slot="end"
+                      formControlName="wc"
+                      interface="popover"
+                    >
+                      <ion-select-option *ngFor="let wc of wcList" [value]="wc">{{ wc }}kg</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>bench only</ion-label>
+                    <ion-checkbox slot="end" formControlName="bp" color="dark"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="fixed">date *</ion-label>
+                    <ion-datetime
+                      displayFormat="MMM DD, YYYY (DDD)"
+                      [min]="today"
+                      max="2099"
+                      formControlName="date"
+                    >
+                    </ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="fixed">weigh in</ion-label>
+                    <ion-datetime
+                      displayFormat="h:mm a"
+                      minuteValues="0, 15, 30, 45"
+                      formControlName="weighIn"
+                    >
+                    </ion-datetime>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="fixed">location</ion-label>
+                    <ion-input type="string" formControlName="location"></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label position="fixed">notes</ion-label>
+                    <ion-textarea formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
+                  </ion-item>
+                </ion-list>
+                <ion-row>
+                  <ion-col>
+                    <ion-button (click)="onClickAddMeet()" color="light" expand="block">Cancel</ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button (click)="onSubmit()" expand="block" [disabled]="!newMeet.valid">Save</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </form>
+          </ion-card>
         </ion-row>
-      </ion-card-content>
-    </form>
-  </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
