@@ -7,7 +7,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size-md="6">
+      <ion-col size-xs="12" size-md="6">
         <ion-card *ngIf="!editMeets && meets?.length > 0">
           <ion-card-header>
             <ion-card-title>Next: {{ earliestMeet.name }}</ion-card-title>
@@ -87,7 +87,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size-md="6">
+      <ion-col [attr.size-md]="(meets?.length > 0) ? 6 : 12">
         <ion-row class="ion-align-items-center ion-margin-top">
           <ion-col size="auto" (click)="onClickAddMeet()">
             <ion-buttons>
