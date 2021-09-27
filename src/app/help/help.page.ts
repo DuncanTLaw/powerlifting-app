@@ -38,6 +38,14 @@ export class HelpPage implements OnInit {
       icon: 'calculator'
     },
     {
+      title: 'Meets',
+      overview: 'Schedule and track your upcoming competitions.',
+      help: [
+        'Click \'Add a meet\' to add a new meet and fill up any info you want (* denotes REQUIRED fields).'
+      ],
+      icon: 'calendar'
+    },
+    {
       title: 'Timer',
       overview: 'Set a timer, and tally your reps.',
       help: [
