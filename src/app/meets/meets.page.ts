@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CoeffService } from '../coefficients/coefficients.service';
 import { FederationService } from '../settings/settings-storage/federation.service';
@@ -15,7 +15,7 @@ import { GenderService } from '../settings/settings-storage/gender.service';
   templateUrl: './meets.page.html',
   styleUrls: ['./meets.page.scss'],
 })
-export class MeetsPage implements OnInit {
+export class MeetsPage implements OnInit, OnDestroy {
   addMeet = false;
   editMeets = false;
   newMeet = new FormGroup(MeetFormGroupTemplate.template);
@@ -30,7 +30,6 @@ export class MeetsPage implements OnInit {
 
   constructor(
     private federationService: FederationService,
-    private coeffService: CoeffService,
     private meetsService: MeetsService,
     public dateService: DateService,
     private genderService: GenderService,
@@ -38,16 +37,17 @@ export class MeetsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.genderService.checkGender().then(
-      () => {
-        if (this.coeffService.gender) {
-          this.userGender = this.coeffService.gender;
-        }
-      }
-    );
+    this.genderService.userGender.subscribe(gender => {
+      this.userGender = gender;
+      this.getWC();
+    });
     this.today = this.dateService.getDateString();
     this.updateView();
     this.patchFed();
+  }
+
+  ngOnDestroy() {
+    this.genderService.userGender.unsubscribe();
   }
 
   getFeds(): void {
@@ -62,16 +62,19 @@ export class MeetsPage implements OnInit {
   }
 
   getWC(): void {
-    if (this.userGender) {
-      for (const weightClass of this.feds[this.newMeet.value.fed][this.userGender]) {
-        this.wcList.push(weightClass);
-      }
-    } else {
-      for (const weightClass of this.feds[this.newMeet.value.fed].male) {
-        this.wcList.push(weightClass);
-      }
-      for (const weightClass of this.feds[this.newMeet.value.fed].female) {
-        this.wcList.push(weightClass);
+    this.wcList = [];
+    if (this.newMeet.value.fed) {
+      if (this.userGender) {
+        for (const weightClass of this.feds[this.newMeet.value.fed][this.userGender]) {
+          this.wcList.push(weightClass);
+        }
+      } else {
+        for (const weightClass of this.feds[this.newMeet.value.fed].male) {
+          this.wcList.push(weightClass);
+        }
+        for (const weightClass of this.feds[this.newMeet.value.fed].female) {
+          this.wcList.push(weightClass);
+        }
       }
     }
   }
