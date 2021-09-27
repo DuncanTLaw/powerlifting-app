@@ -24,3 +24,11 @@ b {
 ion-badge {
   margin-top: 12px;
 }
+
+ion-card-header {
+  padding-bottom: 0;
+}
+
+.meet-list {
+  --ion-item-background: none;
+}

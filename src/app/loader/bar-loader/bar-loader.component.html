@@ -6,7 +6,7 @@
           <ion-card-title>Bar Loader</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-list lines="none">
+          <ion-list [inset]="true">
             <ion-item>
               <ion-label position="fixed">Total weight:</ion-label>
               <ion-input
@@ -27,7 +27,7 @@
           </ion-button>
           <hr/>
           <div [hidden]="!showAdvanced">
-            <ion-list lines="none">
+            <ion-list [inset]="true">
               <ion-item>
                 <ion-label position="fixed">Bar weight:</ion-label>
                 <ion-input
@@ -60,7 +60,7 @@
               {{ plateText }}
             </ion-button>
             <div [hidden]="!showPlates">
-              <ion-list lines="full">
+              <ion-list [inset]="true">
                 <ion-item *ngFor="let plate of plateCount[weightUnitService.userUnit | async]; trackBy:loaderService.trackItems">
                     <ion-col size="4">
                       <ion-badge

@@ -68,7 +68,7 @@
                   </ion-segment-button>
                 </ion-segment>
                 <br/>
-                <ion-list>
+                <ion-list [inset]="true">
                   <ion-item>
                     <ion-label position="fixed">bodyweight</ion-label>
                     <ion-input
@@ -177,7 +177,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col  size-md="6" *ngIf="pointsSelected==='Blues'">
+        <ion-col size-md="6" *ngIf="pointsSelected==='Blues'">
           <ion-card>
             <form #coeff="ngForm">
               <ion-card-header>
@@ -187,7 +187,7 @@
                 </ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                <ion-list lines="none">
+                <ion-list [inset]="true">
                   <ion-item>
                     <ion-label position="fixed">bodyweight</ion-label>
                     <ion-input
@@ -230,7 +230,7 @@
                   </ion-col>
                 </ion-row>
                 <div [hidden]="!calcDiff">
-                  <ion-list lines="none">
+                  <ion-list [inset]="true">
                     <ion-item>
                       <ion-label position="fixed">total</ion-label>
                       <ion-input

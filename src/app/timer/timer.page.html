@@ -42,7 +42,7 @@
               {{ rhsButtonText }}
               </ion-button>
             </ion-row>
-            <ion-list lines="none">
+            <ion-list [inset]="true">
               <ion-item>
                 <ion-label position="fixed">Rest:</ion-label>
                 <ion-input
@@ -52,7 +52,7 @@
                 ></ion-input>
               </ion-item>
             </ion-list>
-            <ion-list lines="none">
+            <ion-list [inset]="true">
               <ion-item>
                 <ion-label>Keep screen awake</ion-label>
                 <ion-toggle [(ngModel)]="awakeService.allowAwake" (ionChange)="onToggleAwake()"></ion-toggle>
@@ -64,7 +64,7 @@
       <ion-col  size-md="6">
         <ion-card id="setsCard">
           <ion-card-content>
-            <ion-list lines="none">
+            <ion-list [inset]="true">
               <ion-item>
                 <ion-label position="fixed">Protocol:</ion-label>
                 <ion-input

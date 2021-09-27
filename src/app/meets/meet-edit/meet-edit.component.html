@@ -14,7 +14,7 @@
     </ion-card-header>
     <form [formGroup]="editMeet">
       <ion-card-content>
-        <ion-list lines="none">
+        <ion-list [inset]="true">
           <ion-item>
             <ion-label position="fixed">date *</ion-label>
             <ion-datetime
@@ -40,7 +40,7 @@
           </ion-item>
           <ion-item>
             <ion-label position="fixed">notes</ion-label>
-            <ion-textarea formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
+            <ion-textarea rows="3" formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
           </ion-item>
         </ion-list>
       </ion-card-content>

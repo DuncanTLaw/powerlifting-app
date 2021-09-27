@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <ion-list lines="none">
+      <ion-list [inset]="true">
         <ion-item>
           <ion-label position="fixed">Unit</ion-label>
           <ion-segment
@@ -76,7 +76,7 @@
       (under the <a href="https://www.powerlifting.sport/">IPF</a>)
       as a Junior lifter in the 83kg weight class.
     </p>
-      <ion-list lines="none">
+      <ion-list class="link-list" lines="none">
           <ion-item *ngFor="let link of links | keyvalue: returnZero">
             <ion-button fill="none" size="clear" [href]="link.value.link">
               <ion-icon class="ion-margin-end" [name]="link.value.icon"></ion-icon>

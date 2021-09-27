@@ -16,7 +16,7 @@
             </ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <ion-list *ngFor="let meet of meets">
+            <ion-list class="meet-list" *ngFor="let meet of meets" [inset]="true">
               <ion-item>
                 <ion-label>
                   <b>{{ meet.name }}</b>
@@ -65,7 +65,7 @@
             <ion-note>Meets in the past will be automatically deleted to save space on the app.</ion-note>
           </ion-card-header>
           <ion-card-content>
-            <ion-list *ngFor="let meet of meets">
+            <ion-list *ngFor="let meet of meets" [inset]="true">
               <ion-item (click)="onEditMeet(meet.date)">
                 <ion-label>
                   <ion-row class="ion-align-items-center">
@@ -112,7 +112,7 @@
           <ion-card id="addMeetCard" *ngIf="addMeet" style="width: 100%;">
             <form [formGroup]="newMeet">
               <ion-card-content>
-                <ion-list lines="none">
+                <ion-list [inset]="true">
                   <ion-item>
                     <ion-label position="fixed">meet *</ion-label>
                       <ion-input type="string" formControlName="name" placeholder="name"></ion-input>
@@ -167,7 +167,7 @@
                   </ion-item>
                   <ion-item>
                     <ion-label position="fixed">notes</ion-label>
-                    <ion-textarea formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
+                    <ion-textarea rows="3" formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
                   </ion-item>
                 </ion-list>
                 <ion-row>
