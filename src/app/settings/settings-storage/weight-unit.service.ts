@@ -15,11 +15,9 @@ export class WeightUnitService {
   }
 
   setUnit = async (event: any): Promise<void> => {
-    this.userUnit.next(event.detail.value);
-    let storeUnit: string;
-    this.userUnit.subscribe(
-      unit => { storeUnit = (unit === 'kg') ? 'kg' : 'lb'; }
-    );
+    const unitInput = event.detail.value;
+    this.userUnit.next(unitInput);
+    const storeUnit = unitInput;
 
     await Storage.set({
       key: 'unit',
@@ -30,7 +28,7 @@ export class WeightUnitService {
   checkUnit = async (): Promise<void> => {
     const { value } = await Storage.get({ key: 'unit' });
     if (value) {
-      this.userUnit.next((value === 'kg') ? 'kg' : 'lb');
+      this.userUnit.next(value);
     }
   };
 

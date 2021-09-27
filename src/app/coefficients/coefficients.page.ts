@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
+import { GenderService } from '../settings/settings-storage/gender.service';
 import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 import { CoeffService } from './coefficients.service';
@@ -37,17 +38,12 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   constructor(
     public weightUnitService: WeightUnitService,
     private coeffService: CoeffService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private genderService: GenderService
   ) { }
 
   ngOnInit() {
-    this.coeffService.checkGender().then(
-      () => {
-        if (this.coeffService.gender) {
-          this.userGender = this.coeffService.gender;
-        }
-      }
-    );
+    this.genderService.userGender.subscribe(gender => this.userGender = gender);
     this.weightUnitService.userUnit.subscribe(() => {
       if (this.segmentSelected === 'points') {
         this.calcPoints(this.coeffForm);
@@ -61,13 +57,14 @@ export class CoefficientsPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.weightUnitService.userUnit.unsubscribe();
+    this.genderService.userGender.unsubscribe();
   }
 
   onChangeGender(form: NgForm): void {
     this.coeffService.gender = this.userGender;
     this.calcPoints(form);
     this.calcTot(form);
-    this.coeffService.setGender(this.userGender);
+    this.genderService.setGender(this.userGender);
   }
 
   segmentChanged(event: any): void {

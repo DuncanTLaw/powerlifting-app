@@ -6,6 +6,7 @@ import { WeightUnitService } from './settings-storage/weight-unit.service';
 import { FEDERATION } from '../meets/services/federation';
 import { CoeffService } from '../coefficients/coefficients.service';
 import { FederationService } from './settings-storage/federation.service';
+import { GenderService } from './settings-storage/gender.service';
 
 interface LINKS {
   [website: string]: {
@@ -52,19 +53,13 @@ export class SettingsComponent implements OnInit {
     public weightUnitService: WeightUnitService,
     private menuController: MenuController,
     private helpService: HelpService,
-    private coeffService: CoeffService,
-    private federationService: FederationService
+    private federationService: FederationService,
+    private genderService: GenderService
   ) { }
 
   ngOnInit() {
     this.weightUnitService.userUnit.subscribe(unit => this.userUnit = unit);
-    this.coeffService.checkGender().then(
-      () => {
-        if (this.coeffService.gender) {
-          this.userGender = this.coeffService.gender;
-        }
-      }
-    );
+    this.genderService.userGender.subscribe(gender => this.userGender = gender);
     this.federationService.checkFed().then(fed => {
       this.userFed = fed;
       this.getFeds();
@@ -78,14 +73,14 @@ export class SettingsComponent implements OnInit {
         this.fedList.push(fed);
       }
     }
-    if (this.userFed) {
-      this.getWC();
-    }
+    this.getWC();
   }
 
   getWC(): void {
-    for (const weightClass of this.feds[this.userFed][this.userGender]) {
-      this.wcList.push(weightClass);
+    if (this.userFed) {
+      for (const weightClass of this.feds[this.userFed][this.userGender]) {
+        this.wcList.push(weightClass);
+      }
     }
   }
 
@@ -105,7 +100,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onChangeGender(): void {
-    this.coeffService.setGender(this.userGender);
+    this.genderService.setGender(this.userGender);
     this.wcList = [];
     this.getWC();
   }

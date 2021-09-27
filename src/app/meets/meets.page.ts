@@ -8,6 +8,7 @@ import { MeetsService, StoredMeetObj } from './services/meets.service';
 import { ModalController } from '@ionic/angular';
 import { MeetEditComponent } from './meet-edit/meet-edit.component';
 import { MeetFormGroupTemplate } from './services/meet-form.model';
+import { GenderService } from '../settings/settings-storage/gender.service';
 
 @Component({
   selector: 'app-meets',
@@ -32,11 +33,12 @@ export class MeetsPage implements OnInit {
     private coeffService: CoeffService,
     private meetsService: MeetsService,
     public dateService: DateService,
+    private genderService: GenderService,
     private modalController: ModalController
   ) { }
 
   ngOnInit() {
-    this.coeffService.checkGender().then(
+    this.genderService.checkGender().then(
       () => {
         if (this.coeffService.gender) {
           this.userGender = this.coeffService.gender;

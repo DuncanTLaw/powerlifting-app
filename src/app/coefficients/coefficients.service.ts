@@ -8,6 +8,7 @@ import { DOTSCOEFF } from '../numeric-tables/dots';
 import { GLCOEFF } from '../numeric-tables/GL';
 import { IPFCOEFF } from '../numeric-tables/IPF';
 import { WILKSCOEFF } from '../numeric-tables/wilks';
+import { GenderService } from '../settings/settings-storage/gender.service';
 
 export interface Blues {
   half: number;
@@ -35,23 +36,12 @@ export class CoeffService {
 
   private wilksScale: GenderCoeff = WILKSCOEFF;
 
-  constructor(private weightUnitService: WeightUnitService) {}
-
-  setGender = async (userGender: string): Promise<void> => {
-    const storeGender = (userGender === 'male') ? 'male' : 'female';
-
-    await Storage.set({
-      key: 'gender',
-      value: storeGender
-    });
-  };
-
-  checkGender = async (): Promise<void> => {
-    const { value } = await Storage.get({ key: 'gender' });
-    if (value) {
-      this.gender = (value === 'male') ? 'male' : 'female';
-    }
-  };
+  constructor(
+    private weightUnitService: WeightUnitService,
+    private genderService: GenderService
+  ) {
+    this.genderService.userGender.subscribe((gender) => this.gender = gender);
+  }
 
   calcDOTS(form: NgForm, total: number): number {
     total = this.weightUnitService.convertToKg(total);
