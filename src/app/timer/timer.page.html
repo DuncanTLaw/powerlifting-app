@@ -52,12 +52,14 @@
                 ></ion-input>
               </ion-item>
             </ion-list>
-            <ion-list [inset]="true">
-              <ion-item>
-                <ion-label>Keep screen awake</ion-label>
+            <ion-row class="ion-align-items-center">
+              <ion-col>
+                Keep screen awake
+              </ion-col>
+              <ion-col size="auto">
                 <ion-toggle [(ngModel)]="awakeService.allowAwake" (ionChange)="onToggleAwake()"></ion-toggle>
-              </ion-item>
-            </ion-list>
+              </ion-col>
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>
