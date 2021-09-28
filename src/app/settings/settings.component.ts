@@ -46,6 +46,8 @@ export class SettingsComponent implements OnInit {
   fedList: string[] = [];
   feds = FEDERATION;
   wcList: string[] = [];
+  version = '2.0.0';
+  build = '3';
 
   constructor(
     private router: Router,

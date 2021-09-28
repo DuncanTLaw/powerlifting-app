@@ -5,7 +5,7 @@
   <ion-card-content>
     <ion-list [inset]="true">
       <ion-row class="ion-align-items-center">
-        <ion-col size="3">
+        <ion-col>
           <ion-input
             type="number"
             [(ngModel)]="squatNum"
@@ -13,10 +13,10 @@
             placeholder="SQ"
           ></ion-input>
         </ion-col>
-        <ion-col class="ion-no-padding" size="1.5">
+        <ion-col class="ion-no-padding" id="plus" size="auto">
           +
         </ion-col>
-        <ion-col size="3">
+        <ion-col>
           <ion-input
             type="number"
             [(ngModel)]="benchNum"
@@ -24,10 +24,10 @@
             placeholder="BP"
           ></ion-input>
         </ion-col>
-        <ion-col class="ion-no-padding" size="1.5">
+        <ion-col class="ion-no-padding" id="plus" size="auto">
           +
         </ion-col>
-        <ion-col size="3">
+        <ion-col>
           <ion-input
             type="number"
             [(ngModel)]="deadliftNum"
