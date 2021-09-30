@@ -8,28 +8,26 @@
         <ion-card-content>
           <ion-card-subtitle>Input # of plates on one side</ion-card-subtitle>
           <ion-card-subtitle>(collars automatically added)</ion-card-subtitle>
-          <ion-list>
+          <ion-list [inset]="true">
             <ion-item
               *ngFor="let plate of plateCount; trackBy:loaderService.trackItems"
             >
-              <ion-row class="ion-align-items-center">
-                <ion-col>
-                  <ion-badge
-                    [color]="loaderService.getKGBadgeColor(plate.weight)"
-                  >
-                    {{ plate.weight }}kg
-                  </ion-badge>
-                </ion-col>
-                <ion-col>
-                  <ion-input
-                    type="number"
-                    [(ngModel)]="plate.count"
-                    [name]="plate.weight.toString()"
-                    placeholder="0"
-                    (ngModelChange)="onCountPlates()"
-                  ></ion-input>
-                </ion-col>
-              </ion-row>
+              <ion-col>
+                <ion-badge
+                  [color]="loaderService.getKGBadgeColor(plate.weight)"
+                >
+                  {{ plate.weight }}kg
+                </ion-badge>
+              </ion-col>
+              <ion-col>
+                <ion-input
+                  type="number"
+                  [(ngModel)]="plate.count"
+                  [name]="plate.weight.toString()"
+                  placeholder="0"
+                  (ngModelChange)="onCountPlates()"
+                ></ion-input>
+              </ion-col>
             </ion-item>
           </ion-list>
         </ion-card-content>

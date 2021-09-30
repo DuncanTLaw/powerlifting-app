@@ -2,19 +2,28 @@
   font-size: large;
 }
 
-// Blues colour specification from https://www.ox.ac.uk/sites/files/oxford/media_wysiwyg/Oxford%20Blue%20LR.pdf
-#blues {
-  color: rgb(0, 33, 71); // Oxford blue
-}
+.ouplc-theme {
+  p {
+    color: white;
+  }
 
-@media (prefers-color-scheme: dark) {
-   #blues {
-    color: rgb(72, 145, 220); // Pantone 279
-   }
-}
-/* Fallback for older browsers or manual mode */
-body.dark {
+  ion-card, ion-item {
+    --ion-text-color: white;
+    --background: var(--oxford-blue);
+  }
+
+  ion-row {
+    color: white;
+  }
+
+  ion-card {
+    border: 2px solid white;
+  }
+
   #blues {
-    color: rgb(72, 145, 220); // Pantone 279
-   }
+    color: var(--oxford-blue-contrast)
+  }
+
+  --ion-color-step-350: #595959;
+  --ion-color-step-600: #999999;
 }

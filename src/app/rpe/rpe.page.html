@@ -7,14 +7,14 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size-xs="12" size-md="6">
+      <ion-col  size-md="6">
         <ion-card>
           <form #projected="ngForm">
             <ion-card-header>
               <ion-card-title>Projected</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-list>
+              <ion-list [inset]="true">
                 <ion-item>
                   <ion-label position="fixed">load</ion-label>
                   <ion-input
@@ -63,14 +63,14 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size-xs="12" size-md="6">
+      <ion-col  size-md="6">
         <ion-card id="requiredCard">
           <form #required="ngForm">
             <ion-card-header>
               <ion-card-title>Required</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-list>
+              <ion-list [inset]="true">
                 <ion-item>
                   <ion-label position="fixed">reps</ion-label>
                   <ion-input

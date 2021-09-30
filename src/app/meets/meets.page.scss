@@ -1,0 +1,38 @@
+ion-content {
+  --offset-bottom: -54px !important;
+}
+
+b {
+  font-size: 18pt;
+}
+
+#meetDate {
+  font-size: 16pt;
+}
+
+#meetNotes {
+  margin-top: 14px;
+  white-space: pre-line;
+}
+
+#meetCol {
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+ion-badge {
+  margin-top: 12px;
+}
+
+ion-card-header {
+  padding-bottom: 0;
+}
+
+ion-card-content {
+  padding: 0;
+}
+
+.meet-list {
+  --ion-item-background: none;
+}

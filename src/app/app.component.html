@@ -1,26 +1,27 @@
 <ion-app>
-  <app-about></app-about>
+  <ion-menu side="start" contentId="main">
+    <ion-header>
+      <ion-toolbar>
+        <ion-button size="small" (click)="presentModal()">
+          <ion-icon id="settings" name="cog-outline"></ion-icon>
+          Settings
+        </ion-button>
+        <ion-buttons slot="end">
+          <ion-button (click)="openTutorial()">
+            <ion-icon name="help-circle"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <!-- <ion-content>
+      <div>
+        <app-notes></app-notes>
+      </div>
+    </ion-content> -->
+    <ion-footer class="ion-padding">
+      <app-utilities></app-utilities>
+    </ion-footer>
+  </ion-menu>
 
-  <ion-router-outlet id="main"></ion-router-outlet>
-
-  <ion-tabs>
-    <ion-tab-bar>
-      <ion-tab-button tab="rpe">
-        <ion-icon name="stats-chart"></ion-icon>
-        <ion-label>RPE</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="coeff">
-        <ion-icon name="calculator"></ion-icon>
-        <ion-label>Coefficients</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="timer">
-        <ion-icon name="timer-sharp"></ion-icon>
-        <ion-label>Timer</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="loader">
-        <ion-icon name="barbell-sharp"></ion-icon>
-        <ion-label>Loader</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+  <ion-router-outlet id="main" [swipeGesture]="false"></ion-router-outlet>
 </ion-app>

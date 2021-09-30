@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Meta } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { MenuController, ModalController } from '@ionic/angular';
+import { HelpService } from './help/help.service';
+import { SettingsComponent } from './settings/settings.component';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +11,27 @@ import { Meta } from '@angular/platform-browser';
 })
 export class AppComponent implements OnInit{
 
-  constructor(private metaService: Meta) {}
+  constructor(
+    private router: Router,
+    private helpService: HelpService,
+    public modalController: ModalController,
+    private menuController: MenuController,
+  ) { }
 
   ngOnInit() {
-    this.metaService.addTags([
-      {
-        name: 'keywords', content:
-        // eslint-disable-next-line max-len
-        'powerlifting, powerlifting toolbox, PL toolbox, RPE, rate of perceived exertion, IPF points, GL points, Wilks, Dots points, bar loader, IPF, USAPL, GBPF, gym'
-      },
-      {
-        name: 'description', content:
-        'Powerlifting toolbox which includes RPE claculator, points calculations, timer, sets counter and what plates to load.'
-      }
-    ]);
   }
 
+  openTutorial(): void {
+    this.helpService.currentRoute.next(this.router.url);
+    this.helpService.setWelcomed(false);
+    this.menuController.close();
+    this.router.navigateByUrl('/help');
+  }
+
+  async presentModal(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: SettingsComponent
+    });
+    return await modal.present();
+  }
 }

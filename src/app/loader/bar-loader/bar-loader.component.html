@@ -1,12 +1,12 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-card>
+      <ion-card class="ion-margin-bottom">
         <ion-card-header>
           <ion-card-title>Bar Loader</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-list lines="none">
+          <ion-list [inset]="true">
             <ion-item>
               <ion-label position="fixed">Total weight:</ion-label>
               <ion-input
@@ -27,7 +27,7 @@
           </ion-button>
           <hr/>
           <div [hidden]="!showAdvanced">
-            <ion-list lines="none">
+            <ion-list [inset]="true">
               <ion-item>
                 <ion-label position="fixed">Bar weight:</ion-label>
                 <ion-input
@@ -38,11 +38,11 @@
                 <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
               </ion-item>
             </ion-list>
-            <div class="ion-text-center">Collar weight</div>
+            <ion-label position="fixed">Collar weight</ion-label>
             <ion-segment
-              (ionChange)="collarSegmentChanged($event); onCalcBar();"
               [value]="compCollars"
               [disabled]="(weightUnitService.userUnit | async) === 'lb'"
+              (ionChange)="collarSegmentChanged($event); onCalcBar()"
             >
               <ion-segment-button [value]="false">
                 <ion-label>0kg</ion-label>
@@ -60,28 +60,26 @@
               {{ plateText }}
             </ion-button>
             <div [hidden]="!showPlates">
-              <ion-list>
+              <ion-list [inset]="true">
                 <ion-item *ngFor="let plate of plateCount[weightUnitService.userUnit | async]; trackBy:loaderService.trackItems">
-                  <ion-row class="ion-align-items-center">
-                    <ion-col>
+                    <ion-col size="4">
                       <ion-badge
                         [color]="(weightUnitService.userUnit | async) === 'kg' ?
-                          loaderService.handleUnits.kg.colours(plate.weight) : loaderService.handleUnits.lb.colours(plate.weight)"
+                          loaderService.handleUnits.kg.colors(plate.weight) : loaderService.handleUnits.lb.colors(plate.weight)"
                       >
                         {{ plate.weight }}{{ weightUnitService.userUnit | async }}
                       </ion-badge>
                     </ion-col>
-                    <ion-col>
+                    <ion-col size="5">
                       <ion-input
                         type="number"
                         [(ngModel)]="plate.pairs"
                         (ngModelChange)="onCalcBar()"
                       ></ion-input>
                     </ion-col>
-                    <ion-col>
+                    <ion-col size="3">
                       <ion-note>pairs</ion-note>
                     </ion-col>
-                  </ion-row>
                 </ion-item>
               </ion-list>
             </div>
@@ -90,38 +88,39 @@
       </ion-card>
     </ion-col>
   </ion-row>
-  <ion-row class="ion-align-items-center ion-justify-content-center" *ngIf="tWeight&&barLoaded">
-    <ion-col class="ion-no-padding" style="margin: 0 3px 8px 3px;" size="auto">
+  <ion-row class="ion-align-items-center ion-justify-content-center ion-margin-top" *ngIf="tWeight&&barLoaded">
+    <ion-col class="ion-no-padding barbell" size="auto">
       <ion-badge
           [color]="loaderService.getKGBadgeColor(barWeight)"
         >
           BAR
         </ion-badge>
     </ion-col>
-    <ion-col class="ion-no-padding" style="margin: 0 3px 8px 3px;" size="auto" *ngFor="let plate of barLoaded">
+    <ion-col class="ion-no-padding barbell" size="auto" *ngFor="let plate of barLoaded">
       <ion-badge
           [color]="(weightUnitService.userUnit | async) === 'kg' ?
-            loaderService.handleUnits.kg.colours(plate) : loaderService.handleUnits.lb.colours(plate)"
+            loaderService.handleUnits.kg.colors(plate) : loaderService.handleUnits.lb.colors(plate)"
           [style.padding-top]="loaderService.getHeight(plate)"
           [style.padding-bottom]="loaderService.getHeight(plate)"
-          style="padding-left: 3px; padding-right: 3px;"
+          id="plate"
         >
           {{ plate }}
         </ion-badge>
     </ion-col>
     <ion-col
-      class="ion-no-padding"
-      style="margin: 0 3px 8px 3px;"
+      class="ion-no-padding barbell"
       size="auto"
       *ngIf="compCollars && (weightUnitService.userUnit | async) !== 'lb'">
       <ion-badge
         [color]="loaderService.getKGBadgeColor(2.5)"
-        style="padding-top: 5px; padding-bottom: 5px;"
+        id="collar"
       >
         C
       </ion-badge>
     </ion-col>
   </ion-row>
-  <ion-note class="ion-justify-content-center" *ngIf="!tWeight">Input weight to load bar.</ion-note>
+  <ion-row class="ion-margin-top ion-justify-content-center">
+    <ion-note *ngIf="!tWeight">Input weight to load bar.</ion-note>
+  </ion-row>
 </ion-grid>
 

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large" color="medium">Edit meet</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="dismissModal()">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="meet">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ meet.name }}</ion-card-title>
+    </ion-card-header>
+    <form [formGroup]="editMeet">
+      <ion-card-content>
+        <ion-list [inset]="true">
+          <ion-item>
+            <ion-label position="fixed">date *</ion-label>
+            <ion-datetime
+              displayFormat="MMM DD, YYYY (DDD)"
+              [min]="today"
+              max="2099"
+              formControlName="date"
+            >
+            </ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">weigh in</ion-label>
+            <ion-datetime
+              displayFormat="h:mm a"
+              minuteValues="0, 15, 30, 45"
+              formControlName="weighIn"
+            >
+            </ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">location</ion-label>
+            <ion-input type="string" formControlName="location"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="fixed">notes</ion-label>
+            <ion-textarea rows="3" formControlName="notes" placeholder="personal notes, goals etc."></ion-textarea>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </form>
+  </ion-card>
+</ion-content>

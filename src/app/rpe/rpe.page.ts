@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RPEPct, RPEPCTTABLE } from '../numeric-tables/RPE-pct';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 @Component({
   selector: 'app-rpe',
@@ -41,26 +41,12 @@ export class RpePage implements OnInit {
 
   onCalcERM(form: NgForm): void {
     if (form.value.haveWeight && form.value.haveReps && form.value.haveRPE) {
-      if (
-        form.value.haveReps >= 1 &&
-        form.value.haveReps <= 15 &&
-        form.value.haveRPE <= 10 &&
-        ((form.value.haveReps <= 10 && form.value.haveRPE >= 5) ||
-          (form.value.haveReps === 11 && form.value.haveRPE >= 6) ||
-          (form.value.haveReps === 12 && form.value.haveRPE >= 7) ||
-          (form.value.haveReps === 13 && form.value.haveRPE >= 8) ||
-          (form.value.haveReps === 14 && form.value.haveRPE >= 9) ||
-          (form.value.haveReps === 15 && form.value.haveRPE === 10))
-      ) {
-        this.e1rm = this.calcMax(
-          form.value.haveWeight,
-          form.value.haveReps,
-          form.value.haveRPE
-        );
-        if (!this.e1rm) {
-          this.e1rm = 'invalid';
-        }
-      } else {
+      this.e1rm = this.calcMax(
+        form.value.haveWeight,
+        form.value.haveReps,
+        form.value.haveRPE
+      );
+      if (!this.e1rm) {
         this.e1rm = 'invalid';
       }
     } else {

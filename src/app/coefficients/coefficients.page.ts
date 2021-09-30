@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { PopoverController } from '@ionic/angular';
+import { GenderService } from '../settings/settings-storage/gender.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 import { CoeffService } from './coefficients.service';
+import { PopoverComponent } from './popover/popover.component';
 
 @Component({
   selector: 'app-coefficients',
@@ -16,14 +19,15 @@ export class CoefficientsPage implements OnInit, OnDestroy {
 
   pointsSelected = 'IPF GL';
   segmentSelected = 'total';
-  bluesSelected = false;
   userGender: string;
   userBw: number;
   userTotal: number;
   userSq: number;
   userBp: number;
   userDl: number;
-  userPoints: any;
+  userPoints: number | string;
+  result = 'points';
+  tempResult = 'points';
 
   goalBlue = 'full';
   goalTotal: number;
@@ -33,19 +37,19 @@ export class CoefficientsPage implements OnInit, OnDestroy {
 
   constructor(
     public weightUnitService: WeightUnitService,
-    private coeffService: CoeffService
+    private coeffService: CoeffService,
+    private popoverController: PopoverController,
+    private genderService: GenderService
   ) { }
 
   ngOnInit() {
-    this.coeffService.checkGender().then(
-      () => {
-        if (this.coeffService.gender) {
-        this.userGender = this.coeffService.gender;
-        }
-      }
-    );
+    this.genderService.userGender.subscribe(gender => this.userGender = gender);
     this.weightUnitService.userUnit.subscribe(() => {
-      this.calcPoints(this.coeffForm);
+      if (this.segmentSelected === 'points') {
+        this.calcPoints(this.coeffForm);
+      } else {
+        this.calcTot(this.coeffForm);
+      }
       this.calcGoal(this.coeffForm);
       this.calcDelta(this.coeffForm);
     });
@@ -53,12 +57,14 @@ export class CoefficientsPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.weightUnitService.userUnit.unsubscribe();
+    this.genderService.userGender.unsubscribe();
   }
 
   onChangeGender(form: NgForm): void {
     this.coeffService.gender = this.userGender;
     this.calcPoints(form);
-    this.coeffService.setGender(this.userGender);
+    this.calcTot(form);
+    this.genderService.setGender(this.userGender);
   }
 
   segmentChanged(event: any): void {
@@ -68,6 +74,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     } else {
       this.coeffService.benchOnly = false;
     }
+    this.result = (this.segmentSelected!=='total') ? 'points' : this.tempResult;
   }
 
   checkSegment(form: NgForm): void {
@@ -86,16 +93,13 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     }
   }
 
-  calcPoints(form: NgForm): void {
-    this.checkSegment(form);
-    this.bluesSelected = (this.pointsSelected !== 'Blues') ? false : true;
-    this.userPoints = (this.pointsSelected !== 'Blues') ? null : 'None';
-
-    if (this.userGender) {
-      if (form.value.weight && this.userTotal) {
-        this.onSwitchPoints(form, this.pointsSelected, this.userTotal);
-      } else if (this.segmentSelected === 'onlyBP' && form.value.bp){
-        this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
+  calcResult(form: NgForm): void {
+    this.result = (this.pointsSelected === 'Blues') ? 'points' : this.result;
+    if (form.dirty) {
+      if (this.result === 'points') {
+        this.calcPoints(form);
+      } else {
+        this.calcTot(form);
       }
     }
   }
@@ -103,26 +107,42 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   onSwitchPoints(form: NgForm, pointSelected: string, total: number): void {
     switch (pointSelected) {
       case 'IPF GL':
-        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcGL(form, total);
         break;
       case 'IPF':
-        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcIPF(form, total);
         break;
       case 'DOTS':
-        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcDOTS(form, total);
         break;
       case 'Wilks':
-        this.bluesSelected = false;
         this.userPoints = this.coeffService.calcWilks(form, total);
         break;
       case 'Blues':
-        this.bluesSelected = true;
         this.userPoints = this.coeffService.calcBlues(form, total);
         break;
     }
+    if (typeof this.userPoints === 'number') {
+      this.userPoints = Math.round(this.userPoints * 100) / 100;
+    }
+  }
+
+  onSwitchTot(form: NgForm, pointSelected: string, points: number): void {
+    switch (pointSelected) {
+      case 'IPF GL':
+        this.userTotal = this.coeffService.calcGLTot(form, points);
+        break;
+      case 'IPF':
+        this.userTotal = this.coeffService.calcIPFTot(form, points);
+        break;
+      case 'DOTS':
+        this.userTotal = this.coeffService.calcDOTSTot(form, points);
+        break;
+      case 'Wilks':
+        this.userTotal = this.coeffService.calcWilksTot(form, points);
+        break;
+    }
+    this.userTotal = Math.round(this.userTotal * 100) / 100;
   }
 
   calcGoal(form: NgForm): void {
@@ -143,6 +163,43 @@ export class CoefficientsPage implements OnInit, OnDestroy {
         this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
         this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
       }
+    }
+  }
+
+  onSwitch(): void {
+    if (this.segmentSelected === 'total') {
+      this.result = (this.result === 'points') ? 'total' : 'points';
+    } else {
+      this.result = 'points';
+    }
+    this.tempResult = this.result;
+  }
+
+  async presentPopover(ev: any): Promise<void> {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
+  }
+
+  private calcPoints(form: NgForm): void {
+    this.checkSegment(form);
+    this.userPoints = (this.pointsSelected !== 'Blues') ? null : null;
+
+    if (this.userGender) {
+      if (form.value.weight && form.value.total) {
+        this.onSwitchPoints(form, this.pointsSelected, form.value.total);
+      } else if (this.segmentSelected === 'onlyBP' && form.value.bp){
+        this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
+      }
+    }
+  }
+
+  private calcTot(form: NgForm): void {
+    if (this.userGender && form.value.weight && form.value.points) {
+      this.onSwitchTot(form, this.pointsSelected, form.value.points);
     }
   }
 }

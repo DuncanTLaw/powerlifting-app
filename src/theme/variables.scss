@@ -3,6 +3,10 @@
 
 /** Ionic CSS Variables **/
 :root {
+  /** Oxford blue colour specification from https://www.ox.ac.uk/sites/files/oxford/media_wysiwyg/Oxford%20Blue%20LR.pdf **/
+  --oxford-blue: rgb(0, 33, 71);
+  --oxford-blue-contrast: rgb(72, 145, 220);
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -74,6 +78,10 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  ion-list {
+    --ion-item-background: var(--ion-color-light);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -179,58 +187,28 @@
     --ion-color-step-900: #e6e6e6;
     --ion-color-step-950: #f2f2f2;
 
-    --ion-item-background: #000000;
+    --ion-toolbar-background: #000000;
 
-    --ion-card-background: #1c1c1d;
+    --ion-card-background: var(--ion-color-step-100);
+
+    ion-list {
+      --ion-item-background: var(--ion-color-step-150);
+    }
   }
 
   .ios ion-modal {
     --ion-background-color: var(--ion-color-step-100);
-    --ion-toolbar-background: var(--ion-color-step-150);
+    --ion-toolbar-background: var(--ion-color-step-100);
     --ion-toolbar-border-color: var(--ion-color-step-250);
-  }
+    --ion-card-background: var(--ion-color-step-150);
+    --ion-item-background: var(--ion-color-step-100);
 
+    ion-card {
+      --ion-item-background: var(--ion-color-step-150);
+    }
 
-  /*
-   * Material Design Dark Theme
-   * -------------------------------------------
-   */
-
-  .md body {
-    --ion-background-color: #121212;
-    --ion-background-color-rgb: 18,18,18;
-
-    --ion-text-color: #ffffff;
-    --ion-text-color-rgb: 255,255,255;
-
-    --ion-border-color: #222222;
-
-    --ion-color-step-50: #1e1e1e;
-    --ion-color-step-100: #2a2a2a;
-    --ion-color-step-150: #363636;
-    --ion-color-step-200: #414141;
-    --ion-color-step-250: #4d4d4d;
-    --ion-color-step-300: #595959;
-    --ion-color-step-350: #656565;
-    --ion-color-step-400: #717171;
-    --ion-color-step-450: #7d7d7d;
-    --ion-color-step-500: #898989;
-    --ion-color-step-550: #949494;
-    --ion-color-step-600: #a0a0a0;
-    --ion-color-step-650: #acacac;
-    --ion-color-step-700: #b8b8b8;
-    --ion-color-step-750: #c4c4c4;
-    --ion-color-step-800: #d0d0d0;
-    --ion-color-step-850: #dbdbdb;
-    --ion-color-step-900: #e7e7e7;
-    --ion-color-step-950: #f3f3f3;
-
-    --ion-item-background: #1e1e1e;
-
-    --ion-toolbar-background: #1f1f1f;
-
-    --ion-tab-bar-background: #1f1f1f;
-
-    --ion-card-background: #1e1e1e;
+    ion-list {
+      --ion-item-background: var(--ion-color-step-200);
+    }
   }
 }

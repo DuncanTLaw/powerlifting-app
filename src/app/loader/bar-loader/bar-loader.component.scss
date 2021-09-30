@@ -1,0 +1,21 @@
+ion-card-header {
+  padding-bottom: 0;
+}
+
+.barbell {
+  margin: 0 3px 8px 3px;
+}
+
+#plate {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+#collar {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.ion-margin-bottom { /* hard-coded as Inspect says `Inherited from ion.row-ios.hydrated` - padding.scss: 113 */
+  --margin-bottom: 0;
+}

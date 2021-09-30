@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
 import { HelpService } from './help.service';
 
 interface Pages {
@@ -14,6 +16,9 @@ interface Pages {
   styleUrls: ['./help.page.scss'],
 })
 export class HelpPage implements OnInit {
+  @ViewChild('slides', { static: true }) slides: IonSlides;
+  viewEnter = false;
+  showSkip = true;
   pages: Array<Pages> = [
     {
       title: 'RPE',
@@ -31,6 +36,14 @@ export class HelpPage implements OnInit {
         'Input your gender and numbers for the scores of popular coefficients, including IPF GL points, IPF points, Dots and Wilks.'
       ],
       icon: 'calculator'
+    },
+    {
+      title: 'Meets',
+      overview: 'Schedule and track your upcoming competitions.',
+      help: [
+        'Click \'Add a meet\' to add a new meet and fill up any info you want (* denotes REQUIRED fields).'
+      ],
+      icon: 'calendar'
     },
     {
       title: 'Timer',
@@ -51,12 +64,51 @@ export class HelpPage implements OnInit {
         'The second slide can tell you how much weight there is on a bar in competition.'
       ],
       icon: 'barbell-sharp'
+    },
+    {
+      title: 'Menu',
+      overview: 'Swipe right for the side menu.',
+      help: [
+        'The side menu is accessible by swiping right from near the left edge of the screen on any page.',
+        // eslint-disable-next-line max-len
+        'The menu contains a button to the settings page at the top. You can also calculate a total from the sum of your lifts. There is also a kg-to-lb converter.'
+      ],
+      icon: 'menu'
     }
   ];
 
-  constructor(public helpService: HelpService) { }
+  constructor(
+    private router: Router,
+    public helpService: HelpService,
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.helpService.checkWelcomed().then(() => {
+      if (this.helpService.haveWelcomed) {
+        this.routeToStored();
+      }
+    });
   }
 
+  ionViewWillEnter() {
+    this.viewEnter = true;
+  }
+
+  startApp(): void {
+    this.routeToStored().then(
+      () => this.helpService.setWelcomed(true)
+    );
+  }
+
+  onSlideChangeStart(event: any): void {
+    event.target.isEnd().then((isEnd: boolean) => {
+      this.showSkip = !isEnd;
+    });
+  }
+
+  async routeToStored(): Promise<void> {
+    this.helpService.currentRoute.subscribe((storedRoute) => {
+      this.router.navigateByUrl(storedRoute, { replaceUrl: true });
+    });
+  }
 }

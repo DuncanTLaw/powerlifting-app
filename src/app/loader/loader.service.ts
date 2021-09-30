@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 import { Storage } from '@capacitor/storage';
 
 export interface Plates {
@@ -13,7 +13,7 @@ export interface Plate {
 interface FunctionHandler {
   [unit: string]: {
     heights(plate: number): number;
-    colours(plate: number): string;
+    colors(plate: number): string;
   };
 }
 
@@ -24,11 +24,11 @@ export class LoaderService {
   handleUnits: FunctionHandler = {
     kg: {
       heights: (plate: number): number => this.kgHeights(plate),
-      colours: (plate: number): string => this.getKGBadgeColor(plate)
+      colors: (plate: number): string => this.getKGBadgeColor(plate)
     },
     lb: {
       heights: (plate: number): number => this.lbHeights(plate),
-      colours: (plate: number): string => 'medium'
+      colors: (plate: number): string => 'medium'
     },
   };
 
@@ -47,6 +47,8 @@ export class LoaderService {
     const { value } = await Storage.get({ key: 'collars' });
     if (value) {
       return (value === 'comp') ? true : false;
+    } else {
+      return true;
     }
   };
 

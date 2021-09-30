@@ -7,7 +7,7 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size-xs="12" size-md="6">
+      <ion-col  size-md="6">
         <ion-card id="timerCard">
           <ion-progress-bar
             color="danger"
@@ -17,7 +17,7 @@
           <ion-card-content>
             <ion-row class="ion-justify-content-center">
               <ion-text
-                style="font-size: 36pt;"
+                id="timerText"
                 [ngClass]="{blink: !timerRunning}"
               >
                 {{ timeRemaining }}<span *ngIf="timeRemaining">s</span>
@@ -25,7 +25,7 @@
             </ion-row>
             <ion-row
               class="ion-justify-content-evenly"
-              style="margin-bottom: 5px;"
+              id="timerButtonRow"
             >
               <ion-button
                 color="light"
@@ -42,7 +42,7 @@
               {{ rhsButtonText }}
               </ion-button>
             </ion-row>
-            <ion-list lines="none">
+            <ion-list [inset]="true">
               <ion-item>
                 <ion-label position="fixed">Rest:</ion-label>
                 <ion-input
@@ -52,19 +52,21 @@
                 ></ion-input>
               </ion-item>
             </ion-list>
-            <ion-list lines="none">
-              <ion-item>
-                <ion-label>Keep screen awake</ion-label>
+            <ion-row class="ion-align-items-center">
+              <ion-col>
+                Keep screen awake
+              </ion-col>
+              <ion-col size="auto">
                 <ion-toggle [(ngModel)]="awakeService.allowAwake" (ionChange)="onToggleAwake()"></ion-toggle>
-              </ion-item>
-            </ion-list>
+              </ion-col>
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size-xs="12" size-md="6">
+      <ion-col  size-md="6">
         <ion-card id="setsCard">
           <ion-card-content>
-            <ion-list lines="none">
+            <ion-list [inset]="true">
               <ion-item>
                 <ion-label position="fixed">Protocol:</ion-label>
                 <ion-input
@@ -86,11 +88,11 @@
                 <ion-icon name="remove"></ion-icon>
               </ion-fab-button>
               <ion-text
-              style="font-size: xx-large;"
-              *ngIf="setsSelected"
-            >
-              {{ setsCompleted }} / {{ setsSelected }}
-            </ion-text>
+                id="setsText"
+                *ngIf="setsSelected"
+              >
+                {{ setsCompleted }} / {{ setsSelected }}
+              </ion-text>
               <ion-fab-button
                 (click)="onAddSet()"
                 size="small"

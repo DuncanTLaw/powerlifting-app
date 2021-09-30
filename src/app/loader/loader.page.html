@@ -5,13 +5,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides pager="true">
-    <ion-slide style="padding-bottom: 32px;">
+  <ion-slides pager="true" [options]="{ slidesPerView: slides }">
+    <ion-slide>
       <ion-content>
         <app-bar-loader></app-bar-loader>
       </ion-content>
     </ion-slide>
-    <ion-slide style="padding-bottom: 32px;">
+    <ion-slide>
       <ion-content>
         <app-bar-loaded></app-bar-loaded>
       </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { ToastController } from '@ionic/angular';
-import { WeightUnitService } from '../settings/weight-unit.service';
+import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 const LB_IN_KG = 2.2046226218488;
 
@@ -14,7 +14,11 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
   squatNum: number;
   benchNum: number;
   deadliftNum: number;
-  totalNum = 0;
+  totalNum: number;
+
+  numInput: number;
+  pctInput: number;
+  pctRes: number;
 
   conversionNum: number;
   conversionUnit: string;
@@ -46,20 +50,24 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
     const sq = (!this.squatNum) ? 0 : this.squatNum;
     const bp = (!this.benchNum) ? 0 : this.benchNum;
     const dl = (!this.deadliftNum) ? 0 : this.deadliftNum;
-    this.totalNum = sq + bp + dl;
+    this.totalNum = +(sq + bp + dl).toFixed(2);
   }
 
-  writeToClipboard = async (): Promise<void> => {
+  calcPct(): void {
+    this.pctRes = this.numInput * (this.pctInput / 100);
+  }
+
+  writeToClipboard = async (result: number): Promise<void> => {
     await Clipboard.write({
     // eslint-disable-next-line id-blacklist
-      string: this.totalNum.toString()
+      string: result.toString()
     });
-    this.presentSetsToast();
+    this.presentToast();
   };
 
-  async presentSetsToast(): Promise<void> {
+  async presentToast(): Promise<void> {
     const toast = await this.toastController.create({
-      message: `Calculated total copied to clipboard.`,
+      message: `Calculated number copied to clipboard.`,
       cssClass: 'copy-toast-class',
       duration: 2000,
       color: 'dark'
@@ -80,9 +88,9 @@ export class UtilitiesComponent implements OnInit, OnDestroy {
 
   convertNumber(): void {
     if (this.conversionUnit === 'lb') {
-      this.convertedNum = this.conversionNum / LB_IN_KG;
+      this.convertedNum = +(this.conversionNum / LB_IN_KG).toFixed(2);
     } else {
-      this.convertedNum = this.conversionNum * LB_IN_KG;
+      this.convertedNum = +(this.conversionNum * LB_IN_KG).toFixed(2);
     }
   }
 }

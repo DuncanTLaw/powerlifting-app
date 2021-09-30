@@ -1,0 +1,10 @@
+<ion-tabs>
+  <ion-tab-bar>
+    <ng-container *ngFor="let page of pages | keyvalue: returnZero">
+      <ion-tab-button [tab]="page.key" [style.--color-selected]="page.value.color">
+        <ion-icon [name]="page.value.icon"></ion-icon>
+        <ion-label>{{ page.value.label }}</ion-label>
+      </ion-tab-button>
+    </ng-container>
+  </ion-tab-bar>
+</ion-tabs>

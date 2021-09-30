@@ -4,22 +4,35 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [class.ouplc-theme]="pointsSelected === 'Blues'">
   <ion-grid>
     <ion-row>
-        <ion-col size-xs="12" [attr.size-md]="pointsSelected!=='Blues'?12:6">
+        <ion-col  [attr.size-md]="pointsSelected!=='Blues' ? 12 : 6">
           <ion-card>
             <form #coeff="ngForm">
               <ion-card-header>
                 <ion-card-title *ngIf="pointsSelected!=='Blues'">{{ pointsSelected }}</ion-card-title>
-                <ion-card-title *ngIf="pointsSelected==='Blues'">Oxford {{ pointsSelected }}</ion-card-title>
+                <ion-card-title *ngIf="pointsSelected==='Blues'">
+                  <ion-row class="ion-align-items-center">
+                    <ion-col class="ion-no-padding">
+                      Oxford {{ pointsSelected }}
+                    </ion-col>
+                    <ion-col class="ion-no-padding" size="auto">
+                      <ion-buttons>
+                        <ion-button (click)="presentPopover($event)">
+                          <ion-icon name="help-circle"></ion-icon>
+                        </ion-button>
+                      </ion-buttons>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-label position="fixed">Gender</ion-label>
                 <ion-segment
                   [(ngModel)]="userGender"
                   [ngModelOptions]="{standalone: true}"
-                  (ionChange)="onChangeGender(coeff); calcPoints(coeff); calcGoal(coeff)"
+                  (ionChange)="onChangeGender(coeff); calcResult(coeff)"
                 >
                   <ion-segment-button value="male">
                     <ion-label>Male</ion-label>
@@ -33,7 +46,7 @@
                 <ion-select
                   [(ngModel)]="pointsSelected"
                   [ngModelOptions]="{standalone: true}"
-                  (ngModelChange)="calcPoints(coeff)"
+                  (ngModelChange)="calcResult(coeff)"
                   interface="popover"
                 >
                   <ion-select-option value="IPF GL">IPF GL</ion-select-option>
@@ -55,26 +68,35 @@
                   </ion-segment-button>
                 </ion-segment>
                 <br/>
-                <ion-list>
+                <ion-list [inset]="true">
                   <ion-item>
                     <ion-label position="fixed">bodyweight</ion-label>
                     <ion-input
                       type="number"
                       [ngModel]="userBw"
                       name="weight"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
-                  <ion-item [hidden]="segmentSelected!=='total'">
+                  <ion-item [hidden]="segmentSelected!=='total' || result==='total'">
                     <ion-label position="fixed">total</ion-label>
                     <ion-input
                       type="number"
                       [(ngModel)]="userTotal"
                       name="total"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
+                  </ion-item>
+                  <ion-item *ngIf="pointsSelected!=='Blues'" [hidden]="result==='points'">
+                    <ion-label position="fixed">points</ion-label>
+                    <ion-input
+                      type="number"
+                      [(ngModel)]="userPoints"
+                      name="points"
+                      (ngModelChange)="calcResult(coeff)"
+                    ></ion-input>
                   </ion-item>
                   <ion-item [hidden]="segmentSelected!=='threeLifts'">
                     <ion-label position="fixed">squat</ion-label>
@@ -82,7 +104,7 @@
                       type="number"
                       [ngModel]="userSq"
                       name="sq"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -92,7 +114,7 @@
                       type="number"
                       [ngModel]="userBp"
                       name="bp"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -102,7 +124,7 @@
                       type="number"
                       name="dl"
                       [ngModel]="userDl"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -112,7 +134,7 @@
                       type="number"
                       [ngModel]="userBp"
                       name="bp"
-                      (ngModelChange)="calcPoints(coeff)"
+                      (ngModelChange)="calcResult(coeff)"
                     ></ion-input>
                     <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                   </ion-item>
@@ -121,15 +143,32 @@
                   = {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }} total
                 </ion-row>
                 <br/>
-                <ion-row id="result" *ngIf="!bluesSelected else bluesBlock">
-                  <ion-text class="ion-padding-end" color="success">
-                    {{ (userPoints | number : '1.2-2') || '0.00' }}
-                  </ion-text> {{ pointsSelected }} points
+                <ion-row class="ion-align-items-center" *ngIf="pointsSelected!=='Blues' else bluesBlock">
+                  <ion-col id="result" *ngIf="result==='points'">
+                    <ion-text class="ion-padding-end" color="success">
+                      {{ (userPoints | number : '1.2-2') || '0.00' }}
+                    </ion-text> {{ pointsSelected }} points
+                  </ion-col>
+                  <ion-col id="result" *ngIf="result==='total'">
+                    <ion-text color="success">
+                      {{ (userTotal | number : '1.2-2') || '0.00' }}{{ weightUnitService.userUnit | async }}
+                    </ion-text> total
+                  </ion-col>
+                  <ion-col
+                    class="ion-text-end ion-no-padding"
+                    size="auto"
+                    [hidden]="segmentSelected!=='total'">
+                    <ion-buttons>
+                      <ion-button (click)="onSwitch()">
+                        <ion-icon name="swap-vertical"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                  </ion-col>
                 </ion-row>
                 <ng-template #bluesBlock>
                   <ion-row id="result">
                     <ion-text class="ion-padding-end" id="blues">
-                      {{ userPoints }}
+                      {{ userPoints || 'None' }}
                     </ion-text> achieved
                   </ion-row>
                 </ng-template>
@@ -138,7 +177,7 @@
           </ion-card>
         </ion-col>
 
-        <ion-col size-xs="12" size-md="6" *ngIf="pointsSelected==='Blues'">
+        <ion-col size-md="6" *ngIf="pointsSelected==='Blues'">
           <ion-card>
             <form #coeff="ngForm">
               <ion-card-header>
@@ -148,7 +187,7 @@
                 </ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
-                <ion-list lines="none">
+                <ion-list [inset]="true">
                   <ion-item>
                     <ion-label position="fixed">bodyweight</ion-label>
                     <ion-input
@@ -191,7 +230,7 @@
                   </ion-col>
                 </ion-row>
                 <div [hidden]="!calcDiff">
-                  <ion-list lines="none">
+                  <ion-list [inset]="true">
                     <ion-item>
                       <ion-label position="fixed">total</ion-label>
                       <ion-input

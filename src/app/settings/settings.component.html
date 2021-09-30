@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title size="large" color="medium">Settings</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list [inset]="true">
+    <ion-item>
+      <ion-label position="fixed">Unit</ion-label>
+      <ion-segment
+        [ngModel]="weightUnitService.userUnit | async"
+        (ionChange)="weightUnitService.setUnit($event)"
+      >
+        <ion-segment-button value="kg">
+          <ion-label>kilogram</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="lb">
+          <ion-label>pound</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">Gender</ion-label>
+        <ion-segment
+          [(ngModel)]="userGender"
+          (ionChange)="onChangeGender()"
+        >
+          <ion-segment-button value="male">
+            <ion-label>Male</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="female">
+            <ion-label>Female</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">federation</ion-label>
+      <ion-select
+        slot="end"
+        [(ngModel)]="userFed"
+        (ngModelChange)="onChangeFed()"
+        interface="popover"
+      >
+        <ion-select-option *ngFor="let fed of fedList" [value]="fed">{{ fed }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">weight cls</ion-label>
+      <ion-select
+        slot="end"
+        [(ngModel)]="userWC"
+        (ngModelChange)="onChangeWC()"
+        interface="popover"
+      >
+        <ion-select-option *ngFor="let wc of wcList" [value]="wc">{{ wc }}kg</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer class="ion-padding">
+  <details>
+    <summary><ion-note>About the developer</ion-note></summary>
+    <p class="ion-text-justify">
+      Duncan Law is currently a third-year undergraduate studying Engineering Science
+      in the University of Oxford. He competes in
+      <a href="https://www.britishpowerlifting.org/">British Powerlifting</a>
+      (under the <a href="https://www.powerlifting.sport/">IPF</a>)
+      as a Junior lifter in the 83kg weight class.
+    </p>
+      <ion-list class="link-list" lines="none">
+          <ion-item *ngFor="let link of links | keyvalue: returnZero">
+            <ion-button fill="none" size="clear" [href]="link.value.link">
+              <ion-icon class="ion-margin-end" [name]="link.value.icon"></ion-icon>
+              {{ link.value.name }}
+            </ion-button>
+          </ion-item>
+      </ion-list>
+  </details>
+  <br/>
+  <ion-note>
+    Have an issue, or want to suggest a feature? Send us an email
+    <a href="mailto:lawdtk@gmail.com">here.</a>
+  </ion-note>
+  <ion-row class="ion-margin-top" id="version">
+    <ion-col>
+      <ion-note>version: {{ version }}</ion-note>
+    </ion-col>
+    <ion-col size="auto">
+      <ion-note>build: {{ build }}</ion-note>
+    </ion-col>
+  </ion-row>
+</ion-footer>
