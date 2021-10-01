@@ -4,7 +4,6 @@ import { MenuController, ModalController } from '@ionic/angular';
 import { HelpService } from '../help/help.service';
 import { WeightUnitService } from './settings-storage/weight-unit.service';
 import { FEDERATION } from '../meets/services/federation';
-import { CoeffService } from '../coefficients/coefficients.service';
 import { FederationService } from './settings-storage/federation.service';
 import { GenderService } from './settings-storage/gender.service';
 
