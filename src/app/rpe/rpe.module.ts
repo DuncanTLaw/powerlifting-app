@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { RpePageRoutingModule } from './rpe-routing.module';
 
 import { RpePage } from './rpe.page';
+import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RpePageRoutingModule
+    RpePageRoutingModule,
+    JoyrideModule.forChild()
   ],
   declarations: [RpePage]
 })

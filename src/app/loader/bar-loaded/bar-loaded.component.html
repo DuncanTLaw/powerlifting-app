@@ -1,7 +1,12 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-card>
+      <ion-card
+        joyrideStep="loaded1"
+        text="You can toggle the weight of the bar, the collars and the number of available plates."
+        (next)="openMenu(); goToSlide()"
+        (prev)="goToSlide()"
+      >
         <ion-card-header>
           <ion-card-title>Bar Loaded: {{ barLoaded }}kg</ion-card-title>
         </ion-card-header>

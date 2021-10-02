@@ -10,6 +10,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { UtilitiesComponent } from './utilities/utilities.component';
+import { JoyrideModule } from 'ngx-joyride';
 import { SettingsComponent } from './settings/settings.component';
 import { NotesComponent } from './notes/notes.component';
 
@@ -28,7 +29,8 @@ import { NotesComponent } from './notes/notes.component';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    FormsModule
+    FormsModule,
+    JoyrideModule.forRoot()
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

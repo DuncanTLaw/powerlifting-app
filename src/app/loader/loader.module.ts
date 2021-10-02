@@ -9,13 +9,15 @@ import { LoaderPageRoutingModule } from './loader-routing.module';
 import { LoaderPage } from './loader.page';
 import { BarLoadedComponent } from './bar-loaded/bar-loaded.component';
 import { BarLoaderComponent } from './bar-loader/bar-loader.component';
+import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LoaderPageRoutingModule
+    LoaderPageRoutingModule,
+    JoyrideModule.forChild()
   ],
   declarations: [LoaderPage, BarLoadedComponent, BarLoaderComponent]
 })

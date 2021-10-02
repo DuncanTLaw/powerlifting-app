@@ -8,6 +8,7 @@ import { MeetsPageRoutingModule } from './meets-routing.module';
 
 import { MeetsPage } from './meets.page';
 import { MeetEditComponent } from './meet-edit/meet-edit.component';
+import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { MeetEditComponent } from './meet-edit/meet-edit.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    MeetsPageRoutingModule
+    MeetsPageRoutingModule,
+    JoyrideModule.forChild()
   ],
   declarations: [MeetsPage, MeetEditComponent]
 })

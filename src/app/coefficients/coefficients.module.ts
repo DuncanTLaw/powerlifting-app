@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CoefficientsPageRoutingModule } from './coefficients-routing.module';
 
 import { CoefficientsPage } from './coefficients.page';
+import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CoefficientsPageRoutingModule
+    CoefficientsPageRoutingModule,
+    JoyrideModule.forChild()
   ],
   declarations: [CoefficientsPage]
 })

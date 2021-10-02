@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IonSlide, IonSlides } from '@ionic/angular';
 import { WeightUnitService } from 'src/app/settings/settings-storage/weight-unit.service';
 import { LoaderService, Plates } from '../loader.service';
 
@@ -46,7 +47,8 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
 
   constructor(
     public weightUnitService: WeightUnitService,
-    public loaderService: LoaderService
+    public loaderService: LoaderService,
+    private slides: IonSlides
   ) { }
 
   ngOnInit() {
@@ -110,5 +112,9 @@ export class BarLoaderComponent implements OnInit, OnDestroy {
   onExpandPlates(): void {
     this.showPlates = !this.showPlates;
     this.plateText = (this.showPlates) ? 'Hide plate configuration' : 'Configure available plates';
+  }
+
+  goToSlide(): void {
+    this.slides.slideNext();
   }
 }

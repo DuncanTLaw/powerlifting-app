@@ -79,7 +79,13 @@
       </ion-col>
 
       <ion-col [attr.size-md]="(meets?.length > 0) ? 6 : 12">
-        <ion-card id="addMeetCard" *ngIf="addMeet">
+        <ion-card
+          id="addMeetCard"
+          *ngIf="addMeet"
+          joyrideStep="meets2"
+          text="... and fill up any info you want (* denotes REQUIRED fields)."
+          (next)="addMeet = false"
+        >
           <form [formGroup]="newMeet">
             <ion-card-content>
               <ion-list [inset]="true">
@@ -156,7 +162,14 @@
   </ion-grid>
 </ion-content>
 
-<ion-fab vertical="bottom" horizontal="start" slot="fixed">
+<ion-fab
+  vertical="bottom"
+  horizontal="start"
+  slot="fixed"
+  joyrideStep="meets1"
+  text="Click here to add a new meet..."
+  (next)="addMeet = true"
+>
   <ion-buttons (click)="onClickAddMeet()">
     <ion-button [hidden]="addMeet">
       <ion-icon size="large" name="add-circle"></ion-icon>
