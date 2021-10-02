@@ -23,11 +23,11 @@ export class AppComponent implements OnInit{
   ) { }
 
   async ngOnInit() {
-    const welcomed = await this.welcomedService.checkWelcomed();
-    if (!welcomed) {
-      this.welcomedService.setWelcomed();
-      this.openTutorial();
-    }
+    // const welcomed = await this.welcomedService.checkWelcomed();
+    // if (!welcomed) {
+    //   this.welcomedService.setWelcomed();
+    //   this.openTutorial();
+    // }
   }
 
   openTutorial(): void {
