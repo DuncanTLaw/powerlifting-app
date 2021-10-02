@@ -106,13 +106,13 @@ export class TimerPage implements OnInit {
     const seconds = this.secondsSelected - minutes * 60;
 
     const timeString = ((minutes > 0) ? (minutes + ' minute' + ((minutes > 1) ? 's ' : ' ')) : '')
-      + ((seconds > 0) ? (seconds + ' second' + ((seconds > 1) ? 's' : '')) : '');
+      + ((seconds > 0) ? (seconds + ' second' + ((seconds > 1) ? 's ' : ' ')) : '');
 
     await LocalNotifications.schedule({
       notifications: [
         {
           title: 'Timer',
-          body: `${timeString} completed.`,
+          body: `${timeString}completed.`,
           id: 0,
           schedule: { at: new Date(Date.now() + this.timeRemaining * 1000) }
         }
