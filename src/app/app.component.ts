@@ -71,14 +71,14 @@ export class AppComponent implements OnInit{
       // message: 'You can revisit the tutorial again from the side menu.',
       // buttons: ['Start lifting']
       header: 'A quick tip.',
-      subHeader: 'Go to settings to add your information.',
+      subHeader: 'Go to Settings to add your information.',
       message: `
         This new app update brings a new competition-tracking feature.<br/>
         <br/>
         To make sure your federation and weight class is automaticaly filled in, set them in Settings.<br/>
         <br/>
-        Access Settings by opening the side menu (accessible by swiping right from near the left edge of the screen on any page)
-        then tap 'Settings' on the top.
+        Access Settings by opening the side menu (accessible by swiping right from near the left edge of your screen on any page)
+        then tap 'Settings'.
       `,
       buttons: ['Start lifting']
     });
