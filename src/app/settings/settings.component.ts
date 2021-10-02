@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
 import { WeightUnitService } from './settings-storage/weight-unit.service';
 import { FEDERATION } from '../meets/services/federation';
@@ -44,11 +43,10 @@ export class SettingsComponent implements OnInit {
   fedList: string[] = [];
   feds = FEDERATION;
   wcList: string[] = [];
-  version = '2.0.0';
-  build = '3';
+  version = '2.1.0';
+  build = '4';
 
   constructor(
-    private router: Router,
     private modalController: ModalController,
     public weightUnitService: WeightUnitService,
     private menuController: MenuController,
