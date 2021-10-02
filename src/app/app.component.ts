@@ -4,6 +4,7 @@ import { AlertController, MenuController, ModalController } from '@ionic/angular
 import { JoyrideService } from 'ngx-joyride';
 import { JoyrideOptions } from 'ngx-joyride/lib/models/joyride-options.class';
 import { HelpService } from './help/help.service';
+import { WelcomedService } from './settings/settings-storage/welcomed.service';
 import { SettingsComponent } from './settings/settings.component';
 
 @Component({
@@ -19,15 +20,19 @@ export class AppComponent implements OnInit{
     public modalController: ModalController,
     private menuController: MenuController,
     private readonly joyrideService: JoyrideService,
-    public alertController: AlertController
+    private alertController: AlertController,
+    private welcomedService: WelcomedService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const welcomed = await this.welcomedService.checkWelcomed();
+    if (!welcomed) {
+      this.openTutorial();
+    }
   }
 
   openTutorial(): void {
-    this.helpService.currentRoute.next(this.router.url);
-    this.helpService.setWelcomed(false);
+    this.welcomedService.setWelcomed();
     this.menuController.close();
     this.router.navigateByUrl('/app/tabs/rpe');
     const options: JoyrideOptions = {
