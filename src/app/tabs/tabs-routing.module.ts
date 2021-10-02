@@ -17,16 +17,16 @@ const routes: Routes = [
         loadChildren: () => import('../coefficients/coefficients.module').then( m => m.CoefficientsPageModule)
       },
       {
+        path: 'meets',
+        loadChildren: () => import('../meets/meets.module').then( m => m.MeetsPageModule)
+      },
+      {
         path: 'timer',
         loadChildren: () => import('../timer/timer.module').then( m => m.TimerPageModule)
       },
       {
         path: 'loader',
         loadChildren: () => import('../loader/loader.module').then( m => m.LoaderPageModule)
-      },
-      {
-        path: 'meets',
-        loadChildren: () => import('../meets/meets.module').then( m => m.MeetsPageModule)
       },
       {
         path: '',
