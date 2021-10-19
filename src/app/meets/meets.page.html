@@ -90,7 +90,7 @@
             <ion-card-content>
               <ion-list [inset]="true">
                 <ion-item>
-                  <ion-label position="fixed">meet *</ion-label>
+                  <ion-label position="fixed">meet <ion-text color="danger">*</ion-text></ion-label>
                     <ion-input type="string" formControlName="name" placeholder="name"></ion-input>
                 </ion-item>
                 <ion-item>
@@ -119,7 +119,7 @@
                   <ion-checkbox slot="end" formControlName="bp" color="dark"></ion-checkbox>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="fixed">date *</ion-label>
+                  <ion-label position="fixed">date <ion-text color="danger">*</ion-text></ion-label>
                   <ion-datetime
                     displayFormat="MMM DD, YYYY (DDD)"
                     [min]="today"
