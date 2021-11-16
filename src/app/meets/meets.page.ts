@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CoeffService } from '../coefficients/coefficients.service';
 import { FederationService } from '../settings/settings-storage/federation.service';
 import { DateService } from './services/date.service';
 import { FEDERATION } from './services/federation';

@@ -163,6 +163,7 @@
 </ion-content>
 
 <ion-fab
+  (click)="onClickAddMeet()"
   vertical="bottom"
   horizontal="start"
   slot="fixed"
@@ -170,21 +171,16 @@
   text="Click here to add a new meet..."
   (next)="addMeet = true"
 >
-  <ion-buttons (click)="onClickAddMeet()">
-    <ion-button [hidden]="addMeet">
-      <ion-icon size="large" name="add-circle"></ion-icon>
-    </ion-button>
-    <ion-button [hidden]="!addMeet">
-      <ion-icon size="large" name="close-circle"></ion-icon>
-    </ion-button>
-    <ion-label slot="end"><ion-note>Add a meet</ion-note></ion-label>
-  </ion-buttons>
+    <ion-fab-button size="small">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list></ion-fab-list>
 </ion-fab>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-button size="small" expand="block" (click)="onEdit()" *ngIf="!editMeets && meets?.length > 0">
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="meets?.length > 0">
+  <ion-button size="small" expand="block" (click)="onEdit()" *ngIf="!editMeets">
     Edit
   </ion-button>
-  <ion-button size="small" expand="block" (click)="onCloseEdit()" *ngIf="editMeets && meets?.length > 0">
+  <ion-button size="small" expand="block" (click)="onCloseEdit()" *ngIf="editMeets">
     Done
   </ion-button>
 </ion-fab>

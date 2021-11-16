@@ -43,8 +43,8 @@ export class SettingsComponent implements OnInit {
   fedList: string[] = [];
   feds = FEDERATION;
   wcList: string[] = [];
-  version = '2.1.0';
-  build = '4';
+  version = '2.2.0';
+  build = '5';
 
   constructor(
     private modalController: ModalController,
