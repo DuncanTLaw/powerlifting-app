@@ -148,7 +148,7 @@
               </ion-list>
               <ion-row>
                 <ion-col>
-                  <ion-button (click)="onClickAddMeet()" color="light" expand="block">Cancel</ion-button>
+                  <ion-button (click)="onClickCancel()" color="light" expand="block">Cancel</ion-button>
                 </ion-col>
                 <ion-col>
                   <ion-button (click)="onSubmit()" expand="block" [disabled]="!newMeet.valid">Save</ion-button>
@@ -170,11 +170,12 @@
   joyrideStep="meets1"
   text="Click here to add a new meet..."
   (next)="addMeet = true"
+  #fab
 >
-    <ion-fab-button size="small">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list></ion-fab-list>
+  <ion-fab-button size="small" class="ion-no-margin">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list></ion-fab-list>
 </ion-fab>
 <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="meets?.length > 0">
   <ion-button size="small" expand="block" (click)="onEdit()" *ngIf="!editMeets">

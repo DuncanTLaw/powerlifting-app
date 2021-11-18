@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FederationService } from '../settings/settings-storage/federation.service';
 import { DateService } from './services/date.service';
 import { FEDERATION } from './services/federation';
 import { MeetsService, StoredMeetObj } from './services/meets.service';
-import { ModalController } from '@ionic/angular';
+import { IonFab, ModalController } from '@ionic/angular';
 import { MeetEditComponent } from './meet-edit/meet-edit.component';
 import { MeetFormGroupTemplate } from './services/meet-form.model';
 import { GenderService } from '../settings/settings-storage/gender.service';
@@ -15,6 +15,8 @@ import { GenderService } from '../settings/settings-storage/gender.service';
   styleUrls: ['./meets.page.scss'],
 })
 export class MeetsPage implements OnInit, OnDestroy {
+  @ViewChild('fab') fab: IonFab;
+
   addMeet = false;
   editMeets = false;
   newMeet = new FormGroup(MeetFormGroupTemplate.template);
@@ -85,12 +87,18 @@ export class MeetsPage implements OnInit, OnDestroy {
 
   onClickAddMeet = (): boolean => this.addMeet = !this.addMeet;
 
+  onClickCancel(): void {
+    this.onClickAddMeet();
+    this.fab.close();
+  }
+
   onSubmit(): void {
     this.addMeet = false;
     this.meetsService.setMeet(this.newMeet);
     this.updateView();
     this.newMeet.reset();
     this.patchFed();
+    this.fab.close();
   }
 
   onEdit = (): boolean => this.editMeets = !this.editMeets;
