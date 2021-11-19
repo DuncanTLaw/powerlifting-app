@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [class.ouplc-theme]="pointsSelected === 'Blues'">
+<ion-content>
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -14,23 +14,6 @@
         text="Input your gender and numbers for the scores of popular coefficients, including IPF GL points, IPF points, Dots and Wilks."
         >
           <form #coeff="ngForm">
-            <!-- <ion-card-header>
-              <ion-card-title *ngIf="pointsSelected!=='Blues'">{{ pointsSelected }}</ion-card-title>
-              <ion-card-title *ngIf="pointsSelected==='Blues'">
-                <ion-row class="ion-align-items-center">
-                  <ion-col class="ion-no-padding">
-                    Oxford {{ pointsSelected }}
-                  </ion-col>
-                  <ion-col class="ion-no-padding" size="auto">
-                    <ion-buttons>
-                      <ion-button (click)="presentPopover($event)">
-                        <ion-icon name="help-circle"></ion-icon>
-                      </ion-button>
-                    </ion-buttons>
-                  </ion-col>
-                </ion-row>
-              </ion-card-title>
-            </ion-card-header> -->
             <ion-card-content>
               <ion-label position="fixed">Gender</ion-label>
               <ion-segment
@@ -46,20 +29,6 @@
                 </ion-segment-button>
               </ion-segment>
               <br/>
-              <!-- <ion-label position="fixed">Point system</ion-label>
-              <ion-select
-                [(ngModel)]="pointsSelected"
-                [ngModelOptions]="{standalone: true}"
-                (ngModelChange)="calcResult(coeff)"
-                interface="popover"
-              >
-                <ion-select-option value="IPF GL">IPF GL</ion-select-option>
-                <ion-select-option value="IPF">IPF</ion-select-option>
-                <ion-select-option value="DOTS">DOTS</ion-select-option>
-                <ion-select-option value="Wilks">Wilks</ion-select-option>
-                <ion-select-option value="Blues">Oxford Blues</ion-select-option>
-              </ion-select>
-              <br/> -->
               <ion-segment (ionChange)="segmentChanged($event)" [value]="segmentSelected">
                 <ion-segment-button value="total">
                   <ion-label>Total</ion-label>
@@ -93,7 +62,7 @@
                   ></ion-input>
                   <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                 </ion-item>
-                <ion-item *ngIf="pointsSelected!=='Blues'" [hidden]="result==='points'">
+                <ion-item [hidden]="result==='points'">
                   <ion-label position="fixed">points</ion-label>
                   <ion-input
                     type="number"
@@ -146,130 +115,57 @@
               <ion-row [hidden]="segmentSelected!=='threeLifts'" class="ion-justify-content-end ion-margin-top">
                 = {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }} total
               </ion-row>
-              <br/>
-              <ion-row class="ion-align-items-center" *ngIf="pointsSelected!=='Blues' else bluesBlock">
-                <ion-col id="result" *ngIf="result==='points'">
-                  <ion-text class="ion-padding-end" color="success">
-                    {{ (userPoints | number : '1.2-2') || '0.00' }}
-                  </ion-text> {{ pointsSelected }} points
-                </ion-col>
-                <ion-col id="result" *ngIf="result==='total'">
-                  <ion-text color="success">
-                    {{ (userTotal | number : '1.2-2') || '0.00' }}{{ weightUnitService.userUnit | async }}
-                  </ion-text> total
-                </ion-col>
-                <!-- <ion-col
-                  class="ion-text-end ion-no-padding"
-                  size="auto"
-                  [hidden]="segmentSelected!=='total'">
-                  <ion-buttons>
-                    <ion-button (click)="onSwitch()">
-                      <ion-icon name="swap-vertical"></ion-icon>
-                    </ion-button>
-                  </ion-buttons>
-                </ion-col> -->
+              <ion-row class="ion-padding-top">
+                <h1><b>Points</b></h1>
               </ion-row>
-              <ng-template #bluesBlock>
-                <ion-row id="result">
-                  <ion-text class="ion-padding-end" id="blues">
-                    {{ userPoints || 'None' }}
-                  </ion-text> achieved
-                </ion-row>
-              </ng-template>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-row>
+                    IPF GL
+                  </ion-row>
+                  <ion-row>
+                    <ion-text color="success">
+                      {{ pointList.gl | number : '1.2-2' }}
+                    </ion-text>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-row>
+                    IPF
+                  </ion-row>
+                  <ion-row>
+                    <ion-text color="success">
+                      {{ pointList.ipf | number : '1.2-2' }}
+                    </ion-text>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-margin-top">
+                <ion-col size="6">
+                  <ion-row>
+                    DOTS
+                  </ion-row>
+                  <ion-row>
+                    <ion-text color="success">
+                      {{ pointList.dots | number : '1.2-2' }}
+                    </ion-text>
+                  </ion-row>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-row>
+                    Wilks
+                  </ion-row>
+                  <ion-row>
+                    <ion-text color="success">
+                      {{ pointList.wilks | number : '1.2-2' }}
+                    </ion-text>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
             </ion-card-content>
           </form>
         </ion-card>
       </ion-col>
-<!--
-      <ion-col size-md="6" *ngIf="pointsSelected==='Blues'">
-        <ion-card>
-          <form #coeff="ngForm">
-            <ion-card-header>
-              <ion-card-title id="blues">Blues Goal Toggle</ion-card-title>
-              <ion-card-subtitle>
-                Calculate what you need to total to obtain your goal Blues certification.
-              </ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-list [inset]="true">
-                <ion-item>
-                  <ion-label position="fixed">bodyweight</ion-label>
-                  <ion-input
-                    type="number"
-                    ngModel
-                    name="goalBw"
-                    (ionChange)="calcGoal(coeff)"
-                  ></ion-input>
-                  <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
-                </ion-item>
-              </ion-list>
-              <ion-label position="fixed">Goal</ion-label>
-              <ion-segment
-                [(ngModel)]="goalBlue"
-                name="goalBlue"
-                (ionChange)="calcGoal(coeff); calcDelta(coeff)"
-              >
-                <ion-segment-button value="full">
-                  <ion-label>Full Blue</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="half">
-                  <ion-label>Half Blue</ion-label>
-                </ion-segment-button>
-              </ion-segment>
-              <br/>
-
-              <ion-row class="ion-align-items-center" (click)="onClickCalc()">
-                <ion-col size="auto">
-                  <ion-buttons>
-                    <ion-button [hidden]="calcDiff" id="blues">
-                      <ion-icon size="large" name="add-circle"></ion-icon>
-                    </ion-button>
-                    <ion-button [hidden]="!calcDiff" id="blues">
-                      <ion-icon size="large" name="close-circle"></ion-icon>
-                    </ion-button>
-                  </ion-buttons>
-                </ion-col>
-                <ion-col>
-                  <ion-note>Calculate how far you are away from your goal</ion-note>
-                </ion-col>
-              </ion-row>
-              <div [hidden]="!calcDiff">
-                <ion-list [inset]="true">
-                  <ion-item>
-                    <ion-label position="fixed">total</ion-label>
-                    <ion-input
-                      type="number"
-                      ngModel
-                      name="tTotal"
-                      (ionChange)="calcDelta(coeff)"
-                    ></ion-input>
-                    <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
-                  </ion-item>
-                </ion-list>
-                <ion-row
-                  class="ion-justify-content-end ion-padding-top"
-                  [hidden]="goalBlue!=='half' || !coeff.value.tTotal || !coeff.value.goalBw"
-                >
-                  Half Blue: {{ hBlueDiff }}
-                </ion-row>
-                <ion-row
-                  class="ion-justify-content-end ion-padding-top"
-                  [hidden]="goalBlue!=='full' || !coeff.value.tTotal || !coeff.value.goalBw"
-                >
-                  Full Blue: {{ blueDiff }}
-                </ion-row>
-              </div>
-              <br/>
-              <ion-row id="result">
-                Goal total
-                <ion-text class="ion-padding-start" color="warning">
-                  {{ (goalTotal | number : '1.2-2') || 0 }}{{ weightUnitService.userUnit | async }}
-                </ion-text>
-              </ion-row>
-            </ion-card-content>
-          </form>
-        </ion-card>
-      </ion-col> -->
     </ion-row>
   </ion-grid>
 </ion-content>

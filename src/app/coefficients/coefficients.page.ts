@@ -17,7 +17,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   // https://stackoverflow.com/questions/37093432/angular-2-template-driven-form-access-ngform-in-component
   @ViewChild('coeff', { static: true }) coeffForm: NgForm;
 
-  pointsSelected = 'IPF GL';
+  // pointsSelected = 'IPF GL';
   segmentSelected = 'total';
   userGender: string;
   userBw: number;
@@ -28,6 +28,12 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   userPoints: number | string;
   result = 'points';
   tempResult = 'points';
+  pointList: {[point: string]: number} = {
+    gl: 0,
+    ipf: 0,
+    dots: 0,
+    wilks: 0
+  };
 
   goalBlue = 'full';
   goalTotal: number;
@@ -48,7 +54,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       if (this.segmentSelected === 'points') {
         this.calcPoints(this.coeffForm);
       } else {
-        this.calcTot(this.coeffForm);
+        // this.calcTot(this.coeffForm);
       }
       this.calcGoal(this.coeffForm);
       this.calcDelta(this.coeffForm);
@@ -63,7 +69,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   onChangeGender(form: NgForm): void {
     this.coeffService.gender = this.userGender;
     this.calcPoints(form);
-    this.calcTot(form);
+    // this.calcTot(form);
     this.genderService.setGender(this.userGender);
   }
 
@@ -94,55 +100,13 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   }
 
   calcResult(form: NgForm): void {
-    this.result = (this.pointsSelected === 'Blues') ? 'points' : this.result;
     if (form.dirty) {
       if (this.result === 'points') {
         this.calcPoints(form);
       } else {
-        this.calcTot(form);
+        // this.calcTot(form);
       }
     }
-  }
-
-  onSwitchPoints(form: NgForm, pointSelected: string, total: number): void {
-    switch (pointSelected) {
-      case 'IPF GL':
-        this.userPoints = this.coeffService.calcGL(form, total);
-        break;
-      case 'IPF':
-        this.userPoints = this.coeffService.calcIPF(form, total);
-        break;
-      case 'DOTS':
-        this.userPoints = this.coeffService.calcDOTS(form, total);
-        break;
-      case 'Wilks':
-        this.userPoints = this.coeffService.calcWilks(form, total);
-        break;
-      case 'Blues':
-        this.userPoints = this.coeffService.calcBlues(form, total);
-        break;
-    }
-    if (typeof this.userPoints === 'number') {
-      this.userPoints = Math.round(this.userPoints * 100) / 100;
-    }
-  }
-
-  onSwitchTot(form: NgForm, pointSelected: string, points: number): void {
-    switch (pointSelected) {
-      case 'IPF GL':
-        this.userTotal = this.coeffService.calcGLTot(form, points);
-        break;
-      case 'IPF':
-        this.userTotal = this.coeffService.calcIPFTot(form, points);
-        break;
-      case 'DOTS':
-        this.userTotal = this.coeffService.calcDOTSTot(form, points);
-        break;
-      case 'Wilks':
-        this.userTotal = this.coeffService.calcWilksTot(form, points);
-        break;
-    }
-    this.userTotal = Math.round(this.userTotal * 100) / 100;
   }
 
   calcGoal(form: NgForm): void {
@@ -184,22 +148,34 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     await popover.present();
   }
 
+  private fillPoints(form: NgForm, total: number): void {
+    this.pointList.gl = this.coeffService.calcGL(form, total);
+    this.pointList.ipf = this.coeffService.calcIPF(form, total);
+    this.pointList.dots = this.coeffService.calcDOTS(form, total);
+    this.pointList.wilks = this.coeffService.calcWilks(form, total);
+  }
+
   private calcPoints(form: NgForm): void {
     this.checkSegment(form);
-    this.userPoints = (this.pointsSelected !== 'Blues') ? null : null;
-
     if (this.userGender) {
       if (form.value.weight && form.value.total) {
-        this.onSwitchPoints(form, this.pointsSelected, form.value.total);
+        this.fillPoints(form, form.value.total);
       } else if (this.segmentSelected === 'onlyBP' && form.value.bp){
-        this.onSwitchPoints(form, this.pointsSelected, form.value.bp);
+        this.fillPoints(form, form.value.bp);
+      } else {
+        this.pointList = {
+          gl: 0,
+          ipf: 0,
+          dots: 0,
+          wilks: 0
+        };
       }
     }
   }
 
-  private calcTot(form: NgForm): void {
-    if (this.userGender && form.value.weight && form.value.points) {
-      this.onSwitchTot(form, this.pointsSelected, form.value.points);
-    }
-  }
+  // private calcTot(form: NgForm): void {
+  //   if (this.userGender && form.value.weight && form.value.points) {
+  //     this.onSwitchTot(form, form.value.points);
+  //   }
+  // }
 }

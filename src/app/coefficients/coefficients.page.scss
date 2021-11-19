@@ -2,28 +2,6 @@
   font-size: large;
 }
 
-.ouplc-theme {
-  p {
-    color: white;
-  }
-
-  ion-card, ion-item {
-    --ion-text-color: white;
-    --background: var(--oxford-blue);
-  }
-
-  ion-row {
-    color: white;
-  }
-
-  ion-card {
-    border: 2px solid white;
-  }
-
-  #blues {
-    color: var(--oxford-blue-contrast)
-  }
-
-  --ion-color-step-350: #595959;
-  --ion-color-step-600: #999999;
+ion-text {
+  font-size: 18pt;
 }
