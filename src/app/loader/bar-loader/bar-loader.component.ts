@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IonSlide, IonSlides } from '@ionic/angular';
+import { IonSlides } from '@ionic/angular';
 import { WeightUnitService } from 'src/app/settings/settings-storage/weight-unit.service';
 import { LoaderService, Plates } from '../loader.service';
 
