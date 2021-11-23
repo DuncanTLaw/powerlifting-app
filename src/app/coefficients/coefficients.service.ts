@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@capacitor/storage';
 import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 import { NgForm } from '@angular/forms';
@@ -10,23 +9,12 @@ import { IPFCOEFF } from '../numeric-tables/IPF';
 import { WILKSCOEFF } from '../numeric-tables/wilks';
 import { GenderService } from '../settings/settings-storage/gender.service';
 
-export interface Blues {
-  half: number;
-  full: number;
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class CoeffService {
   gender: string;
   benchOnly = false;
-
-  bluesClass = 'IPF points';
-  bluesConst: Blues = {
-    half: 500,
-    full: 560
-  };
 
   private dotsScale: GenderCoeff = DOTSCOEFF;
 
@@ -232,51 +220,6 @@ export class CoeffService {
     }
     return this.weightUnitService.convertToLb(Math.max(0,
       points * this.wilksPoly(c1, c2, c3, c4, c5, c6, bw) / 500.0
-    ));
-  }
-
-  calcBlues(form: NgForm, total: number): string {
-    if (!this.benchOnly) { // Hard coded for now since Blues Committee does not give Blues for bench-only lifters (?)
-      const ipfPoints: number = this.calcIPF(form, total);
-      if (ipfPoints < this.bluesConst.half) {
-        return null;
-      } else if (ipfPoints >= this.bluesConst.half && ipfPoints < this.bluesConst.full) {
-        return 'Half Blue';
-      } else {
-        return 'Full Blue';
-      }
-    } else{
-      return null;
-    }
-  }
-
-  calcBluesGoal(form: NgForm): number {
-    const goalBw: number = this.weightUnitService.convertToKg(form.value.goalBw);
-
-    let c1: number;
-    let c2: number;
-    let c3: number;
-    let c4: number;
-
-    if (this.gender === 'male') {
-      c1 = this.ipfScale.male.c1;
-      c2 = this.ipfScale.male.c2;
-      c3 = this.ipfScale.male.c3;
-      c4 = this.ipfScale.male.c4;
-    } else if (this.gender === 'female') {
-      c1 = this.ipfScale.female.c1;
-      c2 = this.ipfScale.female.c2;
-      c3 = this.ipfScale.female.c3;
-      c4 = this.ipfScale.female.c4;
-    }
-
-    const goalIPF = (form.value.goalBlue === 'full') ?
-      this.bluesConst.full : (form.value.goalBlue === 'half') ?
-      this.bluesConst.half : null;
-
-    return this.weightUnitService.convertToLb(Math.max(0,
-      (((goalIPF - 500) / 100) * (c3 * Math.log(goalBw) - c4) +
-      (c1 * Math.log(goalBw) - c2))
     ));
   }
 

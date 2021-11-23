@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { PopoverController } from '@ionic/angular';
 import { GenderService } from '../settings/settings-storage/gender.service';
 import { WeightUnitService } from '../settings/settings-storage/weight-unit.service';
 
 import { CoeffService } from './coefficients.service';
-import { PopoverComponent } from './popover/popover.component';
 
 @Component({
   selector: 'app-coefficients',
@@ -35,16 +33,12 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     wilks: 0
   };
 
-  goalBlue = 'full';
   goalTotal: number;
   calcDiff = false;
-  blueDiff: string;
-  hBlueDiff: string;
 
   constructor(
     public weightUnitService: WeightUnitService,
     private coeffService: CoeffService,
-    private popoverController: PopoverController,
     private genderService: GenderService
   ) { }
 
@@ -56,8 +50,6 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       } else {
         // this.calcTot(this.coeffForm);
       }
-      this.calcGoal(this.coeffForm);
-      this.calcDelta(this.coeffForm);
     });
   }
 
@@ -109,27 +101,6 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     }
   }
 
-  calcGoal(form: NgForm): void {
-    if (this.userGender && form.value.goalBw && form.value.goalBlue) {
-      this.goalTotal = this.coeffService.calcBluesGoal(form);
-    }
-  }
-
-  onClickCalc = (): boolean => this.calcDiff = !this.calcDiff;;
-
-  calcDelta(form: NgForm): void {
-    const unitUsed = this.weightUnitService.userUnit.value;
-    if (this.goalTotal && form.value.tTotal) {
-      if (this.goalTotal < form.value.tTotal) {
-        this.blueDiff = 'achieved';
-        this.hBlueDiff = 'achieved';
-      } else {
-        this.blueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
-        this.hBlueDiff = (this.goalTotal - form.value.tTotal).toFixed(2) + unitUsed + ' remaining';
-      }
-    }
-  }
-
   onSwitch(): void {
     if (this.segmentSelected === 'total') {
       this.result = (this.result === 'points') ? 'total' : 'points';
@@ -137,15 +108,6 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       this.result = 'points';
     }
     this.tempResult = this.result;
-  }
-
-  async presentPopover(ev: any): Promise<void> {
-    const popover = await this.popoverController.create({
-      component: PopoverComponent,
-      event: ev,
-      translucent: true
-    });
-    await popover.present();
   }
 
   private fillPoints(form: NgForm, total: number): void {
@@ -172,10 +134,4 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       }
     }
   }
-
-  // private calcTot(form: NgForm): void {
-  //   if (this.userGender && form.value.weight && form.value.points) {
-  //     this.onSwitchTot(form, form.value.points);
-  //   }
-  // }
 }
