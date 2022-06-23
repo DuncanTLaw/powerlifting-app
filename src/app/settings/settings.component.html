@@ -63,7 +63,29 @@
 </ion-content>
 
 <ion-footer class="ion-padding">
-  <details>
+  <ion-accordion-group>
+    <ion-accordion value="myDeets">
+      <ion-item slot="header" color="light">
+        <ion-label>About the developer</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        Duncan Law is currently a third-year undergraduate studying Engineering Science
+        in the University of Oxford. He competes in
+        <a href="https://www.britishpowerlifting.org/">British Powerlifting</a>
+        (under the <a href="https://www.powerlifting.sport/">IPF</a>)
+        as a Junior lifter in the 83kg weight class.
+        <ion-list class="link-list" lines="none">
+            <ion-item *ngFor="let link of links | keyvalue: returnZero">
+              <ion-button fill="none" size="clear" [href]="link.value.link">
+                <ion-icon class="ion-margin-end" [name]="link.value.icon"></ion-icon>
+                {{ link.value.name }}
+              </ion-button>
+            </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+  <!-- <details>
     <summary><ion-note>About the developer</ion-note></summary>
     <p class="ion-text-justify">
       Duncan Law is currently a third-year undergraduate studying Engineering Science
@@ -80,7 +102,7 @@
             </ion-button>
           </ion-item>
       </ion-list>
-  </details>
+  </details> -->
   <br/>
   <ion-note>
     Have an issue, or want to suggest a feature? Send us an email

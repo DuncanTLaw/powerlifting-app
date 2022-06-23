@@ -10,10 +10,6 @@ const LB_IN_KG = 2.2046226218488;
 export class WeightUnitService {
   userUnit: BehaviorSubject<string> = new BehaviorSubject<string>('kg');
 
-  constructor() {
-    this.checkUnit();
-  }
-
   setUnit = async (event: any): Promise<void> => {
     const unitInput = event.detail.value;
     this.userUnit.next(unitInput);
@@ -31,6 +27,10 @@ export class WeightUnitService {
       this.userUnit.next(value);
     }
   };
+
+  constructor() {
+    this.checkUnit();
+  }
 
   convertToKg(weight: number): number {
     return (this.userUnit.value === 'kg') ? weight : weight / LB_IN_KG ;
