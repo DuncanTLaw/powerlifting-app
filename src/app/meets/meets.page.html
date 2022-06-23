@@ -119,21 +119,28 @@
                   <ion-checkbox slot="end" formControlName="bp" color="dark"></ion-checkbox>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="fixed">date <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-label position="stacked" style="font-size: 1.0em !important;">
+                    date <ion-text color="danger">*</ion-text>
+                  </ion-label>
                   <ion-datetime
-                    displayFormat="MMM DD, YYYY (DDD)"
+                    presentation="date"
                     [min]="today"
                     max="2099"
                     formControlName="date"
                   >
                   </ion-datetime>
                 </ion-item>
-                <ion-item>
+                <ion-item (click)="showTime = !showTime" ion-no-padding>
                   <ion-label position="fixed">weigh in</ion-label>
+                  <ion-text slot="end" *ngIf="!showTime">{{ timePicked }}</ion-text>
                   <ion-datetime
-                    displayFormat="h:mm a"
+                    #timePicked
+                    presentation="time"
                     minuteValues="0, 15, 30, 45"
                     formControlName="weighIn"
+                    *ngIf="showTime"
+                    (ionChange)="timeChange(timePicked.value)"
+                    showDefaultButtons="true"
                   >
                   </ion-datetime>
                 </ion-item>
