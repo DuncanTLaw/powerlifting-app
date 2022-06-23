@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MenuController, ModalController } from '@ionic/angular';
-import { HelpService } from '../help/help.service';
 import { WeightUnitService } from './settings-storage/weight-unit.service';
 import { FEDERATION } from '../meets/services/federation';
 import { FederationService } from './settings-storage/federation.service';
@@ -45,15 +43,13 @@ export class SettingsComponent implements OnInit {
   fedList: string[] = [];
   feds = FEDERATION;
   wcList: string[] = [];
-  version = '2.0.0';
-  build = '3';
+  version = '2.2.0';
+  build = '5';
 
   constructor(
-    private router: Router,
     private modalController: ModalController,
     public weightUnitService: WeightUnitService,
     private menuController: MenuController,
-    private helpService: HelpService,
     private federationService: FederationService,
     private genderService: GenderService
   ) { }
@@ -88,12 +84,6 @@ export class SettingsComponent implements OnInit {
   dismissModal(): void {
     this.modalController.dismiss();
     this.menuController.close();
-  }
-
-  onClickButton(): void {
-    this.menuController.close();
-    this.helpService.currentRoute.next(this.router.url);
-    this.dismissModal();
   }
 
   onChangeUnit(): void {

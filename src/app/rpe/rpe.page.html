@@ -8,7 +8,11 @@
   <ion-grid>
     <ion-row>
       <ion-col size-md="6">
-        <ion-card>
+        <ion-card
+          joyrideStep="rpe1"
+          title="Calculate E1RM"
+          text="Input load, reps and RPE for an estimated one rep max."
+        >
           <form #projected="ngForm">
             <ion-card-header>
               <ion-card-title>Projected</ion-card-title>
@@ -64,7 +68,12 @@
       </ion-col>
 
       <ion-col size-md="6">
-        <ion-card id="requiredCard">
+        <ion-card
+          id="requiredCard"
+          joyrideStep="rpe2"
+          title="Get suggested weight for RPE"
+          text="Put in prescribed rep and RPE to get an estimated weight based on the previous E1RM."
+        >
           <form #required="ngForm">
             <ion-card-header>
               <ion-card-title>Required</ion-card-title>

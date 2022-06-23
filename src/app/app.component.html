@@ -1,16 +1,33 @@
 <ion-app>
+  <joyrideStep
+    joyrideStep="menu1"
+    stepPosition="center"
+    title="Swipe right for side menu"
+    text="
+      The side menu is accessible by swiping right from near the left edge of the screen on any page.
+      Here, you can calculate a total from the sum of your lifts, or quickly get the percentage of any number. There is also a kg-to-lb converter.
+    "
+    (prev)="closeMenu()"
+  >
+  </joyrideStep>
   <ion-menu side="start" contentId="main">
     <ion-header>
       <ion-toolbar>
-        <ion-button size="small" (click)="presentModal()">
+        <ion-button
+          size="small"
+          (click)="presentModal()"
+          joyrideStep="menu2"
+          text="You can also access the Settings of this app. Let's go there now."
+          (done)="presentAlert()"
+        >
           <ion-icon id="settings" name="cog-outline"></ion-icon>
           Settings
         </ion-button>
-        <ion-buttons slot="end">
+        <!-- <ion-buttons slot="end">
           <ion-button (click)="openTutorial()">
             <ion-icon name="help-circle"></ion-icon>
           </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
       </ion-toolbar>
     </ion-header>
     <!-- <ion-content>

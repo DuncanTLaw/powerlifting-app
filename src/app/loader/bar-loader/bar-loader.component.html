@@ -1,7 +1,13 @@
 <ion-grid>
   <ion-row>
     <ion-col>
-      <ion-card class="ion-margin-bottom">
+      <ion-card
+        class="ion-margin-bottom"
+        joyrideStep="loader1"
+        title="Figure out the number of plates required"
+        text="Input a weight and the plate layout will be displayed below to show you which plates to put on the bar."
+        (next)="showAdvanced = true; showPlates = true"
+      >
         <ion-card-header>
           <ion-card-title>Bar Loader</ion-card-title>
         </ion-card-header>
@@ -26,7 +32,12 @@
             {{ advText }} advanced options
           </ion-button>
           <hr/>
-          <div [hidden]="!showAdvanced">
+          <div
+            [hidden]="!showAdvanced"
+            joyrideStep="loader2"
+            text="You can toggle the weight of the bar, the collars and the number of available plates."
+            (next)="showAdvanced = false; showPlates = false; goToSlide()"
+          >
             <ion-list [inset]="true">
               <ion-item>
                 <ion-label position="fixed">Bar weight:</ion-label>

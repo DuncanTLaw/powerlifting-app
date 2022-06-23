@@ -8,7 +8,12 @@
   <ion-grid>
     <ion-row>
       <ion-col  size-md="6">
-        <ion-card id="timerCard">
+        <ion-card
+          id="timerCard"
+          joyrideStep="timer1"
+          title="Set a timer"
+          text="Select a rest limit to get a notification when the time is up."
+        >
           <ion-progress-bar
             color="danger"
             [attr.value]="(timeRemaining !== 0) ? timeRemaining/secondsSelected : 0"
@@ -64,7 +69,12 @@
         </ion-card>
       </ion-col>
       <ion-col  size-md="6">
-        <ion-card id="setsCard">
+        <ion-card
+          id="setsCard"
+          joyrideStep="timer2"
+          title="Tally your reps"
+          text="Put in how many reps you are prescribed and keep track of how many you've completed."
+        >
           <ion-card-content>
             <ion-list [inset]="true">
               <ion-item>

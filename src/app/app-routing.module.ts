@@ -1,21 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HelpGuard } from './help/help.guard';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/help',
+    redirectTo: '/app/tabs/rpe',
     pathMatch: 'full'
   },
   {
     path: 'app',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
-  },
-  {
-    path: 'help',
-    loadChildren: () => import('./help/help.module').then( m => m.HelpPageModule),
-    canLoad: [HelpGuard]
   }
 ];
 

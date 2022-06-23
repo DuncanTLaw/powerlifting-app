@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { Storage } from '@capacitor/storage';
 
 export interface StoredMeetObj {
@@ -20,7 +20,7 @@ export class MeetsService {
 
   constructor() { }
 
-  setMeet = async (form: FormGroup): Promise<void> => {
+  setMeet = async (form: UntypedFormGroup): Promise<void> => {
     form.patchValue({ date: form.value.date.split('T')[0] }); // remove timestamp
     const meetID = 'meet' + form.value.date;
     const formStringified = JSON.stringify(form.value);

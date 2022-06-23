@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IonSlides, MenuController } from '@ionic/angular';
 import { LoaderService, Plate } from '../loader.service';
 
 @Component({
@@ -18,7 +19,11 @@ export class BarLoadedComponent implements OnInit {
   ];
   barLoaded = 25;
 
-  constructor(public loaderService: LoaderService) { }
+  constructor(
+    public loaderService: LoaderService,
+    private menuController: MenuController,
+    private slides: IonSlides
+  ) { }
 
   ngOnInit() {}
 
@@ -30,5 +35,13 @@ export class BarLoadedComponent implements OnInit {
       plateWeight += plate.weight*plate.count;
     }
     this.barLoaded = 20 + 2*(collarWeight + plateWeight);
+  }
+
+  openMenu(): void {
+    this.menuController.open();
+  }
+
+  goToSlide(): void {
+    this.slides.slidePrev();
   }
 }

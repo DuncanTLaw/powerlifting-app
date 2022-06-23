@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { DateService } from '../services/date.service';
 import { MeetFormGroupTemplate } from '../services/meet-form.model';
@@ -15,7 +15,7 @@ export class MeetEditComponent implements OnInit {
   today: string;
 
   meet: StoredMeetObj;
-  editMeet = new FormGroup(MeetFormGroupTemplate.template);
+  editMeet = new UntypedFormGroup(MeetFormGroupTemplate.template);
 
   constructor(
     private modalController: ModalController,
