@@ -12,6 +12,7 @@ import { SettingsComponent } from './settings/settings.component';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit{
+  closeMenu = (): Promise<boolean> => this.menuController.close();
 
   constructor(
     private router: Router,
@@ -58,10 +59,6 @@ export class AppComponent implements OnInit{
       component: SettingsComponent
     });
     return await modal.present();
-  }
-
-  closeMenu(): void {
-    this.menuController.close();
   }
 
   async presentAlert() {

@@ -31,6 +31,8 @@ export class MeetsPage implements OnInit, OnDestroy {
   meets: StoredMeetObj[];
   earliestMeet: {name: string; daysOut: string} = {name: '', daysOut: ''};
 
+  timeChange = (time: string): string => this.timePicked = this.dateService.getReadableTime(time)
+
   constructor(
     private federationService: FederationService,
     private meetsService: MeetsService,
@@ -103,10 +105,6 @@ export class MeetsPage implements OnInit, OnDestroy {
     this.fab.close();
     this.showTime = false;
     this.timePicked = null;
-  }
-
-  timeChange(time: string): void {
-    this.timePicked = this.dateService.getReadableTime(time);
   }
 
   onSubmit(): void {
