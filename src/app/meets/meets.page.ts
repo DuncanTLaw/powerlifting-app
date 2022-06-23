@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FederationService } from '../settings/settings-storage/federation.service';
 import { DateService } from './services/date.service';
 import { FEDERATION } from './services/federation';
@@ -19,7 +19,7 @@ export class MeetsPage implements OnInit, OnDestroy {
 
   addMeet = false;
   editMeets = false;
-  newMeet = new FormGroup(MeetFormGroupTemplate.template);
+  newMeet = new UntypedFormGroup(MeetFormGroupTemplate.template);
   today: string;
   fedList: string[] = [];
   feds = FEDERATION;

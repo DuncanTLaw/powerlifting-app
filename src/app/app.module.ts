@@ -15,24 +15,23 @@ import { SettingsComponent } from './settings/settings.component';
 import { NotesComponent } from './notes/notes.component';
 
 @NgModule({
-  declarations: [AppComponent, UtilitiesComponent, SettingsComponent, NotesComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot({
-      mode: 'ios'
-    }),
-    AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      // Register the ServiceWorker as soon as the app is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
-    FormsModule,
-    JoyrideModule.forRoot()
-  ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent, UtilitiesComponent, SettingsComponent, NotesComponent],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot({
+            mode: 'ios'
+        }),
+        AppRoutingModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+            // Register the ServiceWorker as soon as the app is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
+        }),
+        FormsModule,
+        JoyrideModule.forRoot()
+    ],
+    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
