@@ -170,6 +170,7 @@
 </ion-content>
 
 <ion-fab
+  *ngIf="!editMeets"
   (click)="onClickAddMeet()"
   vertical="bottom"
   horizontal="start"
@@ -188,7 +189,7 @@
   <ion-button size="small" expand="block" (click)="onEdit()" *ngIf="!editMeets">
     Edit
   </ion-button>
-  <ion-button size="small" expand="block" (click)="onCloseEdit()" *ngIf="editMeets">
+  <ion-button size="small" expand="block" (click)="onEdit()" *ngIf="editMeets">
     Done
   </ion-button>
 </ion-fab>

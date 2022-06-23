@@ -31,10 +31,6 @@ export class MeetsPage implements OnInit, OnDestroy {
   meets: StoredMeetObj[];
   earliestMeet: {name: string; daysOut: string} = {name: '', daysOut: ''};
 
-  onEdit = (): boolean => this.editMeets = !this.editMeets;
-
-  onCloseEdit = (): boolean => this.editMeets = false;
-
   constructor(
     private federationService: FederationService,
     private meetsService: MeetsService,
@@ -55,6 +51,12 @@ export class MeetsPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.genderService.userGender.unsubscribe();
+  }
+
+  onEdit(): void {
+    this.editMeets = !this.editMeets;
+    this.addMeet = false;
+    this.fab?.close();
   }
 
   onClickAddMeet(): void {
