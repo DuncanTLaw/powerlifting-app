@@ -9,6 +9,7 @@ import { LoaderPageRoutingModule } from './loader-routing.module';
 import { LoaderPage } from './loader.page';
 import { BarLoadedComponent } from './bar-loaded/bar-loaded.component';
 import { BarLoaderComponent } from './bar-loader/bar-loader.component';
+import { SwiperModule } from 'swiper/angular';
 import { JoyrideModule } from 'ngx-joyride';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { JoyrideModule } from 'ngx-joyride';
     FormsModule,
     IonicModule,
     LoaderPageRoutingModule,
+    SwiperModule,
     JoyrideModule.forChild()
   ],
   declarations: [LoaderPage, BarLoadedComponent, BarLoaderComponent]

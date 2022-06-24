@@ -5,16 +5,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides pager="true" [options]="{ slidesPerView: slides }">
-    <ion-slide>
-      <ion-content>
+  <swiper
+    [pagination]="true"
+    [slidesPerView]="slides"
+    [slidesPerView]="slides"
+  >
+    <ng-template swiperSlide>
         <app-bar-loader></app-bar-loader>
-      </ion-content>
-    </ion-slide>
-    <ion-slide>
-      <ion-content>
+    </ng-template>
+    <ng-template swiperSlide>
         <app-bar-loaded></app-bar-loaded>
-      </ion-content>
-    </ion-slide>
-  </ion-slides>
+    </ng-template>
+  </swiper>
 </ion-content>
