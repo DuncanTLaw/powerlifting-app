@@ -88,6 +88,7 @@ export class SettingsComponent implements OnInit {
 
   onChangeUnit(): void {
     this.weightUnitService.setUnit(this.userUnit);
+    console.log(this.userUnit);
   }
 
   onChangeGender(): void {

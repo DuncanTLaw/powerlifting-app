@@ -12,8 +12,6 @@ import { SettingsComponent } from './settings/settings.component';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit{
-  closeMenu = (): Promise<boolean> => this.menuController.close();
-
   constructor(
     private router: Router,
     public modalController: ModalController,
@@ -22,6 +20,8 @@ export class AppComponent implements OnInit{
     private alertController: AlertController,
     private welcomedService: WelcomedService
   ) { }
+
+  closeMenu = (): Promise<boolean> => this.menuController.close();
 
   async ngOnInit() {
     const welcomed = await this.welcomedService.checkWelcomed();

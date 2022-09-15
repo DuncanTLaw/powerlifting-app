@@ -8,13 +8,16 @@ import { BehaviorSubject } from 'rxjs';
 export class GenderService {
   userGender: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
+  constructor() {
+    this.checkGender();
+  }
+
   setGender = async (gender: string): Promise<void> => {
     this.userGender.next(gender);
-    const storeGender = gender;
 
     await Storage.set({
       key: 'gender',
-      value: storeGender
+      value: gender
     });
   };
 
@@ -24,8 +27,4 @@ export class GenderService {
       this.userGender.next(value);
     }
   };
-
-  constructor() {
-    this.checkGender();
-  }
 }
