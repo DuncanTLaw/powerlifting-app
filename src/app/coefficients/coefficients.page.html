@@ -162,6 +162,16 @@
                   </ion-row>
                 </ion-col>
               </ion-row>
+              <ion-row
+                class="ion-float-end ion-margin-bottom"
+                [hidden]="segmentSelected!=='total'"
+              >
+                <ion-buttons>
+                  <ion-button (click)="onSwitch()">
+                    <ion-icon name="swap-vertical"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-row>
             </ion-card-content>
           </form>
         </ion-card>
