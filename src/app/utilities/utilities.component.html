@@ -52,6 +52,46 @@
 
 <ion-card class="ion-no-margin ion-no-padding ion-margin-top">
   <ion-card-header>
+    <ion-card-title>Converter</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list [inset]="true">
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <ion-input
+            type="number"
+            [(ngModel)]="conversionNum"
+            (ngModelChange)="convertNumber()"
+            placeholder="input weight in"
+          ></ion-input>
+        </ion-col>
+        <ion-col size="auto">
+          {{ conversionUnit }}
+        </ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-row class="ion-align-items-center">
+      <ion-col class="ion-no-padding" id="swapButtonCol" size="auto">
+        <ion-buttons>
+          <ion-button (click)="onSwitchConversion()">
+            <ion-icon name="swap-vertical"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-col>
+      <ion-col class="ion-no-padding ion-text-end">
+        <div [hidden]="convertedNum">
+          convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
+        </div>
+        <div [hidden]="!convertedNum">
+          converts to {{ convertedNum| number : '1.2-2' }}{{ convertedUnit }}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
+
+<ion-card class="ion-no-margin ion-no-padding ion-margin-top">
+  <ion-card-header>
     <ion-card-title>Percentage</ion-card-title>
   </ion-card-header>
   <ion-card-content>
@@ -93,44 +133,3 @@
     </ion-row>
   </ion-card-content>
 </ion-card>
-
-<ion-card class="ion-no-margin ion-no-padding ion-margin-top">
-  <ion-card-header>
-    <ion-card-title>Converter</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <ion-list [inset]="true">
-      <ion-row class="ion-align-items-center">
-        <ion-col>
-          <ion-input
-            type="number"
-            [(ngModel)]="conversionNum"
-            (ngModelChange)="convertNumber()"
-            placeholder="input weight in"
-          ></ion-input>
-        </ion-col>
-        <ion-col size="auto">
-          {{ conversionUnit }}
-        </ion-col>
-      </ion-row>
-    </ion-list>
-    <ion-row class="ion-align-items-center">
-      <ion-col class="ion-no-padding" id="swapButtonCol" size="auto">
-        <ion-buttons>
-          <ion-button (click)="onSwitchConversion()">
-            <ion-icon name="swap-vertical"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-col>
-      <ion-col class="ion-no-padding ion-text-end">
-        <div [hidden]="convertedNum">
-          convert to {{ convertedUnit === 'lb' ? 'pounds' : 'kilograms' }}
-        </div>
-        <div [hidden]="!convertedNum">
-          converts to {{ convertedNum| number : '1.2-2' }}{{ convertedUnit }}
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-card-content>
-</ion-card>
-
