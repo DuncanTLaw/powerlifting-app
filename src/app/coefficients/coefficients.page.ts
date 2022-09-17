@@ -19,7 +19,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   segmentSelected = 'total';
   userGender: string;
   userBw: number;
-  userTotal = 0;
+  userTotal: number;
   userSq: number;
   userBp: number;
   userDl: number;

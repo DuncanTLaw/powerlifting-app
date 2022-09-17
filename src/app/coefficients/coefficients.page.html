@@ -179,7 +179,7 @@
               </div>
               <ion-row [hidden]="result==='points'">
                 <ion-text color="success">
-                  {{ userTotal }}{{ weightUnitService.userUnit | async }}
+                  {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }}
                 </ion-text>
                 <div style="margin-left: 5px; font-size: 18pt;"> total</div>
               </ion-row>
