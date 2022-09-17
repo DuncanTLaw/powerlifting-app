@@ -25,9 +25,13 @@ export class MeetsPage implements OnInit, OnDestroy {
   feds = FEDERATION;
   wcList: string[] = [];
   userGender: string;
+  showTime = false;
+  timePicked: string;
 
   meets: StoredMeetObj[];
   earliestMeet: {name: string; daysOut: string} = {name: '', daysOut: ''};
+
+  timeChange = (time: string): string => this.timePicked = this.dateService.getReadableTime(time)
 
   constructor(
     private federationService: FederationService,
@@ -49,6 +53,17 @@ export class MeetsPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.genderService.userGender.unsubscribe();
+  }
+
+  onEdit(): void {
+    this.editMeets = !this.editMeets;
+    this.addMeet = false;
+    this.fab?.close();
+  }
+
+  onClickAddMeet(): void {
+    this.addMeet = !this.addMeet;
+    this.clearTime();
   }
 
   getFeds(): void {
@@ -85,11 +100,11 @@ export class MeetsPage implements OnInit, OnDestroy {
     this.getWC();
   }
 
-  onClickAddMeet = (): boolean => this.addMeet = !this.addMeet;
-
   onClickCancel(): void {
     this.onClickAddMeet();
     this.fab.close();
+    this.showTime = false;
+    this.timePicked = null;
   }
 
   onSubmit(): void {
@@ -99,11 +114,8 @@ export class MeetsPage implements OnInit, OnDestroy {
     this.newMeet.reset();
     this.patchFed();
     this.fab.close();
+    this.clearTime();
   }
-
-  onEdit = (): boolean => this.editMeets = !this.editMeets;
-
-  onCloseEdit = (): boolean => this.editMeets = false;
 
   deleteMeet(meetDate: string): void {
     this.meetsService.removeMeet(meetDate);
@@ -150,5 +162,10 @@ export class MeetsPage implements OnInit, OnDestroy {
       this.getFeds();
     });
     this.federationService.checkClass().then(wcStored => this.newMeet.patchValue({ wc: wcStored }));
+  }
+
+  private clearTime(): void {
+    this.showTime = false;
+    this.timePicked = null;
   }
 }

@@ -14,14 +14,12 @@ export class WeightUnitService {
     this.checkUnit();
   }
 
-  setUnit = async (event: any): Promise<void> => {
-    const unitInput = event.detail.value;
-    this.userUnit.next(unitInput);
-    const storeUnit = unitInput;
+  setUnit = async (unit: string): Promise<void> => {
+    this.userUnit.next(unit);
 
     await Storage.set({
       key: 'unit',
-      value: storeUnit
+      value: unit
     });
   };
 

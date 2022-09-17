@@ -1,5 +1,9 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 
+import SwiperCore, { Pagination } from 'swiper';
+
+SwiperCore.use([Pagination]);
+
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.page.html',

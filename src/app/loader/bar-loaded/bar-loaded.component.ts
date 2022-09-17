@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonSlides, MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { LoaderService, Plate } from '../loader.service';
 
 @Component({
@@ -21,8 +21,7 @@ export class BarLoadedComponent implements OnInit {
 
   constructor(
     public loaderService: LoaderService,
-    private menuController: MenuController,
-    private slides: IonSlides
+    private menuController: MenuController
   ) { }
 
   ngOnInit() {}
@@ -39,9 +38,5 @@ export class BarLoadedComponent implements OnInit {
 
   openMenu(): void {
     this.menuController.open();
-  }
-
-  goToSlide(): void {
-    this.slides.slidePrev();
   }
 }

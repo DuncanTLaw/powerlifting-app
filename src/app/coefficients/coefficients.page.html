@@ -63,6 +63,19 @@
                   <ion-note slot="end">{{ weightUnitService.userUnit | async }}</ion-note>
                 </ion-item>
                 <ion-item [hidden]="result==='points'">
+                  <ion-select
+                    [(ngModel)]="pointsSelected"
+                    [ngModelOptions]="{standalone: true}"
+                    (ngModelChange)="calcResult(coeff)"
+                    interface="popover"
+                  >
+                    <ion-select-option value="IPF GL">IPF GL</ion-select-option>
+                    <ion-select-option value="IPF">IPF</ion-select-option>
+                    <ion-select-option value="DOTS">DOTS</ion-select-option>
+                    <ion-select-option value="Wilks">Wilks</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item [hidden]="result==='points'">
                   <ion-label position="fixed">points</ion-label>
                   <ion-input
                     type="number"
@@ -116,51 +129,69 @@
                 = {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }} total
               </ion-row>
               <ion-row class="ion-padding-top">
-                <h1><b>Points</b></h1>
+                <h1><b>{{result==='points' ? "Points" : "Total"}}</b></h1>
               </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <ion-row>
-                    IPF GL
-                  </ion-row>
-                  <ion-row>
-                    <ion-text color="success">
-                      {{ pointList.gl | number : '1.2-2' }}
-                    </ion-text>
-                  </ion-row>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-row>
-                    IPF
-                  </ion-row>
-                  <ion-row>
-                    <ion-text color="success">
-                      {{ pointList.ipf | number : '1.2-2' }}
-                    </ion-text>
-                  </ion-row>
-                </ion-col>
+              <div [hidden]="result==='total'">
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-row>
+                      IPF GL
+                    </ion-row>
+                    <ion-row>
+                      <ion-text color="success">
+                        {{ pointList.gl | number : '1.2-2' }}
+                      </ion-text>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-row>
+                      IPF
+                    </ion-row>
+                    <ion-row>
+                      <ion-text color="success">
+                        {{ pointList.ipf | number : '1.2-2' }}
+                      </ion-text>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-margin-top">
+                  <ion-col size="6">
+                    <ion-row>
+                      DOTS
+                    </ion-row>
+                    <ion-row>
+                      <ion-text color="success">
+                        {{ pointList.dots | number : '1.2-2' }}
+                      </ion-text>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-row>
+                      Wilks
+                    </ion-row>
+                    <ion-row>
+                      <ion-text color="success">
+                        {{ pointList.wilks | number : '1.2-2' }}
+                      </ion-text>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </div>
+              <ion-row [hidden]="result==='points'">
+                <ion-text color="success">
+                  {{ userTotal || 0 }}{{ weightUnitService.userUnit | async }}
+                </ion-text>
+                <div style="margin-left: 5px; font-size: 18pt;"> total</div>
               </ion-row>
-              <ion-row class="ion-margin-top">
-                <ion-col size="6">
-                  <ion-row>
-                    DOTS
-                  </ion-row>
-                  <ion-row>
-                    <ion-text color="success">
-                      {{ pointList.dots | number : '1.2-2' }}
-                    </ion-text>
-                  </ion-row>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-row>
-                    Wilks
-                  </ion-row>
-                  <ion-row>
-                    <ion-text color="success">
-                      {{ pointList.wilks | number : '1.2-2' }}
-                    </ion-text>
-                  </ion-row>
-                </ion-col>
+              <ion-row
+                class="ion-float-end ion-margin-bottom"
+                [hidden]="segmentSelected!=='total'"
+              >
+                <ion-buttons>
+                  <ion-button (click)="onSwitch()">
+                    <ion-icon name="swap-vertical"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
               </ion-row>
             </ion-card-content>
           </form>

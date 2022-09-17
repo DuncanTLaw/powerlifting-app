@@ -13,14 +13,13 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 export class TimerPage implements OnInit {
   timerRunning = false;
   secondsSelected: number;
+  timeString: string;
   timeSelected: string;
   timeRemaining = 0;
   timeEnded = false;
   interval: any;
   lhsButtonText = 'Cancel';
   rhsButtonText = 'Start';
-  minutesColIndex: number;
-  secondsColIndex: number;
 
   setsSelected: number;
   setsCompleted = 0;
@@ -37,69 +36,16 @@ export class TimerPage implements OnInit {
     this.awakeService.checkAwake();
   }
 
-  async showTimePicker(): Promise<void> {
-    const seconds = [...Array(60).keys()];
-    const minutes = [...Array(16).keys()]; // you shouldn't even rest more than 10 mins
-    const secondsOptions: Array<PickerColumnOption> = [];
-    const minutesOptions: Array<PickerColumnOption> = [];
-    for(const second of seconds) {
-      secondsOptions.push({text: second.toString(), value: second});
+  changeTime(): void {
+    const minuteVal = new Date(this.timeString).getHours(); // Ion Datetime only has HH:MM for presentation="time"
+    const secondVal = new Date(this.timeString).getMinutes();
+    this.secondsSelected = minuteVal * 60 + secondVal;
+    this.timeRemaining = this.secondsSelected;
+    if (this.timerRunning) {
+      this.cancelNotification();
+      this.scheduleNotification();
     }
-    for(const minute of minutes) {
-      minutesOptions.push({text: minute.toString(), value: minute});
-    }
-
-    let pickerAction: string;
-
-		const options: PickerOptions = {
-			columns: [
-        {
-					name: 'minutes',
-					options: minutesOptions,
-          selectedIndex: this.minutesColIndex
-        },
-        {
-          name: ':',
-          options: [{text: ':'}]
-        },
-        {
-					name: 'seconds',
-					options: secondsOptions,
-          selectedIndex: this.secondsColIndex
-				},
-			],
-      buttons: [
-				{
-					text: 'Cancel',
-          handler: () => {
-            pickerAction = 'cancel';
-          }
-				},
-				{
-					text: 'Done',
-          handler: () => {
-            pickerAction = 'done';
-          }
-				},
-			]
-		};
-
-		const picker = await this.pickerController.create(options);
-		picker.present();
-		picker.onDidDismiss().then(async () => {
-      if (pickerAction === 'done') {
-        const second = await picker.getColumn('seconds');
-        const minute = await picker.getColumn('minutes');
-        const secondVal = second.options[second.selectedIndex].value;
-        const minuteVal = minute.options[minute.selectedIndex].value;
-        this.timeSelected = `${minuteVal}min ${secondVal}sec`;
-        this.secondsSelected = minuteVal * 60 + secondVal;
-        this.timeRemaining = this.secondsSelected;
-        this.secondsColIndex = second.selectedIndex;
-        this.minutesColIndex = minute.selectedIndex;
-      }
-		});
-	}
+  }
 
   async scheduleNotification(): Promise<void> {
     const minutes = Math.floor(this.secondsSelected / 60);

@@ -14,11 +14,10 @@ export class GenderService {
 
   setGender = async (gender: string): Promise<void> => {
     this.userGender.next(gender);
-    const storeGender = gender;
 
     await Storage.set({
       key: 'gender',
-      value: storeGender
+      value: gender
     });
   };
 

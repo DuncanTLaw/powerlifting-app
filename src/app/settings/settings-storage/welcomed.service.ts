@@ -10,11 +10,10 @@ export class WelcomedService {
   constructor() { }
 
   setWelcomed = async (): Promise<void> => {
-    const storeWelcomed = 'welcomed';
 
     await Storage.set({
       key: 'welcomed',
-      value: storeWelcomed
+      value: 'welcomed'
     });
   };
 

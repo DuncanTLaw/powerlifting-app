@@ -15,7 +15,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
   // https://stackoverflow.com/questions/37093432/angular-2-template-driven-form-access-ngform-in-component
   @ViewChild('coeff', { static: true }) coeffForm: NgForm;
 
-  // pointsSelected = 'IPF GL';
+  pointsSelected = 'IPF GL';
   segmentSelected = 'total';
   userGender: string;
   userBw: number;
@@ -32,9 +32,6 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     dots: 0,
     wilks: 0
   };
-
-  goalTotal: number;
-  calcDiff = false;
 
   constructor(
     public weightUnitService: WeightUnitService,
@@ -96,7 +93,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       if (this.result === 'points') {
         this.calcPoints(form);
       } else {
-        // this.calcTot(form);
+        this.calcTot(form);
       }
     }
   }
@@ -108,6 +105,24 @@ export class CoefficientsPage implements OnInit, OnDestroy {
       this.result = 'points';
     }
     this.tempResult = this.result;
+  }
+
+  private onSwitchTot(form: NgForm, pointSelected: string, points: number): void {
+    switch (pointSelected) {
+      case 'IPF GL':
+        this.userTotal = this.coeffService.calcGLTot(form, points);
+        break;
+      case 'IPF':
+        this.userTotal = this.coeffService.calcIPFTot(form, points);
+        break;
+      case 'DOTS':
+        this.userTotal = this.coeffService.calcDOTSTot(form, points);
+        break;
+      case 'Wilks':
+        this.userTotal = this.coeffService.calcWilksTot(form, points);
+        break;
+    }
+    this.userTotal = Math.round(this.userTotal * 100) / 100;
   }
 
   private fillPoints(form: NgForm, total: number): void {
@@ -132,6 +147,12 @@ export class CoefficientsPage implements OnInit, OnDestroy {
           wilks: 0
         };
       }
+    }
+  }
+
+  private calcTot(form: NgForm): void {
+    if (this.userGender && form.value.weight && form.value.points) {
+      this.onSwitchTot(form, this.pointsSelected, form.value.points);
     }
   }
 }

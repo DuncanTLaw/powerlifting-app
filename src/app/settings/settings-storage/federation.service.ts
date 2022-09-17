@@ -9,11 +9,9 @@ export class FederationService {
   constructor() { }
 
   setFed = async (fed: string): Promise<void> => {
-    const storeFed = fed;
-
     await Storage.set({
       key: 'fed',
-      value: storeFed
+      value: fed
     });
   };
 
@@ -25,11 +23,9 @@ export class FederationService {
   };
 
   setClass = async (wc: string): Promise<void> => {
-    const storeClass = wc;
-
     await Storage.set({
       key: 'class',
-      value: storeClass
+      value: wc
     });
   };
 

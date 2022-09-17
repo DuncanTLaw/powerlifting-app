@@ -17,9 +17,6 @@ export interface StoredMeetObj {
   providedIn: 'root'
 })
 export class MeetsService {
-
-  constructor() { }
-
   setMeet = async (form: UntypedFormGroup): Promise<void> => {
     form.patchValue({ date: form.value.date.split('T')[0] }); // remove timestamp
     const meetID = 'meet' + form.value.date;
@@ -71,6 +68,8 @@ export class MeetsService {
       return JSON.parse(value);
     }
   };
+
+  constructor() { }
 
   private sortMeets(meetList: StoredMeetObj[]): StoredMeetObj[] {
     return meetList.sort((a, b) => +new Date(a.date) - +new Date(b.date));

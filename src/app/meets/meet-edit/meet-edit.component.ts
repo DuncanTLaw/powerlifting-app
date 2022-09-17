@@ -16,6 +16,10 @@ export class MeetEditComponent implements OnInit {
 
   meet: StoredMeetObj;
   editMeet = new UntypedFormGroup(MeetFormGroupTemplate.template);
+  showTime = false;
+  timePicked: string;
+
+  timeChange = (time: string): string => this.timePicked = this.dateService.getReadableTime(time)
 
   constructor(
     private modalController: ModalController,
