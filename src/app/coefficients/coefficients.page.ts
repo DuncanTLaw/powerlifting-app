@@ -107,7 +107,7 @@ export class CoefficientsPage implements OnInit, OnDestroy {
     this.tempResult = this.result;
   }
 
-  onSwitchTot(form: NgForm, pointSelected: string, points: number): void {
+  private onSwitchTot(form: NgForm, pointSelected: string, points: number): void {
     switch (pointSelected) {
       case 'IPF GL':
         this.userTotal = this.coeffService.calcGLTot(form, points);
